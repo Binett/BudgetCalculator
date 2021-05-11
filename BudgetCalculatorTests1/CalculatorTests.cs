@@ -13,7 +13,7 @@ namespace BudgetCalculator.Tests
     public class CalculatorTests
     {
         Calculator calc;
-
+        // KOMEMNAT
         [TestInitialize]
         public void Setup()
         {
