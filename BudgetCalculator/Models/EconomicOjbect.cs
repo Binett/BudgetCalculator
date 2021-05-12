@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace BudgetCalculator.Models
 {
-    public interface IPrivateEconomy
+    public class EconomicOjbect
     {
-        public double Balance { get; set; }
+        public EconomicType Type { get; set; }
+        public string Name { get; set; }
+        public double Amount { get; set; }
     }
 }

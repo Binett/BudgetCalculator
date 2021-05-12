@@ -6,13 +6,13 @@ namespace BudgetCalculator
 {
     public class Calculator
     {
-        List<IPrivateEconomy> privateEconomyList;
+        private List<EconomicOjbect> economicObjectList;
 
-        public Calculator(List<IPrivateEconomy> list)
+        public Calculator(List<EconomicOjbect> list)
         {
-            privateEconomyList = list;
+            economicObjectList = list;
         }
-
+        
         public double GetTotalIncome()
         {
             throw new NotImplementedException();
@@ -20,7 +20,15 @@ namespace BudgetCalculator
 
         public double GetTotalExpenses()
         {
-            throw new NotImplementedException();
+            double totalExpenses = 0;
+            foreach (var p in economicObjectList)
+            {
+                if (p.Type == EconomicType.Expense && p != null && p.Amount > 0)
+                {
+                    totalExpenses += p.Amount;
+                }
+            }
+            return totalExpenses;
         }
 
         public double GetTotalSaving()

@@ -13,24 +13,27 @@ namespace BudgetCalculator.Tests
     public class CalculatorTests
     {
         Calculator calc;
-        // KOMEMNAT
+
         [TestInitialize]
         public void Setup()
         {
-            var plist = new List<IPrivateEconomy>()
-            {
-                new IncomesDto { Salary = 2000, OtherIncomes = 200 },
-                new ExpensesDto { },
-                new SavingsDto { },
-            };
+            List<EconomicOjbect> list = new List<EconomicOjbect>();
 
-            calc = new Calculator(plist);
+            list.Add(new EconomicOjbect
+            {
+                Name = "Rent",
+                Amount = 200,
+                Type = EconomicType.Expense,
+            });
+
+            calc = new Calculator(list);
+
         }
 
         [TestMethod()]
         public void GetTotalIncomeTest()
         {
-            Assert.AreEqual(0.0, calc.GetTotalIncome());
+
         }
 
         [TestMethod()]
