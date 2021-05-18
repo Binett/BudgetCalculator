@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BudgetCalculator.Models;
+using BudgetCalculator.Controllers;
+using BudgetCalculatorTests1.Seeder;
 
 namespace BudgetCalculator.Tests
 {
@@ -13,33 +15,43 @@ namespace BudgetCalculator.Tests
     public class CalculatorTests
     {
         Calculator calc;
+        EconomicController ecoController;
+        TestSeeder testSeeder;
 
         [TestInitialize]
         public void Setup()
         {
-            List<EconomicOjbect> list = new List<EconomicOjbect>();
-
-            list.Add(new EconomicOjbect
-            {
-                Name = "Rent",
-                Amount = 200,
-                Type = EconomicType.Expense,
-            });
-
-            calc = new Calculator(list);
-
+            testSeeder = new TestSeeder();
+            
         }
 
         [TestMethod()]
         public void GetTotalIncomeTest()
         {
-
+            Assert.Fail();
         }
 
         [TestMethod()]
-        public void GetTotalExpensesTest()
+        public void GetTotalExpenses_Pass_ShouldReturnSum_3599()
         {
-            Assert.Fail();
+            testSeeder.InitList();
+            calc = new Calculator(testSeeder.ecoController.GetList);
+
+            var expected = 3599;
+            var actual = calc.GetTotalExpenses();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void GetTotalExpensesTest_Fail_Should()
+        {
+            testSeeder.InitList();
+            testSeeder.ecoController.UpdateEconomicObjectAmount("Food", 999999);
+            calc = new Calculator(testSeeder.ecoController.GetList);
+
+            var expected = 3599;
+            var actual = calc.GetTotalExpenses();
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod()]

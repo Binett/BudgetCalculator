@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetCalculator", "BudgetCalculator\BudgetCalculator.csproj", "{506FA3B7-D29B-4203-81D4-729CD5370AB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetCalculatorTests1", "BudgetCalculatorTests1\BudgetCalculatorTests1.csproj", "{F8DFF6AE-03EB-4E93-A569-82A3CD14085F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetCalculatorTests1", "BudgetCalculatorTests1\BudgetCalculatorTests1.csproj", "{F8DFF6AE-03EB-4E93-A569-82A3CD14085F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

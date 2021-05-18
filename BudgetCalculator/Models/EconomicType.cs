@@ -8,7 +8,7 @@ namespace BudgetCalculator.Models
 {
     public enum EconomicType
     {
-        None,
+        Other,
         Expense,
         Income,
         Saving,
