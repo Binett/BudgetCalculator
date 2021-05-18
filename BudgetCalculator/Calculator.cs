@@ -15,7 +15,15 @@ namespace BudgetCalculator
         
         public double GetTotalIncome()
         {
-            throw new NotImplementedException();
+            double totalIncomes = 0;
+            foreach (var p in economicObjectList)
+            {
+                if (p.Type == EconomicType.Income)
+                {
+                    totalIncomes += p.Amount;
+                }
+            }
+            return totalIncomes;
         }
 
         public double GetTotalExpenses()
@@ -23,7 +31,7 @@ namespace BudgetCalculator
             double totalExpenses = 0;
             foreach (var p in economicObjectList)
             {
-                if (p.Type == EconomicType.Expense && p != null && p.Amount > 0)
+                if (p.Type == EconomicType.Expense)
                 {
                     totalExpenses += p.Amount;
                 }
@@ -33,14 +41,24 @@ namespace BudgetCalculator
 
         public double GetTotalSaving()
         {
+            if (IsMoreIncomeThanExpenses())
+            {
+                //EXEMPEL: 20% spara på income. 
+                //Om totalsaving blir mer än total expenses. går ej
+                //totalsaving = (income - expenses) * 0.1 (10 procent)
+            }
             throw new NotImplementedException();
         }
 
         public double GetRemainingBalance()
         {
+            if(IsMoreIncomeThanExpenses())
+            {
+                
+            }
             throw new NotImplementedException();
         }
 
-
+        private bool IsMoreIncomeThanExpenses() => GetTotalIncome() > GetTotalExpenses();
     }
 }
