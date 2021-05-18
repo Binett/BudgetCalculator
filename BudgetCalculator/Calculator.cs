@@ -43,7 +43,9 @@ namespace BudgetCalculator
         {
             if (IsMoreIncomeThanExpenses())
             {
-
+                //EXEMPEL: 20% spara på income. 
+                //Om totalsaving blir mer än total expenses. går ej
+                //totalsaving = (income - expenses) * 0.1 (10 procent)
             }
             throw new NotImplementedException();
         }
