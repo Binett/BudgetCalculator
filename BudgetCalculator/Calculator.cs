@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using BudgetCalculator.Models;
 
 namespace BudgetCalculator
@@ -47,11 +48,36 @@ namespace BudgetCalculator
 
         public double GetRemainingBalance()
         {
-            if(IsMoreIncomeThanExpenses())
+            try
             {
-                
+                if (IsMoreIncomeThanExpenses())
+                {
+                    var totalSavings = 0d;
+                    foreach (var p in economicObjectList)
+                    {
+                        if (p.Type == EconomicType.Saving)
+                        {
+                            totalSavings += p.Amount;
+                        }
+                    }
+
+                    var remainingBalance = GetTotalIncome() - GetTotalExpenses() - totalSavings;
+                    if (remainingBalance > 0)
+                    {
+                        return remainingBalance;
+                    }
+                }
             }
-            throw new NotImplementedException();
+            catch (NullReferenceException e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+
+            return 0;
         }
 
         private bool IsMoreIncomeThanExpenses() => GetTotalIncome() > GetTotalExpenses();
