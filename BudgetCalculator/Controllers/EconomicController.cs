@@ -51,7 +51,7 @@ namespace BudgetCalculator.Controllers
             throw new NotImplementedException();
         }
 
-        public bool UpdateEconomicObjectAmount(string name, int newAmount)
+        public bool UpdateEconomicObjectAmount(string name, double newAmount)
         {
             if(!string.IsNullOrEmpty(name))
             {
