@@ -22,7 +22,7 @@ namespace BudgetCalculatorTests1.Seeder
             ecoController.AddEconomicObjectToList("Rent", EconomicType.Expense, 2000);
             ecoController.AddEconomicObjectToList("Subscription", EconomicType.Expense, 99);
             ecoController.AddEconomicObjectToList("Food", EconomicType.Expense, 1500);
-            ecoController.AddEconomicObjectToList("Savings", EconomicType.Saving, 14000 * 0.1);
+            ecoController.AddEconomicObjectToList("Savings", EconomicType.Saving, 0.1);
         }
     }
 }

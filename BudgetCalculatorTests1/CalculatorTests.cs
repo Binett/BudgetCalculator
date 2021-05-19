@@ -65,6 +65,18 @@ namespace BudgetCalculator.Tests
         }
 
         [TestMethod()]
+        public void GetTotalSavingTest_Negative_ShouldReturnZero()
+        {
+            testSeeder.InitList();
+            testSeeder.ecoController.UpdateEconomicObjectAmount("Savings", 1.1);
+            calc = new Calculator(testSeeder.ecoController.GetList);
+
+            var expected = 4200;
+            var actual = calc.GetTotalSaving();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
         public void GetRemainingBalanceTest()
         {
             Assert.Fail();
