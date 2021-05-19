@@ -55,9 +55,13 @@ namespace BudgetCalculator.Tests
         }
 
         [TestMethod()]
-        public void GetTotalSavingTest()
+        public void GetTotalSavingTest_Positive_ShouldReturnSum()
         {
-            Assert.Fail();
+            testSeeder.InitList();
+            calc = new Calculator(testSeeder.ecoController.GetList);
+            var expected = 1400;
+            var actual = calc.GetTotalSaving();
+            Assert.AreEqual(expected,actual);
         }
 
         [TestMethod()]
