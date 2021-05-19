@@ -41,35 +41,7 @@ namespace BudgetCalculator
 
         public double GetTotalSaving()
         {
-            //if (IsMoreIncomeThanExpenses())
-            //{
-            //    double totalSavings = 0;
-            //    foreach (var p in economicObjectList)
-            //    {
-            //        if (p.Type == EconomicType.Saving)
-            //        {
-            //            totalSavings += p.Amount;
-            //        }
-            //    }
 
-            //    double amountLeftAfterExpenses = GetTotalIncome() - GetTotalExpenses();
-            //    double amountToSave = GetTotalIncome() * totalSavings;
-
-            //    if(amountToSave > amountLeftAfterExpenses)
-            //    {
-            //        //no money to save
-            //        return 0;
-            //    }
-            //    else
-            //    {
-            //        //money exist to for saving
-            //        return amountToSave;
-            //    }
-            //}
-            //else
-            //{
-            //    return 0;
-            //}
             throw new NotImplementedException();
         }
 
