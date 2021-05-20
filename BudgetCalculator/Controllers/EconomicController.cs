@@ -10,100 +10,163 @@ namespace BudgetCalculator.Controllers
     /// </summary>
     public class EconomicController
     {
-        private List<EconomicObject> EconomicObjbectList;
+        private List<EconomicObject> EconomicObjectList;
 
         public EconomicController()
         {
-            EconomicObjbectList = new List<EconomicObject>();
+            EconomicObjectList = new List<EconomicObject>();
         }
 
-        public List<EconomicObject> GetList => EconomicObjbectList;
+        public List<EconomicObject> GetList => EconomicObjectList;
 
         public bool AddEconomicObjectToList(string name, EconomicType type, double amount)
         {
-            if (!string.IsNullOrEmpty(name))
+            if (name != null)
             {
-                if (amount > 0)
+                if(name != "")
                 {
-                    EconomicObjbectList.Add(new EconomicObject
+                    if (amount > 0)
                     {
-                        Name = name,
-                        Type = type,
-                        Amount = amount,
-                    });
-                    return true;
+                        EconomicObjectList.Add(new EconomicObject
+                        {
+                            Name = name,
+                            Type = type,
+                            Amount = amount,
+                        });
+                        return true;
+                    }   
+                    else
+                    {
+                        Debug.WriteLine("Amount was less than zero");
+                        //Logic to save to logger
+                        return false;
+                    }
                 }
                 else
                 {
-                    Debug.WriteLine("Amount was less than zero");
+                    Debug.WriteLine("String name was empty");
+                    //Logic to save to logger
                     return false;
                 }
             }
             else
             {
-                Debug.WriteLine("String name was null or empty");
+                Debug.WriteLine("String name was null");
+                //Logic to save to logger
                 return false;
             }
         }
 
         public bool RemoveEconomicObjectFromList(string name)
         {
-            throw new NotImplementedException();
-        }
 
-        public bool UpdateEconomicObjectAmount(string name, int newAmount)
-        {
-            if(!string.IsNullOrEmpty(name))
+            if (name != null)
             {
-                if(newAmount > 0)
+                if (name != "")
                 {
-                    for (int i = 0; i < EconomicObjbectList.Count; i++)
+                    foreach (var ecoObj in EconomicObjectList)
                     {
-                        if(EconomicObjbectList[i].Name == name)
+                        if (ecoObj.Name.Contains(name))
                         {
-                            EconomicObjbectList[i].Amount = newAmount;
+                            EconomicObjectList.Remove(ecoObj);
                             return true;
                         }
-                        else 
+                    }
+                    Debug.WriteLine("Name does not exist in economic object list");
+                    //Logic to save to logger
+                    return false;
+                }
+                else
+                {
+                    Debug.WriteLine("String name was empty");
+                    //Logic to save to logger
+                    return false;
+                }
+            }
+            else
+            {
+                Debug.WriteLine("String name was null");
+                //Logic to save to logger
+                return false;
+            }
+        }
+
+        public bool UpdateEconomicObjectAmount(string name, double newAmount)
+        {
+            if (name != null)
+            {
+                if (name != "")
+                {
+                    if(newAmount > 0)
+                    {
+                        foreach(var ecoObj in EconomicObjectList)
                         {
-                            Debug.Write("Name does not exist in economic object list");
+                            if(ecoObj.Name.Contains(name))
+                            {
+                                ecoObj.Amount = newAmount;
+                                return true;
+                            }
                         }
+
+                        Debug.WriteLine("Name does not exist in economic object list");
+                        //Logic to save to logger
+                        return false;
+                    }
+                    else
+                    {
+                        Debug.WriteLine("New amount was 0 or less");
+                        //Logic to save to logger
+                        return false;
                     }
                 }
                 else
                 {
-                    Debug.WriteLine("new amount was less than zero");
+                    Debug.WriteLine("String name was empty");
+                    //Logic to save to logger
+                    return false;
                 }
             }
             else
             {
-                Debug.WriteLine("string name was null or empty");
+                Debug.WriteLine("String name was null");
+                //Logic to save to logger
+                return false;
             }
-            return false;
         }
 
         public bool UpdateEconomicObjectName(string oldName, string newName)
         {
-            if (!string.IsNullOrEmpty(newName))
+
+            if (newName != null && oldName != null)
             {
-                for (int i = 0; i < EconomicObjbectList.Count; i++)
+                if (newName != "" && oldName != "")
                 {
-                    if (EconomicObjbectList[i].Name == oldName)
+                    foreach(var ecoObj in EconomicObjectList)
                     {
-                        EconomicObjbectList[i].Name = newName;
-                        return true;
+                        if(ecoObj.Name.Contains(oldName))
+                        {
+                            ecoObj.Name = newName;
+                            return true;
+                        }
                     }
-                    else
-                    {
-                        Debug.WriteLine("Name does not exist in economic object list");
-                    }
+
+                    Debug.WriteLine("Name does not exist in economic object list");
+                    //Logic to save to logger
+                    return false;
+                }
+                else
+                {
+                    Debug.WriteLine("String name was empty");
+                    //Logic to save to logger
+                    return false;
                 }
             }
             else
             {
-                Debug.WriteLine("string oldName was null or empty");
+                Debug.WriteLine("String name was null");
+                //Logic to save to logger
+                return false;
             }
-            return false;
         }
     }
 }

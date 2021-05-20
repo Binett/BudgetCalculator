@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BudgetCalculator.Models;
+using BudgetCalculator.Controllers;
 
 namespace BudgetCalculator
 {
@@ -8,9 +9,9 @@ namespace BudgetCalculator
     {
         private List<EconomicObject> economicObjectList;
 
-        public Calculator(List<EconomicObject> list)
+        public Calculator(EconomicController ecoController)
         {
-            economicObjectList = list;
+            economicObjectList = ecoController.GetList;
         }
         
         public double GetTotalIncome()
@@ -36,7 +37,12 @@ namespace BudgetCalculator
                     totalExpenses += p.Amount;
                 }
             }
-            return totalExpenses;
+            if(totalExpenses < double.MaxValue)
+            {
+                return totalExpenses;
+            }
+
+            return 0;
         }
 
         public double GetTotalSaving()
