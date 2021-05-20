@@ -61,11 +61,16 @@ namespace BudgetCalculator
                     }
                 }
 
-                if (amountToSave > amountLeftAfterExpenses)
+                if (amountToSave < double.MaxValue)
                 {
-                      return Math.Round(amountLeftAfterExpenses * totalSaving, 2);
+                    if (amountToSave > amountLeftAfterExpenses)
+                    {
+                          return Math.Round(amountLeftAfterExpenses * totalSaving, 2);
+                    }
+                    return Math.Round(amountToSave, 2);
+
                 }
-                return Math.Round(amountToSave, 2);
+                return 0;
             }
             return 0;
         }

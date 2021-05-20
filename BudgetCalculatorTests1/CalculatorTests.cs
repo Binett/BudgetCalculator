@@ -90,7 +90,7 @@ namespace BudgetCalculator.Tests
         }
 
         [TestMethod()]
-        public void GetTotalSavingTest_MaxValue_ShouldReturnInfinity()
+        public void GetTotalSavingTest_MaxValue_ShouldReturnZero()
         {
             testSeeder.InitList();
             testSeeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, Double.MaxValue);
