@@ -59,7 +59,6 @@ namespace BudgetCalculator.Controllers
 
         public bool RemoveEconomicObjectFromList(string name)
         {
-
             if (name != null)
             {
                 if (name != "")
@@ -69,6 +68,7 @@ namespace BudgetCalculator.Controllers
                         if (ecoObj.Name.Contains(name))
                         {
                             EconomicObjectList.Remove(ecoObj);
+                          
                             return true;
                         }
                     }
