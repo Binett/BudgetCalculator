@@ -39,6 +39,12 @@ namespace BudgetCalculator
             return totalExpenses;
         }
 
+        /// <summary>
+        /// Method for calculating the sum of all savings.
+        /// If the reminding after all bills paid is less than the sum of savings,
+        /// the percentage of saving will be drawn from the reminding.
+        /// </summary>
+        /// <returns>the sum of all savinga</returns>
         public double GetTotalSaving()
         {
             if (IsMoreIncomeThanExpenses())
