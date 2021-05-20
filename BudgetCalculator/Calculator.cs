@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using BudgetCalculator.Models;
 
 namespace BudgetCalculator
@@ -13,7 +12,7 @@ namespace BudgetCalculator
         {
             economicObjectList = list;
         }
-        
+
         public double GetTotalIncome()
         {
             double totalIncomes = 0;
@@ -48,33 +47,22 @@ namespace BudgetCalculator
 
         public double GetRemainingBalance()
         {
-            try
+            if (IsMoreIncomeThanExpenses())
             {
-                if (IsMoreIncomeThanExpenses())
+                var totalSavings = 0d;
+                foreach (var p in economicObjectList)
                 {
-                    var totalSavings = 0d;
-                    foreach (var p in economicObjectList)
+                    if (p.Type == EconomicType.Saving)
                     {
-                        if (p.Type == EconomicType.Saving)
-                        {
-                            totalSavings += p.Amount;
-                        }
-                    }
-
-                    var remainingBalance = GetTotalIncome() - GetTotalExpenses() - totalSavings;
-                    if (remainingBalance > 0)
-                    {
-                        return remainingBalance;
+                        totalSavings += p.Amount;
                     }
                 }
-            }
-            catch (NullReferenceException e)
-            {
-                Debug.WriteLine(e.Message);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
+
+                var remainingBalance = GetTotalIncome() - GetTotalExpenses() - totalSavings;
+                if (remainingBalance > 0 && remainingBalance < double.MaxValue)
+                {
+                    return remainingBalance;
+                }
             }
 
             return 0;
