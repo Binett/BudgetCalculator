@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BudgetCalculator.Models;
+using BudgetCalculator.Controllers;
 
 namespace BudgetCalculator
 {
@@ -8,9 +9,9 @@ namespace BudgetCalculator
     {
         private List<EconomicObject> economicObjectList;
 
-        public Calculator(List<EconomicObject> list)
+        public Calculator(EconomicController ecoController)
         {
-            economicObjectList = list;
+            economicObjectList = ecoController.GetList;
         }
         
         public double GetTotalIncome()

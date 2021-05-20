@@ -35,7 +35,7 @@ namespace BudgetCalculator.Tests
         public void GetTotalExpenses_Pass_ShouldReturnSum_3599()
         {
             testSeeder.InitList();
-            calc = new Calculator(testSeeder.ecoController.GetList);
+            calc = new Calculator(testSeeder.ecoController);
 
             var expected = 3599;
             var actual = calc.GetTotalExpenses();
@@ -47,7 +47,7 @@ namespace BudgetCalculator.Tests
         {
             testSeeder.InitList();
             testSeeder.ecoController.UpdateEconomicObjectAmount("Food", 999999);
-            calc = new Calculator(testSeeder.ecoController.GetList);
+            calc = new Calculator(testSeeder.ecoController);
 
             var expected = 3599;
             var actual = calc.GetTotalExpenses();
