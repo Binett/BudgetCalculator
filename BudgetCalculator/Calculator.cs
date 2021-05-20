@@ -81,22 +81,16 @@ namespace BudgetCalculator
             return 0;
         }
 
-
+        /// <summary>
+        /// Calculates the remaining balance when all expenses has been made
+        /// </summary>
+        /// <returns>double, remaining balance</returns>
         public double GetRemainingBalance()
         {
             if (IsMoreIncomeThanExpenses())
             {
-                var totalSavings = 0d;
-                foreach (var p in economicObjectList)
-                {
-                    if (p.Type == EconomicType.Saving)
-                    {
-                        totalSavings += p.Amount;
-                    }
-                }
-
-                var remainingBalance = GetTotalIncome() - GetTotalExpenses() - totalSavings;
-                if (remainingBalance > 0 && remainingBalance < double.MaxValue)
+                var remainingBalance = GetTotalIncome() - GetTotalExpenses() - GetTotalSaving();
+                if (remainingBalance > 0)
                 {
                     return remainingBalance;
                 }
