@@ -7,7 +7,7 @@ namespace BudgetCalculator
 {
     public class Calculator
     {
-        private List<EconomicOjbect> economicObjectList;
+        private List<EconomicObject> economicObjectList;
 
         public Calculator(EconomicController ecoController)
         {

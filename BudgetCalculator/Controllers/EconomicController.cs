@@ -10,14 +10,14 @@ namespace BudgetCalculator.Controllers
     /// </summary>
     public class EconomicController
     {
-        private List<EconomicOjbect> EconomicObjectList;
+        private List<EconomicObject> EconomicObjectList;
 
         public EconomicController()
         {
-            EconomicObjectList = new List<EconomicOjbect>();
+            EconomicObjectList = new List<EconomicObject>();
         }
 
-        public List<EconomicOjbect> GetList => EconomicObjectList;
+        public List<EconomicObject> GetList => EconomicObjectList;
 
         public bool AddEconomicObjectToList(string name, EconomicType type, double amount)
         {
@@ -25,7 +25,7 @@ namespace BudgetCalculator.Controllers
             {
                 if (amount > 0)
                 {
-                    EconomicObjectList.Add(new EconomicOjbect
+                    EconomicObjectList.Add(new EconomicObject
                     {
                         Name = name,
                         Type = type,
