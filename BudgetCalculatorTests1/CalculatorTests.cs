@@ -55,23 +55,36 @@ namespace BudgetCalculator.Tests
         }
 
         [TestMethod()]
-        public void GetTotalSavingTest_Positive_ShouldReturnSum()
+        public void GetTotalSavingTest_PositiveAmount_ShouldReturnSum()
         {
             testSeeder.InitList();
+            testSeeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, 0.15);
             calc = new Calculator(testSeeder.ecoController.GetList);
-            var expected = 1400;
+            var expected = 3500;
             var actual = calc.GetTotalSaving();
             Assert.AreEqual(expected,actual);
         }
 
         [TestMethod()]
-        public void GetTotalSavingTest_Negative_ShouldReturnZero()
+        public void GetTotalSavingTest_NegativeAmount_ShouldReturnZero()
         {
             testSeeder.InitList();
-            testSeeder.ecoController.UpdateEconomicObjectAmount("Savings", 1.1);
+            testSeeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, -0.15);
             calc = new Calculator(testSeeder.ecoController.GetList);
 
-            var expected = 4200;
+            var expected = 1400;
+            var actual = calc.GetTotalSaving();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void GetTotalSavingTest_Null_ShouldReturnZero()
+        {
+            testSeeder.InitList();
+            testSeeder.ecoController.AddEconomicObjectToList(null, EconomicType.Saving, 0.15);
+            calc = new Calculator(testSeeder.ecoController.GetList);
+
+            var expected = 1400;
             var actual = calc.GetTotalSaving();
             Assert.AreEqual(expected, actual);
         }
