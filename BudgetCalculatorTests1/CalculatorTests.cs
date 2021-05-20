@@ -78,18 +78,6 @@ namespace BudgetCalculator.Tests
         }
 
         [TestMethod()]
-        public void GetTotalSavingTest_Null_ShouldReturnZero()
-        {
-            testSeeder.InitList();
-            testSeeder.ecoController.AddEconomicObjectToList(null, EconomicType.Saving, 0.15);
-            calc = new Calculator(testSeeder.ecoController);
-
-            var expected = 1400;
-            var actual = calc.GetTotalSaving();
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod()]
         public void GetTotalSavingTest_MaxValue_ShouldReturnZero()
         {
             testSeeder.InitList();
