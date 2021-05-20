@@ -37,7 +37,12 @@ namespace BudgetCalculator
                     totalExpenses += p.Amount;
                 }
             }
-            return totalExpenses;
+            if(totalExpenses < double.MaxValue)
+            {
+                return totalExpenses;
+            }
+
+            return 0;
         }
 
         public double GetTotalSaving()
