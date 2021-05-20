@@ -10,14 +10,14 @@ namespace BudgetCalculator.Controllers
     /// </summary>
     public class EconomicController
     {
-        private List<EconomicOjbect> EconomicOjbectList;
+        private List<EconomicOjbect> EconomicObjectList;
 
         public EconomicController()
         {
-            EconomicOjbectList = new List<EconomicOjbect>();
+            EconomicObjectList = new List<EconomicOjbect>();
         }
 
-        public List<EconomicOjbect> GetList => EconomicOjbectList;
+        public List<EconomicOjbect> GetList => EconomicObjectList;
 
         public bool AddEconomicObjectToList(string name, EconomicType type, double amount)
         {
@@ -25,7 +25,7 @@ namespace BudgetCalculator.Controllers
             {
                 if (amount > 0)
                 {
-                    EconomicOjbectList.Add(new EconomicOjbect
+                    EconomicObjectList.Add(new EconomicOjbect
                     {
                         Name = name,
                         Type = type,
@@ -57,11 +57,11 @@ namespace BudgetCalculator.Controllers
             {
                 if(newAmount > 0)
                 {
-                    for (int i = 0; i < EconomicOjbectList.Count; i++)
+                    for (int i = 0; i < EconomicObjectList.Count; i++)
                     {
-                        if(EconomicOjbectList[i].Name == name)
+                        if(EconomicObjectList[i].Name == name)
                         {
-                            EconomicOjbectList[i].Amount = newAmount;
+                            EconomicObjectList[i].Amount = newAmount;
                             return true;
                         }
                         else 
@@ -86,11 +86,11 @@ namespace BudgetCalculator.Controllers
         {
             if (!string.IsNullOrEmpty(newName))
             {
-                for (int i = 0; i < EconomicOjbectList.Count; i++)
+                for (int i = 0; i < EconomicObjectList.Count; i++)
                 {
-                    if (EconomicOjbectList[i].Name == oldName)
+                    if (EconomicObjectList[i].Name == oldName)
                     {
-                        EconomicOjbectList[i].Name = newName;
+                        EconomicObjectList[i].Name = newName;
                         return true;
                     }
                     else
