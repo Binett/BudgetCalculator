@@ -35,7 +35,7 @@ namespace BudgetCalculator.Tests
         public void GetTotalExpenses_Pass_ShouldReturnSum_3599()
         {
             testSeeder.InitList();
-            calc = new Calculator(testSeeder.ecoController.GetList);
+            calc = new Calculator(testSeeder.ecoController);
 
             var expected = 3599;
             var actual = calc.GetTotalExpenses();
@@ -47,7 +47,7 @@ namespace BudgetCalculator.Tests
         {
             testSeeder.InitList();
             testSeeder.ecoController.UpdateEconomicObjectAmount("Food", 999999);
-            calc = new Calculator(testSeeder.ecoController.GetList);
+            calc = new Calculator(testSeeder.ecoController);
 
             var expected = 3599;
             var actual = calc.GetTotalExpenses();
@@ -59,7 +59,7 @@ namespace BudgetCalculator.Tests
         {
             testSeeder.InitList();
             testSeeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, 0.15);
-            calc = new Calculator(testSeeder.ecoController.GetList);
+            calc = new Calculator(testSeeder.ecoController);
             var expected = 3500;
             var actual = calc.GetTotalSaving();
             Assert.AreEqual(expected,actual);
@@ -70,7 +70,7 @@ namespace BudgetCalculator.Tests
         {
             testSeeder.InitList();
             testSeeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, -0.15);
-            calc = new Calculator(testSeeder.ecoController.GetList);
+            calc = new Calculator(testSeeder.ecoController);
 
             var expected = 1400;
             var actual = calc.GetTotalSaving();
@@ -82,7 +82,7 @@ namespace BudgetCalculator.Tests
         {
             testSeeder.InitList();
             testSeeder.ecoController.AddEconomicObjectToList(null, EconomicType.Saving, 0.15);
-            calc = new Calculator(testSeeder.ecoController.GetList);
+            calc = new Calculator(testSeeder.ecoController);
 
             var expected = 1400;
             var actual = calc.GetTotalSaving();
