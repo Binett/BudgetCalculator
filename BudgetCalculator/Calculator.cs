@@ -109,20 +109,104 @@ namespace BudgetCalculator
         /// Calculates the remaining balance when all expenses has been made
         /// </summary>
         /// <returns>double, remaining balance</returns>
-        public double GetRemainingBalance()
+        public double GetRemainingBalance(out List<EconomicObject> PaidExpenses, out List<EconomicObject> UnpaidExpenses)
         {
+            
+            PaidExpenses = GetPaidExpenses();
+            UnpaidExpenses = GetUnpaidExpenses();
+
             if (IsMoreIncomeThanExpenses())
             {
-
                 var remainingBalance = GetTotalIncome() - GetTotalExpenses() - GetTotalSaving();
                 if (remainingBalance > 0)
                 {
                     return remainingBalance;
                 }
-
+            }
+            else
+            {
+                Debug.WriteLine("Expenses exceed income");
             }
 
             return 0;
+        }
+
+        /// <summary>
+        /// Checks when the total income is exceeded and adds seperate object to list when it does not exceed income
+        /// </summary>
+        /// <returns>list of economic objects</returns>
+        private List<EconomicObject> GetPaidExpenses()
+        {
+            var listOfPaidExpenses = new List<EconomicObject>();
+
+            var income = GetTotalIncome();
+            var expenses = 0d;
+            var amountSavings = 0d;
+            foreach (var ecoObj in economicObjectList)
+            {
+                if (ecoObj.Type == EconomicType.Expense)
+                {
+                    expenses += ecoObj.Amount;
+
+                    if (expenses > income)
+                    {
+                        Debug.WriteLine("expense exceeds income");
+                        break;
+                    }
+
+                    listOfPaidExpenses.Add(ecoObj);
+                }
+                if(ecoObj.Type == EconomicType.Saving)
+                {
+                    amountSavings = ecoObj.Amount * income;
+                    expenses += amountSavings;
+                    if(expenses > income)
+                    {
+                        Debug.WriteLine("savings exceeds income");
+                        break;
+                    }
+
+                    listOfPaidExpenses.Add(ecoObj);
+                }
+            }
+
+            return listOfPaidExpenses;
+        }
+
+        /// <summary>
+        /// Checks when total income is exceeded, when it is, it'll will add the exceeding expenses to list
+        /// </summary>
+        /// <returns>list of economic objects</returns>
+        private List<EconomicObject> GetUnpaidExpenses()
+        {
+            var listUnpaidExpenses = new List<EconomicObject>();
+
+            var income = GetTotalIncome();
+            var expenses = 0d;
+            var amountSavings = 0d;
+
+            foreach (var ecoObj in economicObjectList)
+            {
+                if (ecoObj.Type == EconomicType.Expense)
+                {
+                    expenses += ecoObj.Amount;
+                    if (income < expenses)
+                    {
+                        listUnpaidExpenses.Add(ecoObj);
+                    }
+                }
+                if(ecoObj.Type == EconomicType.Saving)
+                {
+                    amountSavings = ecoObj.Amount * income;
+                    expenses += amountSavings;
+                    if(income < expenses)
+                    {
+                        listUnpaidExpenses.Add(ecoObj);
+                    }
+                }
+            }
+
+            return listUnpaidExpenses;
         }
 
         /// <summary>
