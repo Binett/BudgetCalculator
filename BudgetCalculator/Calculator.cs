@@ -86,9 +86,9 @@ namespace BudgetCalculator
         }
 
         /// <summary>
-        /// Check if the sum of income are more than the sum of expenses.
+        /// Check if the sum of income is more than the sum of expenses.
         /// </summary>
-        /// <returns>true if income is than expenses</returns>
+        /// <returns>true if income is more than expenses</returns>
         private bool IsMoreIncomeThanExpenses() => GetTotalIncome() > GetTotalExpenses();
     }
 }
