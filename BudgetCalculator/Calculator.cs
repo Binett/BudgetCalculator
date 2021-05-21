@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using BudgetCalculator.Controllers;
 using BudgetCalculator.Models;
-using BudgetCalculator.Controllers;
+
 
 namespace BudgetCalculator
 {
@@ -15,6 +15,11 @@ namespace BudgetCalculator
             economicObjectList = ecoController.GetList;
         }
 
+
+        /// <summary>
+        /// Method that calculates the total sum of incomes 
+        /// </summary>
+        /// <returns>the sum of all incomes</returns>
         public double GetTotalIncome()
         {
             double totalIncomes = 0;
@@ -25,7 +30,12 @@ namespace BudgetCalculator
                     totalIncomes += p.Amount;
                 }
             }
-            return totalIncomes;
+            if (totalIncomes < double.MaxValue)
+            {
+                return totalIncomes;
+            }
+
+            return 0;
         }
 
         public double GetTotalExpenses()
@@ -38,7 +48,7 @@ namespace BudgetCalculator
                     totalExpenses += p.Amount;
                 }
             }
-            if(totalExpenses < double.MaxValue)
+            if (totalExpenses < double.MaxValue)
             {
                 return totalExpenses;
             }
@@ -71,7 +81,7 @@ namespace BudgetCalculator
                 {
                     if (amountToSave > amountLeftAfterExpenses)
                     {
-                          return Math.Round(amountLeftAfterExpenses * totalSaving, 2);
+                        return Math.Round(amountLeftAfterExpenses * totalSaving, 2);
                     }
                     return Math.Round(amountToSave, 2);
 
@@ -89,11 +99,13 @@ namespace BudgetCalculator
         {
             if (IsMoreIncomeThanExpenses())
             {
+
                 var remainingBalance = GetTotalIncome() - GetTotalExpenses() - GetTotalSaving();
                 if (remainingBalance > 0)
                 {
                     return remainingBalance;
                 }
+
             }
 
             return 0;

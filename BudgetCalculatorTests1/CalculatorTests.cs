@@ -37,6 +37,18 @@ namespace BudgetCalculator.Tests
         }
 
         [TestMethod()]
+        public void GetTotalIncomeTest_DoubleMaxValue_ShouldReturnZero()
+        {
+            testSeeder.InitList();
+            calc = new Calculator(testSeeder.ecoController);
+            testSeeder.ecoController.UpdateEconomicObjectAmount("Salary", double.MaxValue);
+
+            var expected = 0;
+            var actual = calc.GetTotalIncome();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
         public void GetTotalExpenses_Pass_ShouldReturnSum_3599()
         {
             testSeeder.InitList();
