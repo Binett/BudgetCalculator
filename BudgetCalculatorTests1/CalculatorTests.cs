@@ -54,7 +54,6 @@ namespace BudgetCalculator.Tests
         {
             seeder.InitList();
             calc = new Calculator(seeder.ecoController);
-            seeder.ecoController.UpdateEconomicObjectAmount("Food", double.MaxValue);
             var expected = 3599;
             var actual = calc.GetTotalExpenses();
             Assert.AreEqual(expected, actual);
