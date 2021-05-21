@@ -14,7 +14,7 @@ namespace BudgetCalculator
         {
             economicObjectList = ecoController.GetList;
         }
-        
+
         public double GetTotalIncome()
         {
             double totalIncomes = 0;
@@ -81,14 +81,22 @@ namespace BudgetCalculator
             return 0;
         }
 
-
+        /// <summary>
+        /// Calculates the remaining balance when all expenses has been made
+        /// </summary>
+        /// <returns>double, remaining balance</returns>
         public double GetRemainingBalance()
         {
-            if(IsMoreIncomeThanExpenses())
+            if (IsMoreIncomeThanExpenses())
             {
-                
+                var remainingBalance = GetTotalIncome() - GetTotalExpenses() - GetTotalSaving();
+                if (remainingBalance > 0)
+                {
+                    return remainingBalance;
+                }
             }
-            throw new NotImplementedException();
+
+            return 0;
         }
 
         /// <summary>
