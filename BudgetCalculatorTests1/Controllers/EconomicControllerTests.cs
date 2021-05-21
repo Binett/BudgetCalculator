@@ -43,12 +43,20 @@ namespace BudgetCalculator.Controllers.Tests
         [TestMethod()]
         public void AddEconomicObjectToList_Pass_ShouldReturnTrue()
         {
-            var actual = ecoController.AddEconomicObjectToList("Salary", EconomicType.Income, 200);
+            var actual = ecoController.AddEconomicObjectToList("Salad", EconomicType.Income, 200);
             var expected = true;
 
             Assert.AreEqual(expected, actual);
         }
 
+        [TestMethod()]
+        public void AddEconomicObjectToList_PassNameThatExist_ShouldReturnFalse()
+        {
+            var actual = ecoController.AddEconomicObjectToList("Salary", EconomicType.Expense, 200);
+            var expected = false;
+
+            Assert.AreEqual(expected, actual);
+        }
 
         [TestMethod()]
         [DataRow(null, false)]
