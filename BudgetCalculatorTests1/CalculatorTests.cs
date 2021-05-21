@@ -15,7 +15,6 @@ namespace BudgetCalculator.Tests
     public class    CalculatorTests
     {
         Calculator calc;
-        EconomicController ecoController;
         TestSeeder seeder;
 
         [TestInitialize]
