@@ -119,9 +119,27 @@ namespace BudgetCalculator.Tests
         }
 
         [TestMethod()]
-        public void GetRemainingBalanceTest()
+        public void GetRemainingBalanceTest_Pass_ShouldReturnSum()
         {
-            Assert.Fail();
+            testSeeder.InitList();
+            calc = new Calculator(testSeeder.ecoController);
+
+            var expected = 9001;
+            var actual = calc.GetRemainingBalance();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void GetRemainingBalanceTest_Fail_ShouldReturnZero()
+        {
+            testSeeder.InitList();
+            testSeeder.ecoController.UpdateEconomicObjectAmount("Salary", 10000);
+            testSeeder.ecoController.UpdateEconomicObjectAmount("Food", 8500);
+            calc = new Calculator(testSeeder.ecoController);
+
+            var expected = 0;
+            var actual = calc.GetRemainingBalance();
+            Assert.AreEqual(expected, actual);
         }
     }
 }
