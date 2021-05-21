@@ -57,6 +57,7 @@ namespace BudgetCalculator
             return 0;
         }
 
+
         /// <summary>
         /// Method for calculating the sum of all savings.
         /// If the reminding after all bills paid is less than the sum of savings,
@@ -113,7 +114,7 @@ namespace BudgetCalculator
         {
             if (IsMoreIncomeThanExpenses())
             {
-
+                
                 var remainingBalance = GetTotalIncome() - GetTotalExpenses() - GetTotalSaving();
                 if (remainingBalance > 0)
                 {

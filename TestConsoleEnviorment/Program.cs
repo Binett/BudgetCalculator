@@ -29,8 +29,6 @@ namespace TestConsoleEnviorment
 
             writer.WriteReportToFile(report);
 
-            
-
             Console.WriteLine(report);
         }
     }
