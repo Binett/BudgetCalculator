@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using BudgetCalculator.Controllers;
 using BudgetCalculator.Models;
-using BudgetCalculator.Controllers;
 
 namespace BudgetCalculator
 {
@@ -56,27 +56,38 @@ namespace BudgetCalculator
         {
             if (IsMoreIncomeThanExpenses())
             {
-                double amountLeftAfterExpenses = GetTotalIncome() - GetTotalExpenses();
-                double totalSaving = 0;
-                double amountToSave = 0;
+                var amountLeftAfterExpenses = GetTotalIncome() - GetTotalExpenses();
+                var totalAmountToSaving = 0.00;
+                var amountToSave = 0.00;
                 foreach (var p in economicObjectList)
                 {
-                    if (p.Type == EconomicType.Saving)
-                    {
-                        amountToSave = GetTotalIncome() * (totalSaving += p.Amount);
-                    }
+                        if (p.Type == EconomicType.Saving)
+                        {
+                            amountToSave = GetTotalIncome() * p.Amount;
+                            amountLeftAfterExpenses -= amountToSave;
+                            if (amountLeftAfterExpenses > totalAmountToSaving)
+                            {
+                                totalAmountToSaving += amountToSave;
+                            }
+                            else
+                            {
+                                //Log the savings which can't be done
+                                Debug.WriteLine($"Saving {p.Name} can't be done");
+                            }
+                        }
                 }
+                return totalAmountToSaving;
 
-                if (amountToSave < double.MaxValue)
-                {
-                    if (amountToSave > amountLeftAfterExpenses)
-                    {
-                          return Math.Round(amountLeftAfterExpenses * totalSaving, 2);
-                    }
-                    return Math.Round(amountToSave, 2);
+                //if (amountToSave < double.MaxValue)
+                //{
+                //    if (amountToSave > amountLeftAfterExpenses)
+                //    {
+                //          return Math.Round(amountLeftAfterExpenses * totalSaving, 2);
+                //    }
+                //    return Math.Round(amountToSave, 2);
 
-                }
-                return 0;
+                //}
+                //return 0;
             }
             return 0;
         }

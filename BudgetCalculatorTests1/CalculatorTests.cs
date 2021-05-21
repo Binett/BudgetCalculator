@@ -76,6 +76,7 @@ namespace BudgetCalculator.Tests
         {
             testSeeder.InitList();
             testSeeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, 0.15);
+            testSeeder.ecoController.AddEconomicObjectToList("Pension", EconomicType.Saving, 0.8);
             calc = new Calculator(testSeeder.ecoController);
             var expected = 3500;
             var actual = calc.GetTotalSaving();
