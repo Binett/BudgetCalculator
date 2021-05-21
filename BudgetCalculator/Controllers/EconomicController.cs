@@ -168,5 +168,10 @@ namespace BudgetCalculator.Controllers
                 return false;
             }
         }
+
+        private bool CheckValidString(string check)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -12,7 +12,7 @@ using BudgetCalculatorTests1.Seeder;
 namespace BudgetCalculator.Tests
 {
     [TestClass()]
-    public class CalculatorTests
+    public class    CalculatorTests
     {
         Calculator calc;
         EconomicController ecoController;
@@ -49,7 +49,7 @@ namespace BudgetCalculator.Tests
         }
 
         [TestMethod()]
-        public void GetTotalExpenses_Pass_ShouldReturnSum_3599()
+        public void GetTotalExpenses_PassValidSum_ShouldReturnSum_3599()
         {
             testSeeder.InitList();
             calc = new Calculator(testSeeder.ecoController);
@@ -65,21 +65,9 @@ namespace BudgetCalculator.Tests
             testSeeder.InitList();
             calc = new Calculator(testSeeder.ecoController);
             testSeeder.ecoController.UpdateEconomicObjectAmount("Food", double.MaxValue);
-            var expected = 3599;
+            var expected = 0;
             var actual = calc.GetTotalExpenses();
 
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod()]
-        public void GetTotalExpensesTest_Fail_Should()
-        {
-            testSeeder.InitList();
-            testSeeder.ecoController.UpdateEconomicObjectAmount("Food", 999999);
-            calc = new Calculator(testSeeder.ecoController);
-
-            var expected = 3599;
-            var actual = calc.GetTotalExpenses();
             Assert.AreEqual(expected, actual);
         }
 
