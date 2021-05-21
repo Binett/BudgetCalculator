@@ -109,25 +109,23 @@ namespace BudgetCalculator
         /// Calculates the remaining balance when all expenses has been made
         /// </summary>
         /// <returns>double, remaining balance</returns>
-        public double GetRemainingBalance(out List<EconomicObject> PaidExpenses, out List<EconomicObject> UnpaidExpenses)
+        public double GetRemainingBalance()
         {
-            
-            PaidExpenses = GetPaidExpenses();
-            UnpaidExpenses = GetUnpaidExpenses();
-
             if (IsMoreIncomeThanExpenses())
             {
-                var remainingBalance = GetTotalIncome() - GetTotalExpenses() - GetTotalSaving();
-                if (remainingBalance > 0)
+                var income = GetTotalIncome();
+                var expenses = GetTotalExpenses();
+                var savings = GetTotalSaving();
+
+                var remainingBalance = income - expenses;
+                if (remainingBalance > savings)
                 {
+                    remainingBalance -= savings;
                     return remainingBalance;
                 }
             }
-            else
-            {
-                Debug.WriteLine("Expenses exceed income");
-            }
 
+            Debug.WriteLine("Expenses exceed income");
             return 0;
         }
 
@@ -135,7 +133,7 @@ namespace BudgetCalculator
         /// Checks when the total income is exceeded and adds seperate object to list when it does not exceed income
         /// </summary>
         /// <returns>list of economic objects</returns>
-        private List<EconomicObject> GetPaidExpenses()
+        private List<EconomicObject> GetPaidExpensesList()
         {
             var listOfPaidExpenses = new List<EconomicObject>();
 
@@ -177,7 +175,7 @@ namespace BudgetCalculator
         /// Checks when total income is exceeded, when it is, it'll will add the exceeding expenses to list
         /// </summary>
         /// <returns>list of economic objects</returns>
-        private List<EconomicObject> GetUnpaidExpenses()
+        private List<EconomicObject> GetUnpaidExpensesList()
         {
             var listUnpaidExpenses = new List<EconomicObject>();
 
@@ -214,5 +212,6 @@ namespace BudgetCalculator
         /// </summary>
         /// <returns>true if income is more than expenses</returns>
         private bool IsMoreIncomeThanExpenses() => GetTotalIncome() > GetTotalExpenses();
+
     }
 }
