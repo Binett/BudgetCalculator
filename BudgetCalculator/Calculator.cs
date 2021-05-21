@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using BudgetCalculator.Controllers;
 using BudgetCalculator.Models;
 
@@ -66,27 +67,40 @@ namespace BudgetCalculator
         {
             if (IsMoreIncomeThanExpenses())
             {
-                double amountLeftAfterExpenses = GetTotalIncome() - GetTotalExpenses();
-                double totalSaving = 0;
-                double amountToSave = 0;
+                var amountLeftAfterExpenses = GetTotalIncome() - GetTotalExpenses();
+                var totalAmountToSaving = 0.00;
+                var amountToSave = 0.00;
                 foreach (var p in economicObjectList)
                 {
-                    if (p.Type == EconomicType.Saving)
-                    {
-                        amountToSave = GetTotalIncome() * (totalSaving += p.Amount);
-                    }
+                        if (p.Type == EconomicType.Saving)
+                        {
+                            amountToSave = GetTotalIncome() * p.Amount;
+                            amountLeftAfterExpenses -= amountToSave;
+                            if (amountLeftAfterExpenses > totalAmountToSaving)
+                            {
+                                totalAmountToSaving += amountToSave;
+                            }
+                            else
+                            {
+                                //Log the savings which can't be done
+                                Debug.WriteLine($"Saving {p.Name} can't be done");
+                            }
+                        }
                 }
+                return totalAmountToSaving;
 
-                if (amountToSave < double.MaxValue)
-                {
-                    if (amountToSave > amountLeftAfterExpenses)
-                    {
-                        return Math.Round(amountLeftAfterExpenses * totalSaving, 2);
-                    }
-                    return Math.Round(amountToSave, 2);
 
-                }
-                return 0;
+                //if (amountToSave < double.MaxValue)
+                //{
+                //    if (amountToSave > amountLeftAfterExpenses)
+                //    {
+                //          return Math.Round(amountLeftAfterExpenses * totalSaving, 2);
+                //    }
+                //    return Math.Round(amountToSave, 2);
+
+
+                //}
+                //return 0;
             }
             return 0;
         }
@@ -112,9 +126,9 @@ namespace BudgetCalculator
         }
 
         /// <summary>
-        /// Check if the sum of income are more than the sum of expenses.
+        /// Check if the sum of income is more than the sum of expenses.
         /// </summary>
-        /// <returns>true if income is than expenses</returns>
+        /// <returns>true if income is more than expenses</returns>
         private bool IsMoreIncomeThanExpenses() => GetTotalIncome() > GetTotalExpenses();
     }
 }

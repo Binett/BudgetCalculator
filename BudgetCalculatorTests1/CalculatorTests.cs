@@ -15,6 +15,7 @@ namespace BudgetCalculator.Tests
     public class    CalculatorTests
     {
         Calculator calc;
+        EconomicController ecoController;
         TestSeeder seeder;
 
         [TestInitialize]
@@ -42,6 +43,7 @@ namespace BudgetCalculator.Tests
             calc = new Calculator(seeder.ecoController);
             seeder.ecoController.UpdateEconomicObjectAmount("Salary", double.MaxValue);
 
+
             var expected = 0;
             var actual = calc.GetTotalIncome();
             Assert.AreEqual(expected, actual);
@@ -52,7 +54,7 @@ namespace BudgetCalculator.Tests
         {
             seeder.InitList();
             calc = new Calculator(seeder.ecoController);
-
+            seeder.ecoController.UpdateEconomicObjectAmount("Food", double.MaxValue);
             var expected = 3599;
             var actual = calc.GetTotalExpenses();
             Assert.AreEqual(expected, actual);
@@ -75,6 +77,7 @@ namespace BudgetCalculator.Tests
         {
             seeder.InitList();
             seeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, 0.15);
+            seeder.ecoController.AddEconomicObjectToList("Pension", EconomicType.Saving, 0.8);
             calc = new Calculator(seeder.ecoController);
             var expected = 3500;
             var actual = calc.GetTotalSaving();
@@ -97,7 +100,8 @@ namespace BudgetCalculator.Tests
         public void GetTotalSavingTest_MaxValue_ShouldReturnZero()
         {
             seeder.InitList();
-            seeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, Double.MaxValue);
+            //testSeeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, Double.MaxValue);
+            seeder.ecoController.UpdateEconomicObjectAmount("Saving", double.MaxValue);
             calc = new Calculator(seeder.ecoController);
 
             var expected = 0;
