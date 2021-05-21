@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BudgetCalculator.Models
 {
-    public class EconomicOjbect
+    public class EconomicObject
     {
         public EconomicType Type { get; set; }
         public string Name { get; set; }

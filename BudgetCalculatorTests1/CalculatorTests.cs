@@ -26,19 +26,36 @@ namespace BudgetCalculator.Tests
         }
 
         [TestMethod()]
-        public void GetTotalIncomeTest()
+        public void GetTotalIncomeTest_Pass_ShouldReturnSum_14000() 
         {
-            Assert.Fail();
+            testSeeder.InitList();
+            calc = new Calculator(testSeeder.ecoController);
+
+            var expected = 14000;
+            var actual = calc.GetTotalIncome();
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod()]
         public void GetTotalExpenses_Pass_ShouldReturnSum_3599()
         {
             testSeeder.InitList();
-            calc = new Calculator(testSeeder.ecoController.GetList);
+            calc = new Calculator(testSeeder.ecoController);
 
             var expected = 3599;
             var actual = calc.GetTotalExpenses();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void GetTotalExpenses_PassDoubleMaxValue_ShouldReturnZero()
+        {
+            testSeeder.InitList();
+            calc = new Calculator(testSeeder.ecoController);
+            testSeeder.ecoController.UpdateEconomicObjectAmount("Food", double.MaxValue);
+            var expected = 3599;
+            var actual = calc.GetTotalExpenses();
+
             Assert.AreEqual(expected, actual);
         }
 
@@ -47,7 +64,7 @@ namespace BudgetCalculator.Tests
         {
             testSeeder.InitList();
             testSeeder.ecoController.UpdateEconomicObjectAmount("Food", 999999);
-            calc = new Calculator(testSeeder.ecoController.GetList);
+            calc = new Calculator(testSeeder.ecoController);
 
             var expected = 3599;
             var actual = calc.GetTotalExpenses();
@@ -55,15 +72,62 @@ namespace BudgetCalculator.Tests
         }
 
         [TestMethod()]
-        public void GetTotalSavingTest()
+        public void GetTotalSavingTest_PositiveAmount_ShouldReturnSum()
         {
-            Assert.Fail();
+            testSeeder.InitList();
+            testSeeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, 0.15);
+            calc = new Calculator(testSeeder.ecoController);
+            var expected = 3500;
+            var actual = calc.GetTotalSaving();
+            Assert.AreEqual(expected,actual);
         }
 
         [TestMethod()]
-        public void GetRemainingBalanceTest()
+        public void GetTotalSavingTest_NegativeAmount_ShouldReturnZero()
         {
-            Assert.Fail();
+            testSeeder.InitList();
+            testSeeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, -0.15);
+            calc = new Calculator(testSeeder.ecoController);
+
+            var expected = 1400;
+            var actual = calc.GetTotalSaving();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void GetTotalSavingTest_MaxValue_ShouldReturnZero()
+        {
+            testSeeder.InitList();
+            testSeeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, Double.MaxValue);
+            calc = new Calculator(testSeeder.ecoController);
+
+            var expected = 0;
+            var actual = calc.GetTotalSaving();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void GetRemainingBalanceTest_Pass_ShouldReturnSum()
+        {
+            testSeeder.InitList();
+            calc = new Calculator(testSeeder.ecoController);
+
+            var expected = 9001;
+            var actual = calc.GetRemainingBalance();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void GetRemainingBalanceTest_Fail_ShouldReturnZero()
+        {
+            testSeeder.InitList();
+            testSeeder.ecoController.UpdateEconomicObjectAmount("Salary", 10000);
+            testSeeder.ecoController.UpdateEconomicObjectAmount("Food", 8500);
+            calc = new Calculator(testSeeder.ecoController);
+
+            var expected = 0;
+            var actual = calc.GetRemainingBalance();
+            Assert.AreEqual(expected, actual);
         }
     }
 }
