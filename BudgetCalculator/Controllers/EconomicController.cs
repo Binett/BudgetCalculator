@@ -12,11 +12,13 @@ namespace BudgetCalculator.Controllers
     public class EconomicController
     {
         private List<EconomicObject> EconomicObjectList;
+        private List<string> errorLog;
 
         #region Public Methods
         public EconomicController()
         {
             EconomicObjectList = new List<EconomicObject>();
+            errorLog = new List<string>();
         }
 
         public List<EconomicObject> GetList => EconomicObjectList;
@@ -69,8 +71,7 @@ namespace BudgetCalculator.Controllers
                 }
             }
 
-            return false;
-                
+            return false;  
         }
 
         public bool UpdateEconomicObjectName(string oldName, string newName)
