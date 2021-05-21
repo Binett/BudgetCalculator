@@ -102,7 +102,7 @@ namespace BudgetCalculator.Tests
             testSeeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, Double.MaxValue);
             calc = new Calculator(testSeeder.ecoController);
 
-            var expected = 0;
+            var expected = 1400;
             var actual = calc.GetTotalSaving();
             Assert.AreEqual(expected, actual);
         }
