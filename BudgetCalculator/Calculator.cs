@@ -4,6 +4,7 @@ using System.Diagnostics;
 using BudgetCalculator.Controllers;
 using BudgetCalculator.Models;
 
+
 namespace BudgetCalculator
 {
     public class Calculator
@@ -14,7 +15,12 @@ namespace BudgetCalculator
         {
             economicObjectList = ecoController.GetList;
         }
-        
+
+
+        /// <summary>
+        /// Method that calculates the total sum of incomes 
+        /// </summary>
+        /// <returns>the sum of all incomes</returns>
         public double GetTotalIncome()
         {
             double totalIncomes = 0;
@@ -25,7 +31,12 @@ namespace BudgetCalculator
                     totalIncomes += p.Amount;
                 }
             }
-            return totalIncomes;
+            if (totalIncomes < double.MaxValue)
+            {
+                return totalIncomes;
+            }
+
+            return 0;
         }
 
         public double GetTotalExpenses()
@@ -38,7 +49,7 @@ namespace BudgetCalculator
                     totalExpenses += p.Amount;
                 }
             }
-            if(totalExpenses < double.MaxValue)
+            if (totalExpenses < double.MaxValue)
             {
                 return totalExpenses;
             }
@@ -78,6 +89,7 @@ namespace BudgetCalculator
                 }
                 return totalAmountToSaving;
 
+
                 //if (amountToSave < double.MaxValue)
                 //{
                 //    if (amountToSave > amountLeftAfterExpenses)
@@ -86,20 +98,31 @@ namespace BudgetCalculator
                 //    }
                 //    return Math.Round(amountToSave, 2);
 
+
                 //}
                 //return 0;
             }
             return 0;
         }
 
-
+        /// <summary>
+        /// Calculates the remaining balance when all expenses has been made
+        /// </summary>
+        /// <returns>double, remaining balance</returns>
         public double GetRemainingBalance()
         {
-            if(IsMoreIncomeThanExpenses())
+            if (IsMoreIncomeThanExpenses())
             {
-                
+
+                var remainingBalance = GetTotalIncome() - GetTotalExpenses() - GetTotalSaving();
+                if (remainingBalance > 0)
+                {
+                    return remainingBalance;
+                }
+
             }
-            throw new NotImplementedException();
+
+            return 0;
         }
 
         /// <summary>

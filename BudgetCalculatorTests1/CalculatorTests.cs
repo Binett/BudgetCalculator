@@ -12,7 +12,7 @@ using BudgetCalculatorTests1.Seeder;
 namespace BudgetCalculator.Tests
 {
     [TestClass()]
-    public class CalculatorTests
+    public class    CalculatorTests
     {
         Calculator calc;
         EconomicController ecoController;
@@ -37,11 +37,24 @@ namespace BudgetCalculator.Tests
         }
 
         [TestMethod()]
-        public void GetTotalExpenses_Pass_ShouldReturnSum_3599()
+        public void GetTotalIncomeTest_DoubleMaxValue_ShouldReturnZero()
         {
             seeder.InitList();
             calc = new Calculator(seeder.ecoController);
+            seeder.ecoController.UpdateEconomicObjectAmount("Salary", double.MaxValue);
 
+
+            var expected = 0;
+            var actual = calc.GetTotalIncome();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void GetTotalExpenses_PassValidSum_ShouldReturnSum_3599()
+        {
+            seeder.InitList();
+            calc = new Calculator(seeder.ecoController);
+            seeder.ecoController.UpdateEconomicObjectAmount("Food", double.MaxValue);
             var expected = 3599;
             var actual = calc.GetTotalExpenses();
             Assert.AreEqual(expected, actual);
@@ -53,21 +66,9 @@ namespace BudgetCalculator.Tests
             seeder.InitList();
             calc = new Calculator(seeder.ecoController);
             seeder.ecoController.UpdateEconomicObjectAmount("Food", double.MaxValue);
-            var expected = 3599;
+            var expected = 0;
             var actual = calc.GetTotalExpenses();
 
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod()]
-        public void GetTotalExpensesTest_Fail_Should()
-        {
-            seeder.InitList();
-            seeder.ecoController.UpdateEconomicObjectAmount("Food", 999999);
-            calc = new Calculator(seeder.ecoController);
-
-            var expected = 3599;
-            var actual = calc.GetTotalExpenses();
             Assert.AreEqual(expected, actual);
         }
 
@@ -109,9 +110,27 @@ namespace BudgetCalculator.Tests
         }
 
         [TestMethod()]
-        public void GetRemainingBalanceTest()
+        public void GetRemainingBalanceTest_Pass_ShouldReturnSum()
         {
-            Assert.Fail();
+            seeder.InitList();
+            calc = new Calculator(seeder.ecoController);
+
+            var expected = 9001;
+            var actual = calc.GetRemainingBalance();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void GetRemainingBalanceTest_Fail_ShouldReturnZero()
+        {
+            seeder.InitList();
+            seeder.ecoController.UpdateEconomicObjectAmount("Salary", 10000);
+            seeder.ecoController.UpdateEconomicObjectAmount("Food", 8500);
+            calc = new Calculator(seeder.ecoController);
+
+            var expected = 0;
+            var actual = calc.GetRemainingBalance();
+            Assert.AreEqual(expected, actual);
         }
     }
 }
