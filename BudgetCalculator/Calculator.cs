@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using BudgetCalculator.Controllers;
 using BudgetCalculator.Models;
 
@@ -65,29 +66,34 @@ namespace BudgetCalculator
         /// <returns>the sum of all savings</returns>
         public double GetTotalSaving()
         {
+            const double maxPercentage = 1d;
+            var totalSavingInPercentage = 0d;
             if (IsMoreIncomeThanExpenses())
             {
-                var amountLeftAfterExpenses = GetTotalIncome() - GetTotalExpenses();
-                var totalAmountToSaving = 0.00;
-                var amountToSave = 0.00;
-                foreach (var p in economicObjectList)
+                foreach (var s in economicObjectList)
                 {
-                        if (p.Type == EconomicType.Saving)
+                        if (s.Type == EconomicType.Saving && s.Amount != double.MaxValue)
                         {
-                            amountToSave = GetTotalIncome() * p.Amount;
-                            amountLeftAfterExpenses -= amountToSave;
-                            if (amountLeftAfterExpenses > totalAmountToSaving)
-                            {
-                                totalAmountToSaving += amountToSave;
-                            }
-                            else
-                            {
-                                //Log the savings which can't be done
-                                Debug.WriteLine($"Saving {p.Name} can't be done");
-                            }
+                            totalSavingInPercentage += s.Amount;
+                            //amountToSave = GetTotalIncome() * p.Amount;
+                            //amountLeftAfterExpenses -= amountToSave;
+                            //if (amountLeftAfterExpenses > totalAmountToSaving)
+                            //{
+                            //    totalAmountToSaving += amountToSave;
+                            //}
+                            //else
+                            //{
+                            //    //Log the savings which can't be done
+                            //    Debug.WriteLine($"Saving {p.Name} can't be done");
+                            //}
                         }
                 }
-                return totalAmountToSaving;
+
+                if (totalSavingInPercentage < maxPercentage)
+                {
+                    return totalSavingInPercentage;
+                }
+                return 0;
 
 
                 //if (amountToSave < double.MaxValue)
