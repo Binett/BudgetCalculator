@@ -61,7 +61,7 @@ namespace BudgetCalculator
         /// <summary>
         /// Method for calculating the sum of all savings in percentage.
         /// </summary>
-        /// <returns>the sum of all savings</returns>
+        /// <returns>The sum of all savings if the total percentage is less than 100%</returns>
         public double GetTotalSaving()
         {
             const double maxPercentage = 1d;
