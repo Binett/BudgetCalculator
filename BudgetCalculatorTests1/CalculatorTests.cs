@@ -98,7 +98,6 @@ namespace BudgetCalculator.Tests
         public void GetTotalSavingTest_MaxValue_ShouldReturnZero()
         {
             seeder.InitList();
-            //testSeeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, Double.MaxValue);
             seeder.ecoController.UpdateEconomicObjectAmount("Saving", double.MaxValue);
             calc = new Calculator(seeder.ecoController);
 
