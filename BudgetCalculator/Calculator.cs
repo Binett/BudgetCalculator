@@ -59,9 +59,7 @@ namespace BudgetCalculator
         }
 
         /// <summary>
-        /// Method for calculating the sum of all savings.
-        /// If the reminding after all bills paid is less than the sum of savings,
-        /// the percentage of saving will be drawn from the reminding.
+        /// Method for calculating the sum of all savings in percentage.
         /// </summary>
         /// <returns>the sum of all savings</returns>
         public double GetTotalSaving()
@@ -72,7 +70,7 @@ namespace BudgetCalculator
             {
                 foreach (var s in economicObjectList)
                 {
-                        if (s.Type == EconomicType.Saving && s.Amount != double.MaxValue)
+                        if (s.Type == EconomicType.Saving && s.Amount < double.MaxValue)
                         {
                             totalSavingInPercentage += s.Amount;
                             //amountToSave = GetTotalIncome() * p.Amount;
@@ -89,7 +87,7 @@ namespace BudgetCalculator
                         }
                 }
 
-                if (totalSavingInPercentage < maxPercentage)
+                if (totalSavingInPercentage < maxPercentage && totalSavingInPercentage < double.MaxValue)
                 {
                     return totalSavingInPercentage;
                 }
@@ -134,7 +132,20 @@ namespace BudgetCalculator
         /// <summary>
         /// Check if the sum of income is more than the sum of expenses.
         /// </summary>
-        /// <returns>true if income is more than expenses</returns>
+        /// <returns>True if income is more than expenses.</returns>
         private bool IsMoreIncomeThanExpenses() => GetTotalIncome() > GetTotalExpenses();
+
+        /// <summary>
+        /// Check if saving is possible.
+        /// </summary>
+        /// <returns>True if the reminding is greater than the sum of saving.</returns>
+        private bool IsSavingPossible() => GetTotalIncome() - GetTotalExpenses() > GetTotalSavingToMoney();
+
+        /// <summary>
+        /// Convert the total percentage of saving into money.
+        /// </summary>
+        /// <returns>The sum of Saving value.</returns>
+        private double GetTotalSavingToMoney() => GetTotalIncome() * GetTotalSaving();
+
     }
 }
