@@ -12,7 +12,7 @@ using BudgetCalculatorTests1.Seeder;
 namespace BudgetCalculator.Tests
 {
     [TestClass()]
-    public class    CalculatorTests
+    public class CalculatorTests
     {
         Calculator calc;
         TestSeeder seeder;
@@ -21,11 +21,11 @@ namespace BudgetCalculator.Tests
         public void Setup()
         {
             seeder = new TestSeeder();
-            
+
         }
 
         [TestMethod()]
-        public void GetTotalIncomeTest_Pass_ShouldReturnSum_14000() 
+        public void GetTotalIncomeTest_Pass_ShouldReturnSum_14000()
         {
             seeder.InitList();
             calc = new Calculator(seeder.ecoController);
@@ -79,7 +79,7 @@ namespace BudgetCalculator.Tests
             calc = new Calculator(seeder.ecoController);
             var expected = 0.25;
             var actual = calc.GetTotalSaving();
-            Assert.AreEqual(expected,actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod()]
@@ -127,6 +127,17 @@ namespace BudgetCalculator.Tests
 
             var expected = 0;
             var actual = calc.GetRemainingBalance();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void GetSavingPercentageToMoneyTest_Buffer_ShouldReturn3500()
+        {
+            seeder.InitList();
+            seeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, 0.15);
+            calc = new Calculator(seeder.ecoController);
+            var expected = 2100;
+            var actual = calc.GetSavingPercentageToMoney("Buffer");
             Assert.AreEqual(expected, actual);
         }
     }

@@ -118,6 +118,26 @@ namespace BudgetCalculator
         private bool IsSavingPossible() => CheckRemindingIsMoreThanSaving() && CheckPercentageNeverExceedMax(GetTotalSaving());
 
         /// <summary>
+        /// Convert from percentage to money in one specified saving post.
+        /// </summary>
+        /// <param name="name of saving"></param>
+        /// <returns>The value in money of saving.</returns>
+        public double GetSavingPercentageToMoney(string name)
+        {
+            var savingMoney = 0d;
+            foreach (var o in economicObjectList)
+            {
+                if (o.Type == EconomicType.Saving && o.Name == name)
+                {
+                    savingMoney += GetTotalIncome() * o.Amount;
+                    return savingMoney;
+                }
+            }
+
+            return 0;
+        }
+
+        /// <summary>
         /// Convert the total percentage of saving into money.
         /// </summary>
         /// <returns>The sum of Saving value.</returns>
