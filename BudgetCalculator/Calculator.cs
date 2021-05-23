@@ -73,17 +73,6 @@ namespace BudgetCalculator
                         if (s.Type == EconomicType.Saving && s.Amount < double.MaxValue)
                         {
                             totalSavingInPercentage += s.Amount;
-                            //amountToSave = GetTotalIncome() * p.Amount;
-                            //amountLeftAfterExpenses -= amountToSave;
-                            //if (amountLeftAfterExpenses > totalAmountToSaving)
-                            //{
-                            //    totalAmountToSaving += amountToSave;
-                            //}
-                            //else
-                            //{
-                            //    //Log the savings which can't be done
-                            //    Debug.WriteLine($"Saving {p.Name} can't be done");
-                            //}
                         }
                 }
 
@@ -92,19 +81,6 @@ namespace BudgetCalculator
                     return totalSavingInPercentage;
                 }
                 return 0;
-
-
-                //if (amountToSave < double.MaxValue)
-                //{
-                //    if (amountToSave > amountLeftAfterExpenses)
-                //    {
-                //          return Math.Round(amountLeftAfterExpenses * totalSaving, 2);
-                //    }
-                //    return Math.Round(amountToSave, 2);
-
-
-                //}
-                //return 0;
             }
             return 0;
         }
