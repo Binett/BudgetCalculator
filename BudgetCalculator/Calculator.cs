@@ -58,12 +58,11 @@ namespace BudgetCalculator
             }
             if (totalExpenses < double.MaxValue)
             {
-                string errormsg = "GetTotalExpenses got double.maxvalue";
-                Debug.WriteLine(errormsg);
-                errorLogger.Log.Add(errormsg);
                 return totalExpenses;
             }
 
+
+            Debug.WriteLine("GetTotalExpenses got double.maxvalue");
             return 0;
         }
 
@@ -117,9 +116,7 @@ namespace BudgetCalculator
                 }
             }
 
-            string errormsg = "Expenses exceed income";
-            Debug.WriteLine(errormsg);
-            errorLogger.Log.Add(errormsg);
+            Debug.WriteLine("Expenses exceed income");
             return 0;
         }
 
@@ -144,9 +141,7 @@ namespace BudgetCalculator
 
                     if (expenses > income)
                     {
-                        string errormsg = "Expenses exceed income";
-                        Debug.WriteLine(errormsg);
-                        errorLogger.Log.Add(errormsg);
+                        Debug.WriteLine("Expenses exceed income");
                         break;
                     }
 
@@ -158,9 +153,7 @@ namespace BudgetCalculator
                     expenses += amountSavings;
                     if(expenses > income)
                     {
-                        string errormsg = "Savings exceed income";
-                        Debug.WriteLine(errormsg);
-                        errorLogger.Log.Add(errormsg);
+                        Debug.WriteLine("Savings exceed income");
                         break;
                     }
 
