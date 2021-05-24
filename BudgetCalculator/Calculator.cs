@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using BudgetCalculator.Controllers;
 using BudgetCalculator.Models;
-
+using BudgetCalculator.Helpers;
 
 namespace BudgetCalculator
 {
@@ -11,10 +11,17 @@ namespace BudgetCalculator
     {
         private List<EconomicObject> economicObjectList;
         private const double maxPercentage = 1d;
+        private ErrorLogger errorLogger;
 
         public Calculator(EconomicController ecoController)
         {
+            errorLogger = new ErrorLogger();
             economicObjectList = ecoController.GetList;
+        }
+
+        public ErrorLogger GetErrorLog()
+        {
+            return errorLogger;
         }
 
         /// <summary>
@@ -51,6 +58,9 @@ namespace BudgetCalculator
             }
             if (totalExpenses < double.MaxValue)
             {
+                string errormsg = "GetTotalExpenses got double.maxvalue";
+                Debug.WriteLine(errormsg);
+                errorLogger.Log.Add(errormsg);
                 return totalExpenses;
             }
 

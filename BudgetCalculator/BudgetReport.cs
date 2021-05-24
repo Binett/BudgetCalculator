@@ -40,6 +40,7 @@ namespace BudgetCalculator
             PaidExpenses = paidExpenses;
             UnpaidExpenses = unpayedExpenses;
 
+            errorLogger.Log.Add(calc.GetErrorLog().GetErrorsAsString());
         }
 
 
