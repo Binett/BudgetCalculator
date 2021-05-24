@@ -117,31 +117,6 @@ namespace BudgetCalculator
         /// <returns>True if the reminding is greater than the sum of saving.</returns>
         private bool IsSavingPossible() => CheckRemindingIsMoreThanSaving() && CheckPercentageNeverExceedMax(GetTotalSaving());
 
-        /// <summary>
-        /// Convert from percentage to money in one specified saving post.
-        /// </summary>
-        /// <param name="name of saving"></param>
-        /// <returns>The value in money of saving.</returns>
-        public double GetSavingPercentageToMoney(string name)
-        {
-            var savingMoney = 0d;
-            foreach (var o in economicObjectList)
-            {
-                if (o.Type == EconomicType.Saving && o.Name == name)
-                {
-                    savingMoney += GetTotalIncome() * o.Amount;
-                    return savingMoney;
-                }
-            }
-
-            return 0;
-        }
-
-        /// <summary>
-        /// Convert the total percentage of saving into money.
-        /// </summary>
-        /// <returns>The sum of Saving value.</returns>
-        private double GetTotalSavingToMoney() => GetTotalIncome() * GetTotalSaving();
 
         /// <summary>
         /// Check if the percentage in parameter is exceeded maximum allowed.
@@ -157,6 +132,31 @@ namespace BudgetCalculator
         private bool CheckRemindingIsMoreThanSaving() =>
             GetTotalIncome() - GetTotalExpenses() > GetTotalSavingToMoney();
         
+        /// <summary>
+        /// Convert from percentage to money in one specified saving post.
+        /// </summary>
+        /// <param name="name of saving"></param>
+        /// <returns>The value in money of saving.</returns>
+        private double GetSavingPercentageToMoney(string name)
+        {
+            var savingMoney = 0d;
+            foreach (var o in economicObjectList)
+            {
+                if (o.Type == EconomicType.Saving && o.Name == name)
+                {
+                    savingMoney += GetTotalIncome() * o.Amount;
+                    return savingMoney;
+                }
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// Convert the total percentage of saving into money.
+        /// </summary>
+        /// <returns>The sum of Saving value.</returns>
+        private double GetTotalSavingToMoney() => GetTotalIncome() * GetTotalSaving();
+
         #endregion
     }
 }

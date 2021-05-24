@@ -130,15 +130,15 @@ namespace BudgetCalculator.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod()]
-        public void GetSavingPercentageToMoneyTest_Buffer_ShouldReturn3500()
-        {
-            seeder.InitList();
-            seeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, 0.15);
-            calc = new Calculator(seeder.ecoController);
-            var expected = 2100;
-            var actual = calc.GetSavingPercentageToMoney("Buffer");
-            Assert.AreEqual(expected, actual);
-        }
+        //[TestMethod()]
+        //public void GetSavingPercentageToMoneyTest_NameOfSaving_ShouldReturn2100()
+        //{
+        //    seeder.InitList();
+        //    //seeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, 0.15);
+        //    calc = new Calculator(seeder.ecoController);
+        //    var expected = 1400;
+        //    var actual = calc.GetSavingPercentageToMoney("Savings");
+        //    Assert.AreEqual(expected, actual);
+        //}
     }
 }
