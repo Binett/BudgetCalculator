@@ -107,12 +107,12 @@ namespace BudgetCalculator
             {
                 var income = GetTotalIncome();
                 var expenses = GetTotalExpenses();
-                var savings = GetTotalSaving();
+                var savings = GetTotalSavingToMoney();
 
                 var remainingBalance = income - expenses;
                 if (IsSavingPossible())
                 {
-                    remainingBalance -= GetTotalSavingToMoney();
+                    remainingBalance -= savings;
                     return remainingBalance;
                 }
             }
