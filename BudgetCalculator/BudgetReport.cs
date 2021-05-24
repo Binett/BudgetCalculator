@@ -51,7 +51,7 @@ namespace BudgetCalculator
         public string GetCalculatedDataToString(EconomicController ecoController)
         {
             BudgetReport report = new BudgetReport(ecoController);
-            string reportString = null;
+            string reportString = string.Empty;
             reportString = $"Total Income:       {report.TotalIncome}\n" + 
                            $"Total Expenses:     {report.TotalExpenses}\n" +
                            $"Total Saving:       {report.TotalMoneyForSavings}\n" +

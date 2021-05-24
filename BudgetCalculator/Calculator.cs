@@ -120,6 +120,13 @@ namespace BudgetCalculator
             return 0;
         }
 
+        /// <summary>
+        /// Convert the total percentage of saving into money.
+        /// </summary>
+        /// <returns>The sum of Saving value.</returns>
+        public double GetTotalSavingToMoney() => GetTotalIncome() * GetTotalSaving();
+
+
         #region Private
 
         /// <summary>
@@ -225,6 +232,7 @@ namespace BudgetCalculator
         /// </summary>
         /// <returns>True if reminding is more than saving.</returns>
         private bool CheckRemindingIsMoreThanSaving() =>
+        
             GetTotalIncome() - GetTotalExpenses() > GetTotalSavingToMoney();
         
         /// <summary>
@@ -245,12 +253,6 @@ namespace BudgetCalculator
             }
             return 0;
         }
-
-        /// <summary>
-        /// Convert the total percentage of saving into money.
-        /// </summary>
-        /// <returns>The sum of Saving value.</returns>
-        public double GetTotalSavingToMoney() => GetTotalIncome() * GetTotalSaving();
 
         #endregion
     }
