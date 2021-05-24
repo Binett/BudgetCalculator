@@ -47,11 +47,13 @@ namespace BudgetCalculator
         {
             BudgetReport report = new BudgetReport(ecoController);
             string reportString = null;
-            reportString = $"Total Income:   {report.TotalIncome}\n" + 
-                           $"Total Expenses: {report.TotalExpenses}\n" +
-                           $"Total Saving:   {report.TotalMoneyForSavings}\n" +
-                           $"Cash:           {report.Balance}\n" +
-                           $"Expenses paid:   ";
+            reportString = $"Total Income:       {report.TotalIncome}\n" + 
+                           $"Total Expenses:     {report.TotalExpenses}\n" +
+                           $"Total Saving:       {report.TotalMoneyForSavings}\n" +
+                           $"Cash:               {report.Balance}\n" +
+                           $"Expenses (paid):    {UnWrapExpenses(report.PaidExpenses)}\n" +
+                           $"Expenses (unpaid):  {UnWrapExpenses(report.UnpaidExpenses)}\n" +
+                           $"Savings (paid);     {}";
             return reportString;
         }
 
