@@ -18,7 +18,6 @@ namespace BudgetCalculator
             economicObjectList = ecoController.GetList;
         }
 
-
         /// <summary>
         /// Method that calculates the total sum of incomes 
         /// </summary>
@@ -116,7 +115,6 @@ namespace BudgetCalculator
         /// </summary>
         /// <returns>True if the reminding is greater than the sum of saving.</returns>
         private bool IsSavingPossible() => CheckRemindingIsMoreThanSaving() && CheckPercentageNeverExceedMax(GetTotalSaving());
-
 
         /// <summary>
         /// Check if the percentage in parameter is exceeded maximum allowed.
