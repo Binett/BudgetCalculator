@@ -107,9 +107,9 @@ namespace BudgetCalculator.Controllers.Tests
         [DataRow(null,"Winnings",false)]
         [DataRow("","Winnings",false)]
         [DataRow(" ","Winnings",false)]        
-        [DataRow("Winnings",null,false)]
-        [DataRow("Winnings","",false)]
-        [DataRow("Winnings"," ",false)]
+        [DataRow("Salary",null,false)]
+        [DataRow("Salary","",false)]
+        [DataRow("Salary"," ",false)]
         [DataRow("Winnings","Salary",false)]
         public void UpdateEconomicObjectNameTest_Negative_ShouldReturnFalse(
             string oldName, string newName, bool expected)
