@@ -32,6 +32,7 @@ namespace BudgetCalculator.Controllers.Tests
         [TestMethod()]
         [DataRow(null, 200, false)]
         [DataRow("", 200, false)]
+        [DataRow(" ", 200, false)]
         [DataRow("Salary", -1200, false)]
         public void AddEconomicObjectToList_Negative_ShouldReturnFalse(
             string name, double amount, bool expected)
@@ -61,6 +62,7 @@ namespace BudgetCalculator.Controllers.Tests
         [TestMethod()]
         [DataRow(null, false)]
         [DataRow("", false)]
+        [DataRow(" ", false)]
         public void RemoveEconomicObjectFromListTest_NameIsEmptyOrNull_ShouldReturnFalse(
             string name, bool expected)
         {
@@ -76,10 +78,12 @@ namespace BudgetCalculator.Controllers.Tests
 
             Assert.AreEqual(expected, actual);
         }
+       
 
         [TestMethod()]
         [DataRow(null, 200, false)]
         [DataRow("", 200, false)]
+        [DataRow(" ", 200, false)]
         [DataRow("Salary", -200, false)]
         public void UpdateEconomicObjectAmountTest_Negative_ShouldReturnFalse(
             string name, double amount, bool expected)
@@ -97,12 +101,16 @@ namespace BudgetCalculator.Controllers.Tests
 
             Assert.AreEqual(expected, actual);
         }
+   
 
         [TestMethod()]
         [DataRow(null,"Winnings",false)]
         [DataRow("","Winnings",false)]
-        [DataRow("Winnings",null,false)]
-        [DataRow("Winnings","",false)]
+        [DataRow(" ","Winnings",false)]        
+        [DataRow("Salary",null,false)]
+        [DataRow("Salary","",false)]
+        [DataRow("Salary"," ",false)]
+        [DataRow("Winnings","Salary",false)]
         public void UpdateEconomicObjectNameTest_Negative_ShouldReturnFalse(
             string oldName, string newName, bool expected)
         {
