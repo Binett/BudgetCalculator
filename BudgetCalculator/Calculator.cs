@@ -10,12 +10,12 @@ namespace BudgetCalculator
     public class Calculator
     {
         private List<EconomicObject> economicObjectList;
+        private const double maxPercentage = 1d;
 
         public Calculator(EconomicController ecoController)
         {
             economicObjectList = ecoController.GetList;
         }
-
 
         /// <summary>
         /// Method that calculates the total sum of incomes 
@@ -57,50 +57,29 @@ namespace BudgetCalculator
             return 0;
         }
 
+
         /// <summary>
-        /// Method for calculating the sum of all savings.
-        /// If the reminding after all bills paid is less than the sum of savings,
-        /// the percentage of saving will be drawn from the reminding.
+        /// Method for calculating the sum of all savings in percentage.
         /// </summary>
-        /// <returns>the sum of all savings</returns>
+        /// <returns>The sum of all savings if the total percentage is less than 100%</returns>
         public double GetTotalSaving()
         {
+            var totalSavingInPercentage = 0d;
             if (IsMoreIncomeThanExpenses())
             {
-                var amountLeftAfterExpenses = GetTotalIncome() - GetTotalExpenses();
-                var totalAmountToSaving = 0.00;
-                var amountToSave = 0.00;
-                foreach (var p in economicObjectList)
+                foreach (var s in economicObjectList)
                 {
-                        if (p.Type == EconomicType.Saving)
+                        if (s.Type == EconomicType.Saving && s.Amount < double.MaxValue)
                         {
-                            amountToSave = GetTotalIncome() * p.Amount;
-                            amountLeftAfterExpenses -= amountToSave;
-                            if (amountLeftAfterExpenses > totalAmountToSaving)
-                            {
-                                totalAmountToSaving += amountToSave;
-                            }
-                            else
-                            {
-                                //Log the savings which can't be done
-                                Debug.WriteLine($"Saving {p.Name} can't be done");
-                            }
+                            totalSavingInPercentage += s.Amount;
                         }
                 }
-                return totalAmountToSaving;
 
-
-                //if (amountToSave < double.MaxValue)
-                //{
-                //    if (amountToSave > amountLeftAfterExpenses)
-                //    {
-                //          return Math.Round(amountLeftAfterExpenses * totalSaving, 2);
-                //    }
-                //    return Math.Round(amountToSave, 2);
-
-
-                //}
-                //return 0;
+                if (CheckPercentageNeverExceedMax(totalSavingInPercentage) && totalSavingInPercentage < double.MaxValue)
+                {
+                    return totalSavingInPercentage;
+                }
+                return 0;
             }
             return 0;
         }
@@ -207,11 +186,59 @@ namespace BudgetCalculator
             return listUnpaidExpenses;
         }
 
+        #region Private
+
         /// <summary>
         /// Check if the sum of income is more than the sum of expenses.
         /// </summary>
-        /// <returns>true if income is more than expenses</returns>
+        /// <returns>True if income is more than expenses.</returns>
         private bool IsMoreIncomeThanExpenses() => GetTotalIncome() > GetTotalExpenses();
 
+        /// <summary>
+        /// Check if saving is possible.
+        /// </summary>
+        /// <returns>True if the reminding is greater than the sum of saving.</returns>
+        private bool IsSavingPossible() => CheckRemindingIsMoreThanSaving() && CheckPercentageNeverExceedMax(GetTotalSaving());
+
+        /// <summary>
+        /// Check if the percentage in parameter is exceeded maximum allowed.
+        /// </summary>
+        /// <param name="totalPercentage"></param>
+        /// <returns>True if parameter is less than max.</returns>
+        private bool CheckPercentageNeverExceedMax(double totalPercentage) => totalPercentage < maxPercentage;
+        
+        /// <summary>
+        /// Check if reminding is more than the total value of saving.
+        /// </summary>
+        /// <returns>True if reminding is more than saving.</returns>
+        private bool CheckRemindingIsMoreThanSaving() =>
+            GetTotalIncome() - GetTotalExpenses() > GetTotalSavingToMoney();
+        
+        /// <summary>
+        /// Convert from percentage to money in one specified saving post.
+        /// </summary>
+        /// <param name="name of saving"></param>
+        /// <returns>The value in money of saving.</returns>
+        private double GetSavingPercentageToMoney(string name)
+        {
+            var savingMoney = 0d;
+            foreach (var o in economicObjectList)
+            {
+                if (o.Type == EconomicType.Saving && o.Name == name)
+                {
+                    savingMoney += GetTotalIncome() * o.Amount;
+                    return savingMoney;
+                }
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// Convert the total percentage of saving into money.
+        /// </summary>
+        /// <returns>The sum of Saving value.</returns>
+        private double GetTotalSavingToMoney() => GetTotalIncome() * GetTotalSaving();
+
+        #endregion
     }
 }
