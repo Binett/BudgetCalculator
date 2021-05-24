@@ -117,9 +117,13 @@ namespace BudgetCalculator
                 }
             }
 
-            Debug.WriteLine("Expenses exceed income");
+            string errormsg = "Expenses exceed income";
+            Debug.WriteLine(errormsg);
+            errorLogger.Log.Add(errormsg);
             return 0;
         }
+
+        #region Private
 
         /// <summary>
         /// Checks when the total income is exceeded and adds seperate object to list when it does not exceed income
@@ -140,7 +144,9 @@ namespace BudgetCalculator
 
                     if (expenses > income)
                     {
-                        Debug.WriteLine("expense exceeds income");
+                        string errormsg = "Expenses exceed income";
+                        Debug.WriteLine(errormsg);
+                        errorLogger.Log.Add(errormsg);
                         break;
                     }
 
@@ -152,7 +158,9 @@ namespace BudgetCalculator
                     expenses += amountSavings;
                     if(expenses > income)
                     {
-                        Debug.WriteLine("savings exceeds income");
+                        string errormsg = "Savings exceed income";
+                        Debug.WriteLine(errormsg);
+                        errorLogger.Log.Add(errormsg);
                         break;
                     }
 
@@ -199,8 +207,7 @@ namespace BudgetCalculator
             return listUnpaidExpenses;
         }
 
-        #region Private
-
+        
         /// <summary>
         /// Check if the sum of income is more than the sum of expenses.
         /// </summary>
