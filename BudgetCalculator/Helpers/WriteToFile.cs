@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,15 +10,17 @@ namespace BudgetCalculator.Helpers
 {
     public class WriteToFile
     {
+        private string fileName = "default";
         /// <summary>
         /// Generates file for todays date and sets path to desktop
         /// </summary>
-        public string FileName
+        public string PathAndFileName
         {
             get
             {
                 var desktop = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-                return Path.Combine(desktop, DateTime.Now.ToString("yyyy-mm-dd") + ".log"); ;
+                string temp = fileName + ".txt";
+                return Path.Combine(desktop, DateTime.Now.ToString("yyyy-MM-dd") + temp);
             }
         }
 
@@ -25,9 +28,17 @@ namespace BudgetCalculator.Helpers
         /// Recieves string txt and writes to file
         /// </summary>
         /// <param name="txt">text that should be added to file</param>
-        public void WriteStringToFile(string txt)
+        public void WriteStringToFile(string name, string txt)
         {
-            File.AppendAllText(FileName, DateTime.Now + ":" + txt + "\r\n");
+            if (txt != "")
+            {
+                fileName = name;
+                File.AppendAllText(PathAndFileName, txt + "\n");
+            }
+            else
+            {
+                Debug.WriteLine("Text is empty");
+            }
         }
 
     }
