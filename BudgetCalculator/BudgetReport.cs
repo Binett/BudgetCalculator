@@ -43,6 +43,11 @@ namespace BudgetCalculator
             errorLogger.Log.Add(calc.GetErrorLog().GetErrorsAsString());
         }
 
+        /// <summary>
+        /// Collect all calculated data from calculator to a string. 
+        /// </summary>
+        /// <param name="ecoController"></param>
+        /// <returns>A string of all calculated data.</returns>
         public string GetCalculatedDataToString(EconomicController ecoController)
         {
             BudgetReport report = new BudgetReport(ecoController);
@@ -51,19 +56,20 @@ namespace BudgetCalculator
                            $"Total Expenses:     {report.TotalExpenses}\n" +
                            $"Total Saving:       {report.TotalMoneyForSavings}\n" +
                            $"Cash:               {report.Balance}\n" +
-                           $"Expenses (paid):    {UnWrapExpenses(report.PaidExpenses)}\n" +
-                           $"Expenses (unpaid):  {UnWrapExpenses(report.UnpaidExpenses)}\n" +
-                           $"Savings (paid);     {}";
+                           $"Expenses (paid):    {UnWrapExpenses(EconomicType.Expense, report.PaidExpenses)}\n" +
+                           $"Expenses (unpaid):  {UnWrapExpenses(EconomicType.Expense, report.UnpaidExpenses)}\n" +
+                           $"Savings (paid):     {UnWrapExpenses(EconomicType.Saving, report.PaidExpenses)}\n" +
+                           $"Savings (unpaid):   {UnWrapExpenses(EconomicType.Saving, report.UnpaidExpenses)}\n";
             return reportString;
         }
 
-        private List<string> UnWrapExpenses(List<EconomicObject> list)
+        private List<string> UnWrapExpenses(EconomicType type, List<EconomicObject> list)
         {
             List<string> listToSend = new List<string>();
 
             foreach(var exp in list)
             {
-                if(exp.Type == EconomicType.Expense)
+                if(exp.Type == type)
                 {
                     listToSend.Add($"Name: {exp.Name} Amount: {exp.Amount}");
                 }

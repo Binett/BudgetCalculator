@@ -24,12 +24,13 @@ namespace TestConsoleEnviorment
             ecoTest.AddEconomicObjectToList("Savings", EconomicType.Saving, 0.1);
 
             BudgetReport report = new BudgetReport(ecoTest);
+            report.GetCalculatedDataToString(ecoTest);
 
-            WriteToFile writer = new WriteToFile();
+            //WriteToFile writer = new WriteToFile();
 
-            writer.WriteReportToFile(report);
+            //writer.WriteReportToFile(report);
 
-            Console.WriteLine(report);
+            //Console.WriteLine(report);
         }
     }
 }
