@@ -33,7 +33,7 @@ namespace BudgetCalculator
 
             TotalIncome = calc.GetTotalIncome();
             TotalExpenses = calc.GetTotalExpenses();
-            TotalMoneyForSavings = calc.GetTotalSaving();
+            TotalMoneyForSavings = calc.GetTotalSavingToMoney();
 
             Balance = calc.GetRemainingBalance(out List<EconomicObject> paidExpenses, out List<EconomicObject> unpayedExpenses);
 
@@ -43,6 +43,16 @@ namespace BudgetCalculator
             errorLogger.Log.Add(calc.GetErrorLog().GetErrorsAsString());
         }
 
+        public string GetCalculatedDataToString(EconomicController ecoController)
+        {
+            BudgetReport report = new BudgetReport(ecoController);
+            string reportString = null;
+            reportString = $"Total Income: {report.TotalIncome}\n" +
+                           $"Total Expenses: {report.TotalExpenses}\n" +
+                           $"Total Saving: {report.TotalMoneyForSavings}\n" +
+                           $"";
+
+        }
 
         private List<string> UnWrapExpenses(List<EconomicObject> list)
         {

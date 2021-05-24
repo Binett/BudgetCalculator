@@ -250,7 +250,7 @@ namespace BudgetCalculator
         /// Convert the total percentage of saving into money.
         /// </summary>
         /// <returns>The sum of Saving value.</returns>
-        private double GetTotalSavingToMoney() => GetTotalIncome() * GetTotalSaving();
+        public double GetTotalSavingToMoney() => GetTotalIncome() * GetTotalSaving();
 
         #endregion
     }
