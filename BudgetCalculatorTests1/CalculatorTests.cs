@@ -113,7 +113,7 @@ namespace BudgetCalculator.Tests
             calc = new Calculator(seeder.ecoController);
 
             var expected = 9001;
-            var actual = calc.GetRemainingBalance();
+            var actual = calc.GetRemainingBalance(out List<EconomicObject> listOfPaidExpenses, out List<EconomicObject> listOfUnpaidExpenses);
             Assert.AreEqual(expected, actual);
         }
 
@@ -126,8 +126,31 @@ namespace BudgetCalculator.Tests
             calc = new Calculator(seeder.ecoController);
 
             var expected = 0;
-            var actual = calc.GetRemainingBalance();
+            var actual = calc.GetRemainingBalance(out List<EconomicObject> listOfPaidExpenses, out List<EconomicObject> listOfUnpaidExpenses);
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void GetRemainingBalanceTest_list_ShouldContain1Unpaid()
+        {
+            seeder.InitList();
+            seeder.ecoController.AddEconomicObjectToList("Electric bill", EconomicType.Expense, 9001);
+            seeder.ecoController.AddEconomicObjectToList("Fun stuff", EconomicType.Expense, 1000);
+            calc = new Calculator(seeder.ecoController);
+            
+            calc.GetRemainingBalance(out List<EconomicObject> listOfPaidExpenses, out List<EconomicObject> listOfUnpaidExpenses);
+            Assert.AreEqual(1, listOfUnpaidExpenses.Count);
+        }
+
+        [TestMethod()]
+        public void GetRemainingBalanceTest_list_ShouldContain5Paid()
+        {
+            seeder.InitList();
+            seeder.ecoController.AddEconomicObjectToList("Electric bill", EconomicType.Expense, 500);
+            calc = new Calculator(seeder.ecoController);
+
+            calc.GetRemainingBalance(out List<EconomicObject> listOfPaidExpenses, out List<EconomicObject> listOfUnpaidExpenses);
+            Assert.AreEqual(5, listOfPaidExpenses.Count);
         }
 
         //[TestMethod()]
