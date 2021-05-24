@@ -88,8 +88,11 @@ namespace BudgetCalculator
         /// Calculates the remaining balance when all expenses has been made
         /// </summary>
         /// <returns>double, remaining balance</returns>
-        public double GetRemainingBalance()
+        public double GetRemainingBalance(out List<EconomicObject> listOfPaidExpenses, out List<EconomicObject> listOfUnpaidExpenses)
         {
+            listOfPaidExpenses = GetPaidExpensesList();
+            listOfUnpaidExpenses = GetUnpaidExpensesList();
+
             if (IsMoreIncomeThanExpenses())
             {
                 var income = GetTotalIncome();
@@ -97,9 +100,9 @@ namespace BudgetCalculator
                 var savings = GetTotalSaving();
 
                 var remainingBalance = income - expenses;
-                if (remainingBalance > savings)
+                if (IsSavingPossible())
                 {
-                    remainingBalance -= savings;
+                    remainingBalance -= GetTotalSavingToMoney();
                     return remainingBalance;
                 }
             }
