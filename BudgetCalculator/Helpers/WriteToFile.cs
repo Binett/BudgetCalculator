@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,16 +9,26 @@ namespace BudgetCalculator.Helpers
 {
     public class WriteToFile
     {
-
-        //TODO loops through list and writest to .txt file
-        public void ListOfStringToTxt(List<string> listOfStrings)
+        /// <summary>
+        /// Generates file for todays date and sets path to desktop
+        /// </summary>
+        public string FileName
         {
-            throw new NotImplementedException();
+            get
+            {
+                var desktop = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+                return Path.Combine(desktop, DateTime.Now.ToString("yyyy-mm-dd") + ".log"); ;
+            }
         }
 
-        public void WriteReportToFile(BudgetReport report)
+        /// <summary>
+        /// Recieves string txt and writes to file
+        /// </summary>
+        /// <param name="txt">text that should be added to file</param>
+        public void WriteStringToFile(string txt)
         {
-            throw new NotImplementedException();
+            File.AppendAllText(FileName, DateTime.Now + ":" + txt + "\r\n");
         }
+
     }
 }
