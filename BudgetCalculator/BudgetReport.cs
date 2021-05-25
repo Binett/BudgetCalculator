@@ -51,16 +51,22 @@ namespace BudgetCalculator
         public string GetCalculatedDataToString(EconomicController ecoController)
         {
             BudgetReport report = new BudgetReport(ecoController);
+            List<string> listOfPaidExpenses = new List<string>(UnWrapExpenses(EconomicType.Expense, report.PaidExpenses));
+            List<string> listOfUnpaidExpenses = new List<string>(UnWrapExpenses(EconomicType.Expense, report.UnpaidExpenses));
+            List<string> listOfPaidSavings = new List<string>(UnWrapExpenses(EconomicType.Saving, report.PaidExpenses));
+            List<string> listOfUnpaidSavings = new List<string>(UnWrapExpenses(EconomicType.Saving, report.UnpaidExpenses));
+
             string reportString = string.Empty;
-            reportString = $"Total Income:       {report.TotalIncome}\n" + 
-                           $"Total Expenses:     {report.TotalExpenses}\n" +
-                           $"Total Saving:       {report.TotalMoneyForSavings}\n" +
-                           $"Cash:               {report.Balance}\n" +
-                           $"Expenses (paid):    {UnWrapExpenses(EconomicType.Expense, report.PaidExpenses)}\n" +
-                           $"Expenses (unpaid):  {UnWrapExpenses(EconomicType.Expense, report.UnpaidExpenses)}\n" +
-                           $"Savings (paid):     {UnWrapExpenses(EconomicType.Saving, report.PaidExpenses)}\n" +
-                           $"Savings (unpaid):   {UnWrapExpenses(EconomicType.Saving, report.UnpaidExpenses)}\n";
+            reportString = $"Total Income:       {report.TotalIncome}\n"+ 
+                           $"Total Expenses:     {report.TotalExpenses}\n"+ 
+                           $"Total Saving:       {report.TotalMoneyForSavings}\n"+
+                           $"Cash:               {report.Balance}\n"+
+                           $"Expenses (paid):    {GetStringFromList(listOfPaidExpenses)}\n" +
+                           $"Expenses (unpaid):  {GetStringFromList(listOfUnpaidExpenses)}\n"+
+                           $"Savings (paid):     {GetStringFromList(listOfPaidSavings)}\n"+
+                           $"Savings (unpaid):   {GetStringFromList(listOfUnpaidSavings)}";
             return reportString;
+
         }
 
         /// <summary>
@@ -77,11 +83,27 @@ namespace BudgetCalculator
             {
                 if(exp.Type == type)
                 {
-                    listToSend.Add($"Name: {exp.Name} Amount: {exp.Amount}");
+                    listToSend.Add($"Name: {exp.Name} Amount: {exp.Amount}\n");
                 }
             }
 
             return listToSend;
         }
+
+        /// <summary>
+        /// Set up one single string from a list of string
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        private string GetStringFromList(List<string> list)
+        {
+            string dataTxt = string.Empty;
+            foreach (var s in list)
+            {
+                dataTxt += s;
+            }
+            return dataTxt;
+        }
+     
     }
 }

@@ -25,7 +25,7 @@ namespace BudgetCalculator.Tests
         }
         
         [TestMethod()]
-        public void GetCalculatedDataToStringTest()
+        public void GetCalculatedDataToStringTest_BudgetReport_ShouldWriteToFile()
         {
             seeder.InitList();
             calc = new Calculator(seeder.ecoController);
@@ -37,10 +37,6 @@ namespace BudgetCalculator.Tests
 
             var expected = File.ReadAllLines(filetxt.PathAndFileName);
             Assert.AreEqual(expected, reportString);
-
-
-
-
         }
     }
 }

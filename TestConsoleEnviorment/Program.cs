@@ -26,11 +26,11 @@ namespace TestConsoleEnviorment
             BudgetReport report = new BudgetReport(ecoTest);
             report.GetCalculatedDataToString(ecoTest);
 
-            //WriteToFile writer = new WriteToFile();
+            WriteToFile writer = new WriteToFile();
 
-            //writer.WriteReportToFile(report);
+            writer.WriteStringToFile("report", report);
 
-            //Console.WriteLine(report);
+            Console.WriteLine(report);
         }
     }
 }
