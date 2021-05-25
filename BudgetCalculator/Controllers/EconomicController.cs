@@ -1,9 +1,7 @@
-﻿using BudgetCalculator.Models;
-using System;
+﻿using BudgetCalculator.Helpers;
+using BudgetCalculator.Models;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using BudgetCalculator.Helpers;
 
 namespace BudgetCalculator.Controllers
 {
@@ -16,14 +14,15 @@ namespace BudgetCalculator.Controllers
         private List<string> errorLog;
 
         #region Public Methods
+
         /// <summary>
-        /// Constructor for EconomicController 
+        /// Constructor for EconomicController
         /// instanciate a new list of EconomicObject
         /// </summary>
         public EconomicController()
         {
             EconomicObjectList = new List<EconomicObject>();
-                errorLog = new List<string>();
+            errorLog = new List<string>();
         }
 
         public List<EconomicObject> GetList => EconomicObjectList;
@@ -39,7 +38,7 @@ namespace BudgetCalculator.Controllers
         {
             if (IsValidString(name) && IsAmountMoreThanZero(amount))
             {
-                if(!DoListContainName(name))
+                if (!DoListContainName(name))
                 {
                     EconomicObjectList.Add(new EconomicObject
                     {
@@ -85,7 +84,7 @@ namespace BudgetCalculator.Controllers
         }
 
         /// <summary>
-        /// Updates an economic objects amount 
+        /// Updates an economic objects amount
         /// </summary>
         /// <param name="name">string name</param>
         /// <param name="newAmount">double new amount</param>
@@ -94,7 +93,7 @@ namespace BudgetCalculator.Controllers
         {
             if (IsValidString(name) && IsAmountMoreThanZero(newAmount))
             {
-                if(DoListContainName(name))
+                if (DoListContainName(name))
                 {
                     foreach (var ecoObj in EconomicObjectList)
                     {
@@ -117,7 +116,6 @@ namespace BudgetCalculator.Controllers
             return false;
         }
 
-
         /// <summary>
         /// Updates an economic object name if name
         /// dosent exist
@@ -127,11 +125,11 @@ namespace BudgetCalculator.Controllers
         /// <returns>bool true if success else false</returns>
         public bool UpdateEconomicObjectName(string oldName, string newName)
         {
-            if(IsValidString(oldName) && IsValidString(newName))
+            if (IsValidString(oldName) && IsValidString(newName))
             {
-                foreach(var ecoObj in EconomicObjectList)
+                foreach (var ecoObj in EconomicObjectList)
                 {
-                    if(ecoObj.Name.Contains(oldName))
+                    if (ecoObj.Name.Contains(oldName))
                     {
                         ecoObj.Name = newName;
                         return true;
@@ -148,9 +146,11 @@ namespace BudgetCalculator.Controllers
                 return false;
             }
         }
-        #endregion
+
+        #endregion Public Methods
 
         #region Private Methods
+
         /// <summary>
         /// Checks so the string name dosent contain
         /// null, string empty and string whitespace
@@ -160,11 +160,11 @@ namespace BudgetCalculator.Controllers
         private bool IsValidString(string check)
         {
             string errormsg;
-            if(!IsStringNull(check))
+            if (!IsStringNull(check))
             {
-                if(!IsStringEmpty(check))
+                if (!IsStringEmpty(check))
                 {
-                    if(!IsStringPreWhitespace(check))
+                    if (!IsStringPreWhitespace(check))
                     {
                         return true;
                     }
@@ -193,7 +193,6 @@ namespace BudgetCalculator.Controllers
             }
         }
 
-       
         /// <summary>
         /// Checks if string is null
         /// </summary>
@@ -231,12 +230,12 @@ namespace BudgetCalculator.Controllers
         /// <returns>If double amount is greater than 0 return true</returns>
         private bool IsAmountMoreThanZero(double amount)
         {
-            if(amount > 0)
+            if (amount > 0)
             {
                 return true;
             }
             else
-            { 
+            {
                 string errormsg = $"{this} Amount was less than zero";
                 Debug.WriteLine(errormsg);
                 ErrorLogger.Add(errormsg);
@@ -245,7 +244,7 @@ namespace BudgetCalculator.Controllers
         }
 
         /// <summary>
-        /// Checks if objects name already exists 
+        /// Checks if objects name already exists
         /// </summary>
         /// <param name="name">string name</param>
         /// <returns>bool true if name dosent exists</returns>
@@ -261,6 +260,7 @@ namespace BudgetCalculator.Controllers
 
             return false;
         }
-        #endregion
+
+        #endregion Private Methods
     }
 }

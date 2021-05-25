@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BudgetCalculator.Controllers;
 using BudgetCalculator.Models;
-using BudgetCalculator.Controllers;
-using BudgetCalculator.Helpers;
+using System.Collections.Generic;
 
 namespace BudgetCalculator
 {
@@ -13,13 +8,14 @@ namespace BudgetCalculator
     {
         // This is a POCO not a DTO, we got logic in here.
         public double TotalIncome { get; }
+
         public double TotalExpenses { get; }
         public double TotalMoneyForSavings { get; }
         public List<EconomicObject> PaidExpenses { get; }
         public List<EconomicObject> UnpaidExpenses { get; }
         public double Balance { get; }
         private Calculator calc;
-        public  EconomicController ecoController;
+        public EconomicController ecoController;
 
         /// <summary>
         /// Constructor initializes all necessary objects which the class needs. Must have an economic object to function.
@@ -48,14 +44,13 @@ namespace BudgetCalculator
             List<string> listOfUnpaidExpenses = new List<string>(UnWrapExpenses(UnpaidExpenses));
 
             string reportString = string.Empty;
-            reportString = $"Total Income:       {TotalIncome}\n"+ 
-                           $"Total Expenses:     {TotalExpenses}\n"+ 
-                           $"Total Saving:       {TotalMoneyForSavings}\n"+
-                           $"Cash:               {Balance}\n\n"+
+            reportString = $"Total Income:       {TotalIncome}\n" +
+                           $"Total Expenses:     {TotalExpenses}\n" +
+                           $"Total Saving:       {TotalMoneyForSavings}\n" +
+                           $"Cash:               {Balance}\n\n" +
                            $"Paid expenses:\n{GetStringFromList(listOfPaidExpenses)}\n" +
                            $"Unpaid expenses:\n{GetStringFromList(listOfUnpaidExpenses)}\n";
             return reportString;
-
         }
 
         /// <summary>
@@ -67,16 +62,16 @@ namespace BudgetCalculator
         {
             List<string> listToSend = new List<string>();
 
-            foreach(var exp in list)
+            foreach (var exp in list)
             {
-                    if(exp.Type == EconomicType.Saving)
-                    {
-                        listToSend.Add($"{exp.Name} Amount: {exp.Amount * 100} Percent\n");
-                    }
-                    else
-                    {
-                        listToSend.Add($"{exp.Name} Amount: {exp.Amount}\n");
-                    }
+                if (exp.Type == EconomicType.Saving)
+                {
+                    listToSend.Add($"{exp.Name} Amount: {exp.Amount * 100} Percent\n");
+                }
+                else
+                {
+                    listToSend.Add($"{exp.Name} Amount: {exp.Amount}\n");
+                }
             }
 
             return listToSend;
@@ -94,12 +89,11 @@ namespace BudgetCalculator
             {
                 dataTxt += s;
             }
-            if(dataTxt == string.Empty)
+            if (dataTxt == string.Empty)
             {
                 return "None\n";
             }
             return dataTxt;
         }
-     
     }
 }

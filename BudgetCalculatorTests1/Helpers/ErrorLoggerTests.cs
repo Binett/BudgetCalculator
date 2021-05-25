@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BudgetCalculatorTests1.Seeder;
+﻿using BudgetCalculatorTests1.Seeder;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
 namespace BudgetCalculator.Helpers.Tests

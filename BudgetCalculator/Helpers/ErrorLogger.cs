@@ -21,7 +21,7 @@ namespace BudgetCalculator.Helpers
             {
                 return "No Logs";
             }
-            foreach(var s in logList)
+            foreach (var s in logList)
             {
                 stringToSend += $"{counter}: {DateTime.Now} {s}\n";
                 counter++;
@@ -31,7 +31,7 @@ namespace BudgetCalculator.Helpers
 
         public static void Add(string text)
         {
-            if(logList.Contains(text))
+            if (logList.Contains(text))
             {
                 return;
             }

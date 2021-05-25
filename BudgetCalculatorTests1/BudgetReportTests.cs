@@ -1,29 +1,22 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BudgetCalculator;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BudgetCalculator.Controllers;
-using BudgetCalculator.Helpers;
+﻿using BudgetCalculator.Helpers;
 using BudgetCalculatorTests1.Seeder;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
 
 namespace BudgetCalculator.Tests
 {
     [TestClass()]
     public class BudgetReportTests
     {
-        Calculator calc;
-        TestSeeder seeder;
+        private Calculator calc;
+        private TestSeeder seeder;
 
         [TestInitialize]
         public void SetUp()
         {
             seeder = new TestSeeder();
         }
-        
+
         [TestMethod()]
         public void GetCalculatedDataToStringTest_SendInEcoController_ReturnsCollectedDataAsString()
         {

@@ -1,10 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BudgetCalculator.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace BudgetCalculator.Helpers.Tests
@@ -12,7 +6,6 @@ namespace BudgetCalculator.Helpers.Tests
     [TestClass()]
     public class WriteToFileTests
     {
-
         [TestMethod()]
         public void WriteStringToFileTest_ShouldWriteToFile()
         {

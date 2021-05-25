@@ -1,21 +1,15 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BudgetCalculator;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BudgetCalculator.Models;
-using BudgetCalculator.Controllers;
+﻿using BudgetCalculator.Models;
 using BudgetCalculatorTests1.Seeder;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace BudgetCalculator.Tests
 {
     [TestClass()]
     public class CalculatorTests
     {
-        Calculator calc;
-        TestSeeder seeder;
+        private Calculator calc;
+        private TestSeeder seeder;
 
         [TestInitialize]
         public void Setup()
@@ -40,7 +34,6 @@ namespace BudgetCalculator.Tests
             seeder.InitList();
             calc = new Calculator(seeder.ecoController);
             seeder.ecoController.UpdateEconomicObjectAmount("Salary", double.MaxValue);
-
 
             var expected = 0;
             var actual = calc.GetTotalIncome();
@@ -168,7 +161,7 @@ namespace BudgetCalculator.Tests
             seeder.InitList();
             seeder.ecoController.UpdateEconomicObjectAmount("Saving", -0.15);
             calc = new Calculator(seeder.ecoController);
-            var expected =1400;
+            var expected = 1400;
             var actual = calc.GetTotalSavingToMoney();
             Assert.AreEqual(expected, actual);
         }

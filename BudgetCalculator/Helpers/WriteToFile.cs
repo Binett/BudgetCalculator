@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BudgetCalculator.Helpers
 {
     public class WriteToFile
     {
         private string fileName = "default";
+
         /// <summary>
         /// Generates file for todays date and sets path to desktop
         /// </summary>
@@ -40,6 +37,5 @@ namespace BudgetCalculator.Helpers
                 Debug.WriteLine("Text is empty");
             }
         }
-
     }
 }

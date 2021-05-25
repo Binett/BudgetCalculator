@@ -1,17 +1,10 @@
-﻿using System;
-using BudgetCalculator.Controllers;
-using BudgetCalculator.Models;
-using BudgetCalculator.Helpers;
-using BudgetCalculator;
-
-namespace TestConsoleEnviorment
+﻿namespace TestConsoleEnviorment
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             //Console.WriteLine("Hello Test Enviorment!");
-
 
             ////Testing the Budgetcalculator Library
 
@@ -23,11 +16,9 @@ namespace TestConsoleEnviorment
             //ecoController.AddEconomicObjectToList("Food", EconomicType.Expense, 1500);
             //ecoController.AddEconomicObjectToList("Savings", EconomicType.Saving, 0.1);
 
-
             //BudgetReport report = new BudgetReport(ecoController);
 
             //Console.WriteLine(ErrorLogger.GetSummarizedLogAsString());
-
         }
     }
 }

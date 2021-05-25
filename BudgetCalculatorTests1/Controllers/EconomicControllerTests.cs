@@ -1,19 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BudgetCalculator.Controllers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BudgetCalculatorTests1.Seeder;
-using BudgetCalculator.Models;
+﻿using BudgetCalculator.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BudgetCalculator.Controllers.Tests
 {
     [TestClass()]
     public class EconomicControllerTests
     {
-        EconomicController ecoController;
+        private EconomicController ecoController;
 
         [TestInitialize]
         public void Setup()
@@ -22,11 +15,9 @@ namespace BudgetCalculator.Controllers.Tests
             ecoController.AddEconomicObjectToList("Salary", EconomicType.Income, 2000);
         }
 
-
         [TestMethod()]
         public void AddEconomicObjectToListTest()
         {
-
         }
 
         [TestMethod()]
@@ -78,7 +69,6 @@ namespace BudgetCalculator.Controllers.Tests
 
             Assert.AreEqual(expected, actual);
         }
-       
 
         [TestMethod()]
         [DataRow(null, 200, false)]
@@ -92,7 +82,6 @@ namespace BudgetCalculator.Controllers.Tests
             Assert.AreEqual(expected, actual);
         }
 
-
         [TestMethod()]
         public void UpdateEconomicObjectAmountTest_Pass_ShouldReturnTrue()
         {
@@ -101,16 +90,15 @@ namespace BudgetCalculator.Controllers.Tests
 
             Assert.AreEqual(expected, actual);
         }
-   
 
         [TestMethod()]
-        [DataRow(null,"Winnings",false)]
-        [DataRow("","Winnings",false)]
-        [DataRow(" ","Winnings",false)]        
-        [DataRow("Salary",null,false)]
-        [DataRow("Salary","",false)]
-        [DataRow("Salary"," ",false)]
-        [DataRow("Winnings","Salary",false)]
+        [DataRow(null, "Winnings", false)]
+        [DataRow("", "Winnings", false)]
+        [DataRow(" ", "Winnings", false)]
+        [DataRow("Salary", null, false)]
+        [DataRow("Salary", "", false)]
+        [DataRow("Salary", " ", false)]
+        [DataRow("Winnings", "Salary", false)]
         public void UpdateEconomicObjectNameTest_Negative_ShouldReturnFalse(
             string oldName, string newName, bool expected)
         {
