@@ -18,9 +18,9 @@ namespace TestConsoleEnviorment
             EconomicController ecoTest = new EconomicController();
 
             ecoTest.AddEconomicObjectToList("Salary", EconomicType.Income, 14000);
-            ecoTest.AddEconomicObjectToList("Rent", EconomicType.Expense, 2000);
+            ecoTest.AddEconomicObjectToList(" Rent", EconomicType.Expense, 2);
             ecoTest.AddEconomicObjectToList("Subscription", EconomicType.Expense, 99);
-            ecoTest.AddEconomicObjectToList("Food", EconomicType.Expense, 1500);
+            ecoTest.AddEconomicObjectToList("Food", EconomicType.Expense, double.MaxValue);
             ecoTest.AddEconomicObjectToList("Savings", EconomicType.Saving, 0.1);
 
             ecoTest.AddEconomicObjectToList("SalaSADry", EconomicType.Income, 14000);
@@ -32,11 +32,7 @@ namespace TestConsoleEnviorment
 
             BudgetReport report = new BudgetReport(ecoTest);
 
-
-            Console.WriteLine(report.GetCalculatedDataToString());
-
-            WriteToFile writer = new WriteToFile();
-            writer.WriteStringToFile("super rapporten", report.GetCalculatedDataToString());
+            Console.WriteLine(ErrorLogger.GetSummarizedLogAsString());
 
         }
     }

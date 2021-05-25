@@ -22,27 +22,25 @@ namespace BudgetCalculator
 
         private Calculator calc;
         public  EconomicController ecoController;
-        private ErrorLogger errorLogger;
 
+        /// <summary>
+        /// Constructor initializes all necessary objects which the class needs. Must have an economic object to function.
+        /// </summary>
+        /// <param name="_ecoController"></param>
         public BudgetReport(EconomicController _ecoController)
         {
             ecoController = _ecoController;
-            errorLogger = new ErrorLogger();
-
             calc = new Calculator(ecoController);
-
             TotalIncome = calc.GetTotalIncome();
             TotalExpenses = calc.GetTotalExpenses();
             TotalMoneyForSavings = calc.GetTotalSavingToMoney();
-
             Balance = calc.GetRemainingBalance(out List<EconomicObject> paidExpenses, out List<EconomicObject> unpayedExpenses);
-
             PaidExpenses = paidExpenses;
             UnpaidExpenses = unpayedExpenses;
         }
 
         /// <summary>
-        /// Collect all calculated data from calculator to a string. 
+        /// Collect all calculated data from calculator to a string.
         /// </summary>
         /// <param name="ecoController"></param>
         /// <returns>A string of all calculated data.</returns>
@@ -67,7 +65,7 @@ namespace BudgetCalculator
         }
 
         /// <summary>
-        /// 
+        /// Converts List of economic objects of certain type to string list
         /// </summary>
         /// <param name="type"></param>
         /// <param name="list"></param>

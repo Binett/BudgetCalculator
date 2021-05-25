@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using BudgetCalculator.Helpers;
 
 namespace BudgetCalculator.Controllers
 {
@@ -18,7 +19,7 @@ namespace BudgetCalculator.Controllers
         public EconomicController()
         {
             EconomicObjectList = new List<EconomicObject>();
-            errorLog = new List<string>();
+                errorLog = new List<string>();
         }
 
         public List<EconomicObject> GetList => EconomicObjectList;
@@ -71,7 +72,7 @@ namespace BudgetCalculator.Controllers
                 }
             }
 
-            return false;  
+            return false;
         }
 
         public bool UpdateEconomicObjectName(string oldName, string newName)
@@ -99,6 +100,7 @@ namespace BudgetCalculator.Controllers
         #region Private Methods
         private bool IsValidString(string check)
         {
+            string errormsg;
             if(!IsStringNull(check))
             {
                 if(!IsStringEmpty(check))
@@ -109,22 +111,25 @@ namespace BudgetCalculator.Controllers
                     }
                     else
                     {
-                        Debug.WriteLine("String name had a whitespace as first character");
-                        //impelement logger logic
+                        errormsg = $"{this} String name had a whitespace as first character";
+                        Debug.WriteLine(errormsg);
+                        ErrorLogger.Add(errormsg);
                         return false;
                     }
                 }
                 else
                 {
-                    Debug.WriteLine("String name was empty");
-                    //impelement logger logic
+                    errormsg = $"{this} String name was empty";
+                    Debug.WriteLine(errormsg);
+                    ErrorLogger.Add(errormsg);
                     return false;
                 }
             }
             else
             {
-                Debug.WriteLine("String name was null");
-                //impelement logger logic
+                errormsg = $"{this} String name was null";
+                Debug.WriteLine(errormsg);
+                ErrorLogger.Add(errormsg);
                 return false;
             }
         }
@@ -151,9 +156,10 @@ namespace BudgetCalculator.Controllers
                 return true;
             }
             else
-            {
-                Debug.WriteLine("Amount was less than zero");
-                //Logic to save to logger
+            { 
+                string errormsg = $"{this} Amount was less than zero";
+                Debug.WriteLine(errormsg);
+                ErrorLogger.Add(errormsg);
                 return false;
             }
         }
@@ -168,8 +174,9 @@ namespace BudgetCalculator.Controllers
                 }
             }
 
-            Debug.WriteLine("String name does not exist in economic object list");
-            //Logic to save to logge
+            string errormsg = $"{this} String name does not exist in economic object list";
+            Debug.WriteLine(errormsg);
+            ErrorLogger.Add(errormsg);
             return false;
         }
         #endregion
