@@ -136,7 +136,7 @@ namespace BudgetCalculator.Tests
             seeder.ecoController.AddEconomicObjectToList("Electric bill", EconomicType.Expense, 9001);
             seeder.ecoController.AddEconomicObjectToList("Fun stuff", EconomicType.Expense, 1000);
             calc = new Calculator(seeder.ecoController);
-            
+
             calc.GetRemainingBalance(out List<EconomicObject> listOfPaidExpenses, out List<EconomicObject> listOfUnpaidExpenses);
             Assert.AreEqual(1, listOfUnpaidExpenses.Count);
         }
@@ -152,15 +152,37 @@ namespace BudgetCalculator.Tests
             Assert.AreEqual(5, listOfPaidExpenses.Count);
         }
 
-        //[TestMethod()]
-        //public void GetSavingPercentageToMoneyTest_NameOfSaving_ShouldReturn2100()
-        //{
-        //    seeder.InitList();
-        //    //seeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, 0.15);
-        //    calc = new Calculator(seeder.ecoController);
-        //    var expected = 1400;
-        //    var actual = calc.GetSavingPercentageToMoney("Savings");
-        //    Assert.AreEqual(expected, actual);
-        //}
+        [TestMethod()]
+        public void GetTotalSavingToMoneyTest_PassValue_ShouldReturn3500()
+        {
+            seeder.InitList();
+            seeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, 0.15);
+            calc = new Calculator(seeder.ecoController);
+            var expected = 3500;
+            var actual = calc.GetTotalSavingToMoney();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void GetTotalSavingToMoneyTest_NegativeValue_ShouldReturnZero()
+        {
+            seeder.InitList();
+            seeder.ecoController.UpdateEconomicObjectAmount("Saving", -0.15);
+            calc = new Calculator(seeder.ecoController);
+            var expected =1400;
+            var actual = calc.GetTotalSavingToMoney();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void GetTotalSavingToMoneyTest_MaxValue_ShouldReturnZero()
+        {
+            seeder.InitList();
+            seeder.ecoController.UpdateEconomicObjectAmount("Saving", double.MaxValue);
+            calc = new Calculator(seeder.ecoController);
+            var expected = 0;
+            var actual = calc.GetTotalSavingToMoney();
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
