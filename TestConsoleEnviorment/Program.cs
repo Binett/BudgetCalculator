@@ -15,22 +15,16 @@ namespace TestConsoleEnviorment
 
             //Testing the Budgetcalculator Library
 
-            EconomicController ecoTest = new EconomicController();
+            EconomicController ecoController = new EconomicController();
 
-            ecoTest.AddEconomicObjectToList("Salary", EconomicType.Income, 14000);
-            ecoTest.AddEconomicObjectToList(" Rent", EconomicType.Expense, 2);
-            ecoTest.AddEconomicObjectToList("Subscription", EconomicType.Expense, 99);
-            ecoTest.AddEconomicObjectToList("Food", EconomicType.Expense, double.MaxValue);
-            ecoTest.AddEconomicObjectToList("Savings", EconomicType.Saving, 0.1);
-
-            ecoTest.AddEconomicObjectToList("SalaSADry", EconomicType.Income, 14000);
-            ecoTest.AddEconomicObjectToList("ReASDnt", EconomicType.Expense, 2000);
-            ecoTest.AddEconomicObjectToList("SubscSADription", EconomicType.Expense, 99);
-            ecoTest.AddEconomicObjectToList("FoASDod", EconomicType.Expense, 1500);
-            ecoTest.AddEconomicObjectToList("SavASDings", EconomicType.Saving, 0.05);
+            ecoController.AddEconomicObjectToList("Salary", EconomicType.Income, 14000);
+            ecoController.AddEconomicObjectToList("Rent", EconomicType.Expense, 2000);
+            ecoController.AddEconomicObjectToList("Subscription", EconomicType.Expense, 99);
+            ecoController.AddEconomicObjectToList("Food", EconomicType.Expense, 1500);
+            ecoController.AddEconomicObjectToList("Savings", EconomicType.Saving, 0.1);
 
 
-            BudgetReport report = new BudgetReport(ecoTest);
+            BudgetReport report = new BudgetReport(ecoController);
 
             Console.WriteLine(ErrorLogger.GetSummarizedLogAsString());
 

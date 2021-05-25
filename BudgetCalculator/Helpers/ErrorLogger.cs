@@ -5,13 +5,13 @@ namespace BudgetCalculator.Helpers
 {
     public static class ErrorLogger
     {
-        private static List<string> logList = new List<string>();
+        private static readonly List<string> logList = new();
 
         public static List<string> GetLogList()
         {
             return logList;
         }
-        
+
         public static string GetSummarizedLogAsString()
         {
             int counter = 1;
@@ -28,7 +28,7 @@ namespace BudgetCalculator.Helpers
             }
             return stringToSend;
         }
-        
+
         public static void Add(string text)
         {
             if(logList.Contains(text))

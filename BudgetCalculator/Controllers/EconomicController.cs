@@ -37,15 +37,25 @@ namespace BudgetCalculator.Controllers
         /// <returns>bool true or false</returns>
         public bool AddEconomicObjectToList(string name, EconomicType type, double amount)
         {
-            if (IsValidString(name) && IsAmountMoreThanZero(amount) && !DoListContainName(name))
+            if (IsValidString(name) && IsAmountMoreThanZero(amount))
             {
-                EconomicObjectList.Add(new EconomicObject
+                if(!DoListContainName(name))
                 {
-                    Name = name,
-                    Type = type,
-                    Amount = amount,
-                });
-                return true;
+                    EconomicObjectList.Add(new EconomicObject
+                    {
+                        Name = name,
+                        Type = type,
+                        Amount = amount,
+                    });
+                    return true;
+                }
+                else
+                {
+                    string errormsg = $"{this} String name does already exist in economic object list";
+                    Debug.WriteLine(errormsg);
+                    ErrorLogger.Add(errormsg);
+                    return false;
+                }
             }
 
             return false;
@@ -82,15 +92,25 @@ namespace BudgetCalculator.Controllers
         /// <returns>bool true if success</returns>
         public bool UpdateEconomicObjectAmount(string name, double newAmount)
         {
-            if (IsValidString(name) && IsAmountMoreThanZero(newAmount) && DoListContainName(name))
+            if (IsValidString(name) && IsAmountMoreThanZero(newAmount))
             {
-                foreach (var ecoObj in EconomicObjectList)
+                if(DoListContainName(name))
                 {
-                    if (ecoObj.Name.Contains(name))
+                    foreach (var ecoObj in EconomicObjectList)
                     {
-                        ecoObj.Amount = newAmount;
-                        return true;
+                        if (ecoObj.Name.Contains(name))
+                        {
+                            ecoObj.Amount = newAmount;
+                            return true;
+                        }
                     }
+                }
+                else
+                {
+                    string errormsg = $"{this} Name Does not exist in the list, therefore cannot update.";
+                    Debug.WriteLine(errormsg);
+                    ErrorLogger.Add(errormsg);
+                    return false;
                 }
             }
 
@@ -118,6 +138,9 @@ namespace BudgetCalculator.Controllers
                     }
                 }
 
+                string errormsg = $"{this} String name does not exist in economic object list";
+                Debug.WriteLine(errormsg);
+                ErrorLogger.Add(errormsg);
                 return false;
             }
             else
@@ -236,9 +259,6 @@ namespace BudgetCalculator.Controllers
                 }
             }
 
-            string errormsg = $"{this} String name does not exist in economic object list";
-            Debug.WriteLine(errormsg);
-            ErrorLogger.Add(errormsg);
             return false;
         }
         #endregion

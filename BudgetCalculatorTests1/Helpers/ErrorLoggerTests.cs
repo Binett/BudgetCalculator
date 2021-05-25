@@ -1,26 +1,45 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BudgetCalculator.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BudgetCalculatorTests1.Seeder;
 
 namespace BudgetCalculator.Helpers.Tests
 {
     [TestClass()]
     public class ErrorLoggerTests
     {
-        [TestMethod()]
-        public void GetSummarizedLogAsStringTest()
+        private Calculator calc;
+        private TestSeeder seeder;
+
+        [TestInitialize]
+        public void SetUp()
         {
-            Assert.Fail();
+            seeder = new TestSeeder();
+        }
+
+        [TestMethod()]
+        public void GetSummarizedLogAsStringTest_NoErrors_ShouldReturnNoLogs()
+        {
+            seeder.InitList();
+            calc = new Calculator(seeder.ecoController);
+            BudgetReport report = new BudgetReport(seeder.ecoController);
+
+            var expected = "No Logs";
+            var actual = ErrorLogger.GetSummarizedLogAsString();
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod()]
         public void AddTest()
         {
-            Assert.Fail();
+            seeder.InitList();
+            seeder.ecoController.UpdateEconomicObjectAmount("Rent", double.MaxValue);
+            calc = new Calculator(seeder.ecoController);
+            BudgetReport report = new BudgetReport(seeder.ecoController);
+
+
+            var expected = "No Logs";
+            var actual = ErrorLogger.GetSummarizedLogAsString();
+
+            Assert.AreEqual(expected, actual);
         }
     }
 }
