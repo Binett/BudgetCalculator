@@ -15,6 +15,10 @@ namespace BudgetCalculator.Controllers
         private List<string> errorLog;
 
         #region Public Methods
+        /// <summary>
+        /// Constructor for EconomicController 
+        /// instanciate a new list of EconomicObject
+        /// </summary>
         public EconomicController()
         {
             EconomicObjectList = new List<EconomicObject>();
@@ -47,7 +51,7 @@ namespace BudgetCalculator.Controllers
         }
 
         /// <summary>
-        /// Remove an object from EconomicObjectList
+        /// Remove an economic object from EconomicObjectList
         /// </summary>
         /// <param name="name">string name</param>
         /// <returns>bool true or false</returns>
