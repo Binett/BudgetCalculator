@@ -25,18 +25,23 @@ namespace BudgetCalculator.Tests
         }
         
         [TestMethod()]
-        public void GetCalculatedDataToStringTest_BudgetReport_ShouldWriteToFile()
+        public void GetCalculatedDataToStringTest_SendInEcoController_ReturnsCollectedDataAsString()
         {
             seeder.InitList();
             calc = new Calculator(seeder.ecoController);
             BudgetReport report = new BudgetReport(seeder.ecoController);
+            var actual = report.GetCalculatedDataToString().Trim();
+            WriteToFile writer = new WriteToFile();
 
-            var filetxt = new WriteToFile();
-            var reportString = report.GetCalculatedDataToString(seeder.ecoController);
-            filetxt.WriteStringToFile("Budget", reportString);
+            //In case file already exists--
+            writer.WriteStringToFile("test file", report.GetCalculatedDataToString());
+            File.Delete(writer.PathAndFileName);
+            //--
 
-            var expected = File.ReadAllLines(filetxt.PathAndFileName);
-            Assert.AreEqual(expected, reportString);
+            writer.WriteStringToFile("test file", report.GetCalculatedDataToString());
+            string expected = File.ReadAllText(writer.PathAndFileName).Trim();
+
+            Assert.AreEqual(expected, actual);
         }
     }
 }
