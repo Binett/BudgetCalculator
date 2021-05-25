@@ -12,7 +12,6 @@ namespace BudgetCalculator
     public class BudgetReport
     {
         // This is a POCO not a DTO, we got logic in here.
-
         public double TotalIncome { get; }
         public double TotalExpenses { get; }
         public double TotalMoneyForSavings { get; }
