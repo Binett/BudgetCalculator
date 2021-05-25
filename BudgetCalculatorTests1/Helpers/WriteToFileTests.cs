@@ -7,7 +7,7 @@ namespace BudgetCalculator.Helpers.Tests
     public class WriteToFileTests
     {
         [TestMethod()]
-        public void WriteStringToFileTest_ShouldWriteToFile()
+        public void WriteStringToFileTest_CallsWriteTofileWithString_ShouldWriteToFile()
         {
             var fileTxt = new WriteToFile();
             const string test = "Hello";
@@ -18,7 +18,7 @@ namespace BudgetCalculator.Helpers.Tests
         }
 
         [TestMethod()]
-        public void WriteStringToFileTest_ShouldNotWriteToFile()
+        public void WriteStringToFileTest_CallsWriteToFileWithEmptyString_ShouldNotWriteToFile()
         {
             var fileTxt = new WriteToFile();
             string test = string.Empty;
