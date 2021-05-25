@@ -15,6 +15,10 @@ namespace BudgetCalculator.Controllers
         private List<string> errorLog;
 
         #region Public Methods
+        /// <summary>
+        /// Constructor for EconomicController 
+        /// instanciate a new list of EconomicObject
+        /// </summary>
         public EconomicController()
         {
             EconomicObjectList = new List<EconomicObject>();
@@ -23,6 +27,13 @@ namespace BudgetCalculator.Controllers
 
         public List<EconomicObject> GetList => EconomicObjectList;
 
+        /// <summary>
+        /// Add Economic object to EconomicObjectList
+        /// </summary>
+        /// <param name="name">string name</param>
+        /// <param name="type">Type of object</param>
+        /// <param name="amount">double amount</param>
+        /// <returns>bool true or false</returns>
         public bool AddEconomicObjectToList(string name, EconomicType type, double amount)
         {
             if (IsValidString(name) && IsAmountMoreThanZero(amount) && !DoListContainName(name))
@@ -39,6 +50,11 @@ namespace BudgetCalculator.Controllers
             return false;
         }
 
+        /// <summary>
+        /// Remove an economic object from EconomicObjectList
+        /// </summary>
+        /// <param name="name">string name</param>
+        /// <returns>bool true or false</returns>
         public bool RemoveEconomicObjectFromList(string name)
         {
             if (IsValidString(name))
@@ -57,6 +73,12 @@ namespace BudgetCalculator.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates an economic objects amount 
+        /// </summary>
+        /// <param name="name">string name</param>
+        /// <param name="newAmount">double new amount</param>
+        /// <returns>bool true if success</returns>
         public bool UpdateEconomicObjectAmount(string name, double newAmount)
         {
             if (IsValidString(name) && IsAmountMoreThanZero(newAmount) && DoListContainName(name))
@@ -74,6 +96,14 @@ namespace BudgetCalculator.Controllers
             return false;  
         }
 
+
+        /// <summary>
+        /// Updates an economic object name if name
+        /// dosent exist
+        /// </summary>
+        /// <param name="oldName">string old name</param>
+        /// <param name="newName">string new name</param>
+        /// <returns>bool true if success else false</returns>
         public bool UpdateEconomicObjectName(string oldName, string newName)
         {
             if(IsValidString(oldName) && IsValidString(newName))
@@ -97,6 +127,12 @@ namespace BudgetCalculator.Controllers
         #endregion
 
         #region Private Methods
+        /// <summary>
+        /// Checks so the string name dosent contain
+        /// null, string empty and string whitespace
+        /// </summary>
+        /// <param name="check">string check</param>
+        /// <returns>bool if success</returns>
         private bool IsValidString(string check)
         {
             if(!IsStringNull(check))
@@ -129,21 +165,42 @@ namespace BudgetCalculator.Controllers
             }
         }
 
+       
+        /// <summary>
+        /// Checks if string is null
+        /// </summary>
+        /// <param name="check">string check</param>
+        /// <returns>if string is null return false</returns>
         private bool IsStringNull(string check)
         {
             return check == null;
         }
 
+        /// <summary>
+        /// Checks if string is Empty
+        /// </summary>
+        /// <param name="check">string check</param>
+        /// <returns>if string is empty return false</returns>
         private bool IsStringEmpty(string check)
         {
             return check == "";
         }
 
+        /// <summary>
+        ///  Checks if string is starts with whitespace
+        /// </summary>
+        /// <param name="check">string check</param>
+        /// <returns>if string starts with whitespace return false</returns>
         private bool IsStringPreWhitespace(string check)
         {
             return check[0] == ' ';
         }
 
+        /// <summary>
+        /// Checks if objects amount is greater than 0
+        /// </summary>
+        /// <param name="amount">double amount</param>
+        /// <returns>If double amount is greater than 0 return true</returns>
         private bool IsAmountMoreThanZero(double amount)
         {
             if(amount > 0)
@@ -158,6 +215,11 @@ namespace BudgetCalculator.Controllers
             }
         }
 
+        /// <summary>
+        /// Checks if objects name already exists 
+        /// </summary>
+        /// <param name="name">string name</param>
+        /// <returns>bool true if name dosent exists</returns>
         private bool DoListContainName(string name)
         {
             foreach (var ecoObj in EconomicObjectList)
