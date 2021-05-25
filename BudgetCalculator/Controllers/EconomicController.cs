@@ -147,6 +147,11 @@ namespace BudgetCalculator.Controllers
         #endregion Public Methods
 
         #region Private Methods
+        /// <summary>
+        /// Checks if incoming value is more than double.MaxValue
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns>True if value is over double.MaxValue</returns>
         private bool IsAmountMoreThanMaxValue(double amount)
         {
             if (amount > double.MaxValue)
