@@ -49,7 +49,7 @@ namespace BudgetCalculator.Helpers.Tests
             calc = new Calculator(seeder.ecoController);
             BudgetReport report = new BudgetReport(seeder.ecoController);
 
-            var expected = "BudgetCalculator.Controllers.EconomicController String name was empty";
+            var expected = "BudgetCalculator.Calculator GetTotalExpenses got double.maxvalue";
             var actual = ErrorLogger.GetLogList()[0];
             Assert.AreEqual(expected, actual);
         }
