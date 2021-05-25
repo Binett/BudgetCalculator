@@ -63,6 +63,12 @@ namespace BudgetCalculator
             return reportString;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="list"></param>
+        /// <returns>List of string</returns>
         private List<string> UnWrapExpenses(EconomicType type, List<EconomicObject> list)
         {
             List<string> listToSend = new List<string>();
