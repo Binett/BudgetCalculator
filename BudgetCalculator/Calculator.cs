@@ -46,6 +46,10 @@ namespace BudgetCalculator
             return 0;
         }
 
+        /// <summary>
+        /// Returns all expenses from the economic Object list in this calculator class.
+        /// </summary>
+        /// <returns>double as total expenses</returns>
         public double GetTotalExpenses()
         {
             double totalExpenses = 0;
