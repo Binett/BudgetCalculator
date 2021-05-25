@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BudgetCalculator.Controllers;
+﻿using BudgetCalculator.Controllers;
 using BudgetCalculator.Models;
 
 namespace BudgetCalculatorTests1.Seeder
@@ -11,6 +6,7 @@ namespace BudgetCalculatorTests1.Seeder
     public class TestSeeder
     {
         public EconomicController ecoController;
+
         public TestSeeder()
         {
             ecoController = new EconomicController();

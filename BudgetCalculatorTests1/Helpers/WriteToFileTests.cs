@@ -1,10 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BudgetCalculator.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace BudgetCalculator.Helpers.Tests
@@ -12,12 +6,11 @@ namespace BudgetCalculator.Helpers.Tests
     [TestClass()]
     public class WriteToFileTests
     {
-
         [TestMethod()]
-        public void WriteStringToFileTest_ShouldWriteToFile()
+        public void WriteStringToFileTest_CallsWriteTofileWithString_ShouldWriteToFile()
         {
             var fileTxt = new WriteToFile();
-            string test = "Hello";
+            const string test = "Hello";
             fileTxt.WriteStringToFile("error", test);
 
             var expected = File.ReadAllLines(fileTxt.PathAndFileName);
@@ -25,7 +18,7 @@ namespace BudgetCalculator.Helpers.Tests
         }
 
         [TestMethod()]
-        public void WriteStringToFileTest_ShouldNotWriteToFile()
+        public void WriteStringToFileTest_CallsWriteToFileWithEmptyString_ShouldNotWriteToFile()
         {
             var fileTxt = new WriteToFile();
             string test = string.Empty;

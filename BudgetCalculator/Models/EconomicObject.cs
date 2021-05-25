@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BudgetCalculator.Models
+﻿namespace BudgetCalculator.Models
 {
+    /// <summary>
+    /// A DTO of economic objects
+    /// </summary>
     public class EconomicObject
     {
         public EconomicType Type { get; set; }
