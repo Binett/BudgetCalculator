@@ -92,8 +92,10 @@ namespace BudgetCalculator
                 {
                     return totalSavingInPercentage;
                 }
+
                 return 0;
             }
+
             return 0;
         }
 

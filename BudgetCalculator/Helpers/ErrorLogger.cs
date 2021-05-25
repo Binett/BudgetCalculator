@@ -8,16 +8,6 @@ namespace BudgetCalculator.Helpers
 {
     public class ErrorLogger
     {
-        public List<string> Log { get; set; }
 
-        public string GetErrorsAsString()
-        {
-            string stringToSend = null;
-            foreach(string error in Log)
-            {
-                stringToSend += $"\n{error} {DateTime.Now}";
-            }
-            return stringToSend;
-        }
     }
 }

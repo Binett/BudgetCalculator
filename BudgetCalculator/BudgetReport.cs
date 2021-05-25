@@ -39,8 +39,6 @@ namespace BudgetCalculator
 
             PaidExpenses = paidExpenses;
             UnpaidExpenses = unpayedExpenses;
-
-            errorLogger.Log.Add(calc.GetErrorLog().GetErrorsAsString());
         }
 
         /// <summary>
@@ -48,23 +46,22 @@ namespace BudgetCalculator
         /// </summary>
         /// <param name="ecoController"></param>
         /// <returns>A string of all calculated data.</returns>
-        public string GetCalculatedDataToString(EconomicController ecoController)
+        public string GetCalculatedDataToString()
         {
-            BudgetReport report = new BudgetReport(ecoController);
-            List<string> listOfPaidExpenses = new List<string>(UnWrapExpenses(EconomicType.Expense, report.PaidExpenses));
-            List<string> listOfUnpaidExpenses = new List<string>(UnWrapExpenses(EconomicType.Expense, report.UnpaidExpenses));
-            List<string> listOfPaidSavings = new List<string>(UnWrapExpenses(EconomicType.Saving, report.PaidExpenses));
-            List<string> listOfUnpaidSavings = new List<string>(UnWrapExpenses(EconomicType.Saving, report.UnpaidExpenses));
+            List<string> listOfPaidExpenses = new List<string>(UnWrapExpenses(EconomicType.Expense, PaidExpenses));
+            List<string> listOfUnpaidExpenses = new List<string>(UnWrapExpenses(EconomicType.Expense, UnpaidExpenses));
+            List<string> listOfPaidSavings = new List<string>(UnWrapExpenses(EconomicType.Saving, PaidExpenses));
+            List<string> listOfUnpaidSavings = new List<string>(UnWrapExpenses(EconomicType.Saving, UnpaidExpenses));
 
             string reportString = string.Empty;
-            reportString = $"Total Income:       {report.TotalIncome}\n"+ 
-                           $"Total Expenses:     {report.TotalExpenses}\n"+ 
-                           $"Total Saving:       {report.TotalMoneyForSavings}\n"+
-                           $"Cash:               {report.Balance}\n"+
-                           $"Expenses (paid):    {GetStringFromList(listOfPaidExpenses)}\n" +
-                           $"Expenses (unpaid):  {GetStringFromList(listOfUnpaidExpenses)}\n"+
-                           $"Savings (paid):     {GetStringFromList(listOfPaidSavings)}\n"+
-                           $"Savings (unpaid):   {GetStringFromList(listOfUnpaidSavings)}";
+            reportString = $"Total Income:       {TotalIncome}\n"+ 
+                           $"Total Expenses:     {TotalExpenses}\n"+ 
+                           $"Total Saving:       {TotalMoneyForSavings}\n"+
+                           $"Cash:               {Balance}\n\n"+
+                           $"Expenses (paid):\n{GetStringFromList(listOfPaidExpenses)}\n" +
+                           $"Savings (paid):\n{GetStringFromList(listOfPaidSavings)}\n"+
+                           $"Expenses (unpaid):\n{GetStringFromList(listOfUnpaidExpenses)}\n"+
+                           $"Savings (unpaid):\n{GetStringFromList(listOfUnpaidSavings)}\n";
             return reportString;
 
         }
@@ -83,7 +80,14 @@ namespace BudgetCalculator
             {
                 if(exp.Type == type)
                 {
-                    listToSend.Add($"Name: {exp.Name} Amount: {exp.Amount}\n");
+                    if(exp.Type == EconomicType.Saving)
+                    {
+                        listToSend.Add($"{exp.Name} Amount: {exp.Amount * 100} Percent\n");
+                    }
+                    else
+                    {
+                        listToSend.Add($"{exp.Name} Amount: {exp.Amount}\n");
+                    }
                 }
             }
 
@@ -101,6 +105,10 @@ namespace BudgetCalculator
             foreach (var s in list)
             {
                 dataTxt += s;
+            }
+            if(dataTxt == string.Empty)
+            {
+                return "None\n";
             }
             return dataTxt;
         }

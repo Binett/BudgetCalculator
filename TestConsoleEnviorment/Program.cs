@@ -23,14 +23,18 @@ namespace TestConsoleEnviorment
             ecoTest.AddEconomicObjectToList("Food", EconomicType.Expense, 1500);
             ecoTest.AddEconomicObjectToList("Savings", EconomicType.Saving, 0.1);
 
+            ecoTest.AddEconomicObjectToList("SalaSADry", EconomicType.Income, 14000);
+            ecoTest.AddEconomicObjectToList("ReASDnt", EconomicType.Expense, 2000);
+            ecoTest.AddEconomicObjectToList("SubscSADription", EconomicType.Expense, 99);
+            ecoTest.AddEconomicObjectToList("FoASDod", EconomicType.Expense, 1500);
+            ecoTest.AddEconomicObjectToList("SavASDings", EconomicType.Saving, 0.05);
+
+
             BudgetReport report = new BudgetReport(ecoTest);
-            report.GetCalculatedDataToString(ecoTest);
 
-            WriteToFile writer = new WriteToFile();
 
-            writer.WriteStringToFile("report", report);
+            Console.WriteLine(report.GetCalculatedDataToString());
 
-            Console.WriteLine(report);
         }
     }
 }
