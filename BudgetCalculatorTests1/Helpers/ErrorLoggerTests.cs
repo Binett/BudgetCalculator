@@ -19,6 +19,7 @@ namespace BudgetCalculator.Helpers.Tests
         [TestMethod()]
         public void GetSummarizedLogAsStringTest_NoErrors_ShouldReturnNoLogs()
         {
+            ErrorLogger.GetLogList().Clear();
             seeder.InitList();
             calc = new Calculator(seeder.ecoController);
             BudgetReport report = new BudgetReport(seeder.ecoController);
@@ -31,6 +32,7 @@ namespace BudgetCalculator.Helpers.Tests
         [TestMethod()]
         public void GetSummarizedLogAsStringTest_UpdateEconomicObjectWithEmptyName_ShouldReturnLogMessageStringWasEmpty()
         {
+            ErrorLogger.GetLogList().Clear();
             seeder.InitList();
             seeder.ecoController.UpdateEconomicObjectName("Rent", "");
             calc = new Calculator(seeder.ecoController);
@@ -44,6 +46,7 @@ namespace BudgetCalculator.Helpers.Tests
         [TestMethod()]
         public void AddTest_AddEconomicObjectWithDoubleMaxValue_ShouldReturnAnErrorInLogList()
         {
+            ErrorLogger.GetLogList().Clear();
             seeder.InitList();
             seeder.ecoController.UpdateEconomicObjectAmount("Rent", double.MaxValue);
             calc = new Calculator(seeder.ecoController);
