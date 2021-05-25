@@ -7,6 +7,9 @@ using System.Diagnostics;
 
 namespace BudgetCalculator
 {
+    /// <summary>
+    /// Class is used to calculate income, expenses and savings in varies ways.
+    /// </summary>
     public class Calculator
     {
         private readonly List<EconomicObject> economicObjectList;

@@ -4,9 +4,11 @@ using System.Collections.Generic;
 
 namespace BudgetCalculator
 {
+    /// <summary>
+    /// Functions as a POCO, using the calculatorclass in it self.
+    /// </summary>
     public class BudgetReport
     {
-        // This is a POCO not a DTO, we got logic in here.
         public double TotalIncome { get; }
 
         public double TotalExpenses { get; }

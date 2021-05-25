@@ -4,6 +4,9 @@ using System.IO;
 
 namespace BudgetCalculator.Helpers
 {
+    /// <summary>
+    /// Class for writing strings to file.
+    /// </summary>
     public class WriteToFile
     {
         private string fileName = "default";
