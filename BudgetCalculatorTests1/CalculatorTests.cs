@@ -21,7 +21,6 @@ namespace BudgetCalculator.Tests
         public void Setup()
         {
             seeder = new TestSeeder();
-
         }
 
         [TestMethod()]
@@ -153,7 +152,7 @@ namespace BudgetCalculator.Tests
         }
 
         [TestMethod()]
-        public void GetTotalSavingToMoneyTest_PassValue_ShouldReturn3500()
+        public void GetTotalSavingToMoneyTest_PassValue_ShouldReturn_3500()
         {
             seeder.InitList();
             seeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, 0.15);

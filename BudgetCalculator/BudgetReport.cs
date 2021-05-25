@@ -46,20 +46,18 @@ namespace BudgetCalculator
         /// <returns>A string of all calculated data.</returns>
         public string GetCalculatedDataToString()
         {
-            List<string> listOfPaidExpenses = new List<string>(UnWrapExpenses(EconomicType.Expense, PaidExpenses));
-            List<string> listOfUnpaidExpenses = new List<string>(UnWrapExpenses(EconomicType.Expense, UnpaidExpenses));
-            List<string> listOfPaidSavings = new List<string>(UnWrapExpenses(EconomicType.Saving, PaidExpenses));
-            List<string> listOfUnpaidSavings = new List<string>(UnWrapExpenses(EconomicType.Saving, UnpaidExpenses));
+            //List<string> listOfPaidExpenses = new List<string>(UnWrapExpenses(EconomicType.Expense, PaidExpenses));
+            //List<string> listOfUnpaidExpenses = new List<string>(UnWrapExpenses(EconomicType.Expense, UnpaidExpenses));
+            //List<string> listOfPaidSavings = new List<string>(UnWrapExpenses(EconomicType.Saving, PaidExpenses));
+            //List<string> listOfUnpaidSavings = new List<string>(UnWrapExpenses(EconomicType.Saving, UnpaidExpenses));
 
             string reportString = string.Empty;
             reportString = $"Total Income:       {TotalIncome}\n"+ 
                            $"Total Expenses:     {TotalExpenses}\n"+ 
                            $"Total Saving:       {TotalMoneyForSavings}\n"+
                            $"Cash:               {Balance}\n\n"+
-                           $"Expenses (paid):\n{GetStringFromList(listOfPaidExpenses)}\n" +
-                           $"Savings (paid):\n{GetStringFromList(listOfPaidSavings)}\n"+
-                           $"Expenses (unpaid):\n{GetStringFromList(listOfUnpaidExpenses)}\n"+
-                           $"Savings (unpaid):\n{GetStringFromList(listOfUnpaidSavings)}\n";
+                           $"Paid expenses:\n{UnWrapExpenses(PaidExpenses)}\n" +
+                           $"Unpaid expenses:\n{UnWrapExpenses(UnpaidExpenses)}\n";
             return reportString;
 
         }
@@ -70,14 +68,12 @@ namespace BudgetCalculator
         /// <param name="type"></param>
         /// <param name="list"></param>
         /// <returns>List of string</returns>
-        private List<string> UnWrapExpenses(EconomicType type, List<EconomicObject> list)
+        private List<string> UnWrapExpenses(List<EconomicObject> list)
         {
             List<string> listToSend = new List<string>();
 
             foreach(var exp in list)
             {
-                if(exp.Type == type)
-                {
                     if(exp.Type == EconomicType.Saving)
                     {
                         listToSend.Add($"{exp.Name} Amount: {exp.Amount * 100} Percent\n");
@@ -86,7 +82,6 @@ namespace BudgetCalculator
                     {
                         listToSend.Add($"{exp.Name} Amount: {exp.Amount}\n");
                     }
-                }
             }
 
             return listToSend;
