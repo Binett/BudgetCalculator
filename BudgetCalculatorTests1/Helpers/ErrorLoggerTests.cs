@@ -7,7 +7,6 @@ namespace BudgetCalculator.Helpers.Tests
     [TestClass()]
     public class ErrorLoggerTests
     {
-        private Calculator calc;
         private TestSeeder seeder;
 
         [TestInitialize]
@@ -21,10 +20,8 @@ namespace BudgetCalculator.Helpers.Tests
         {
             ErrorLogger.GetLogList().Clear();
             seeder.InitList();
-            calc = new Calculator(seeder.ecoController);
-            BudgetReport report = new BudgetReport(seeder.ecoController);
 
-            var expected = "No Logs";
+            const string expected = "No Logs";
             var actual = ErrorLogger.GetSummarizedLogAsString();
             Assert.AreEqual(expected, actual);
         }
@@ -35,8 +32,6 @@ namespace BudgetCalculator.Helpers.Tests
             ErrorLogger.GetLogList().Clear();
             seeder.InitList();
             seeder.ecoController.UpdateEconomicObjectName("Rent", "");
-            calc = new Calculator(seeder.ecoController);
-            BudgetReport report = new BudgetReport(seeder.ecoController);
 
             var expected = "1: " + DateTime.Now + " BudgetCalculator.Controllers.EconomicController String name was empty\n";
             var actual = ErrorLogger.GetSummarizedLogAsString();
@@ -49,10 +44,8 @@ namespace BudgetCalculator.Helpers.Tests
             ErrorLogger.GetLogList().Clear();
             seeder.InitList();
             seeder.ecoController.UpdateEconomicObjectAmount("Rent", double.MaxValue);
-            calc = new Calculator(seeder.ecoController);
-            BudgetReport report = new BudgetReport(seeder.ecoController);
 
-            var expected = "BudgetCalculator.Calculator GetTotalExpenses got double.maxvalue";
+            const string expected = "BudgetCalculator.Controllers.EconomicController Amount was more than double.MaxValue";
             var actual = ErrorLogger.GetLogList()[0];
             Assert.AreEqual(expected, actual);
         }

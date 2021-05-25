@@ -9,7 +9,7 @@ namespace BudgetCalculator
 {
     public class Calculator
     {
-        private List<EconomicObject> economicObjectList;
+        private readonly List<EconomicObject> economicObjectList;
         private const double maxPercentage = 1d;
 
         public Calculator(EconomicController ecoController)
@@ -165,7 +165,6 @@ namespace BudgetCalculator
             string errormsg;
             var income = GetTotalIncome();
             var expenses = 0d;
-            var amountSavings = 0d;
             foreach (var ecoObj in economicObjectList)
             {
                 if (ecoObj.Type == EconomicType.Expense)
@@ -181,7 +180,7 @@ namespace BudgetCalculator
                 }
                 if (ecoObj.Type == EconomicType.Saving)
                 {
-                    amountSavings = ecoObj.Amount * income;
+                    double amountSavings = ecoObj.Amount * income;
                     expenses += amountSavings;
                     if (expenses > income)
                     {
@@ -249,7 +248,7 @@ namespace BudgetCalculator
         /// </summary>
         /// <param name="totalPercentage"></param>
         /// <returns>True if parameter is less than max.</returns>
-        private bool CheckPercentageNeverExceedMax(double totalPercentage) => totalPercentage < maxPercentage;
+        private static bool CheckPercentageNeverExceedMax(double totalPercentage) => totalPercentage < maxPercentage;
 
         /// <summary>
         /// Check if reminding is more than the total value of saving.

@@ -14,7 +14,7 @@ namespace BudgetCalculator
         public List<EconomicObject> PaidExpenses { get; }
         public List<EconomicObject> UnpaidExpenses { get; }
         public double Balance { get; }
-        private Calculator calc;
+        private readonly Calculator calc;
         public EconomicController ecoController;
 
         /// <summary>
@@ -40,17 +40,14 @@ namespace BudgetCalculator
         /// <returns>A string of all calculated data.</returns>
         public string GetCalculatedDataToString()
         {
-            List<string> listOfPaidExpenses = new List<string>(UnWrapExpenses(PaidExpenses));
-            List<string> listOfUnpaidExpenses = new List<string>(UnWrapExpenses(UnpaidExpenses));
-
-            string reportString = string.Empty;
-            reportString = $"Total Income:       {TotalIncome}\n" +
-                           $"Total Expenses:     {TotalExpenses}\n" +
-                           $"Total Saving:       {TotalMoneyForSavings}\n" +
-                           $"Cash:               {Balance}\n\n" +
-                           $"Paid expenses:\n{GetStringFromList(listOfPaidExpenses)}\n" +
-                           $"Unpaid expenses:\n{GetStringFromList(listOfUnpaidExpenses)}\n";
-            return reportString;
+            List<string> listOfPaidExpenses = new(UnWrapExpenses(PaidExpenses));
+            List<string> listOfUnpaidExpenses = new(UnWrapExpenses(UnpaidExpenses));
+            return $"Total Income:       {TotalIncome}\n" +
+               $"Total Expenses:     {TotalExpenses}\n" +
+               $"Total Saving:       {TotalMoneyForSavings}\n" +
+               $"Cash:               {Balance}\n\n" +
+               $"Paid expenses:\n{GetStringFromList(listOfPaidExpenses)}\n" +
+               $"Unpaid expenses:\n{GetStringFromList(listOfUnpaidExpenses)}\n";
         }
 
         /// <summary>
@@ -58,9 +55,9 @@ namespace BudgetCalculator
         /// </summary>
         /// <param name="list"></param>
         /// <returns>List of string</returns>
-        private List<string> UnWrapExpenses(List<EconomicObject> list)
+        private static List<string> UnWrapExpenses(List<EconomicObject> list)
         {
-            List<string> listToSend = new List<string>();
+            List<string> listToSend = new();
 
             foreach (var exp in list)
             {
@@ -82,14 +79,14 @@ namespace BudgetCalculator
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        private string GetStringFromList(List<string> list)
+        private static string GetStringFromList(List<string> list)
         {
             string dataTxt = string.Empty;
             foreach (var s in list)
             {
                 dataTxt += s;
             }
-            if (dataTxt == string.Empty)
+            if (dataTxt?.Length == 0)
             {
                 return "None\n";
             }

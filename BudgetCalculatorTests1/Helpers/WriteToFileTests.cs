@@ -10,7 +10,7 @@ namespace BudgetCalculator.Helpers.Tests
         public void WriteStringToFileTest_ShouldWriteToFile()
         {
             var fileTxt = new WriteToFile();
-            string test = "Hello";
+            const string test = "Hello";
             fileTxt.WriteStringToFile("error", test);
 
             var expected = File.ReadAllLines(fileTxt.PathAndFileName);

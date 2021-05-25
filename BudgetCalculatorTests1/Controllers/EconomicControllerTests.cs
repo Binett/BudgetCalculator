@@ -36,7 +36,7 @@ namespace BudgetCalculator.Controllers.Tests
         public void AddEconomicObjectToList_Pass_ShouldReturnTrue()
         {
             var actual = ecoController.AddEconomicObjectToList("Salad", EconomicType.Income, 200);
-            var expected = true;
+            const bool expected = true;
 
             Assert.AreEqual(expected, actual);
         }
@@ -45,7 +45,7 @@ namespace BudgetCalculator.Controllers.Tests
         public void AddEconomicObjectToList_PassNameThatExist_ShouldReturnFalse()
         {
             var actual = ecoController.AddEconomicObjectToList("Salary", EconomicType.Expense, 200);
-            var expected = false;
+            const bool expected = false;
 
             Assert.AreEqual(expected, actual);
         }
@@ -65,7 +65,7 @@ namespace BudgetCalculator.Controllers.Tests
         public void RemoveEconomicObjectFromListTest_Pass_ShouldReturnTrue()
         {
             var actual = ecoController.RemoveEconomicObjectFromList("Salary");
-            var expected = true;
+            const bool expected = true;
 
             Assert.AreEqual(expected, actual);
         }
@@ -86,7 +86,7 @@ namespace BudgetCalculator.Controllers.Tests
         public void UpdateEconomicObjectAmountTest_Pass_ShouldReturnTrue()
         {
             var actual = ecoController.UpdateEconomicObjectAmount("Salary", 200);
-            var expected = true;
+            const bool expected = true;
 
             Assert.AreEqual(expected, actual);
         }
@@ -110,7 +110,7 @@ namespace BudgetCalculator.Controllers.Tests
         public void UpdateEconomicObjectNameTest_Pass_ShouldReturnTrue()
         {
             var actual = ecoController.UpdateEconomicObjectName("Salary", "Winnings");
-            var expected = true;
+            const bool expected = true;
 
             Assert.AreEqual(expected, actual);
         }

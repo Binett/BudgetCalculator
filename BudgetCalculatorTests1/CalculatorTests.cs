@@ -23,7 +23,7 @@ namespace BudgetCalculator.Tests
             seeder.InitList();
             calc = new Calculator(seeder.ecoController);
 
-            var expected = 14000;
+            const int expected = 14000;
             var actual = calc.GetTotalIncome();
             Assert.AreEqual(expected, actual);
         }
@@ -35,7 +35,7 @@ namespace BudgetCalculator.Tests
             calc = new Calculator(seeder.ecoController);
             seeder.ecoController.UpdateEconomicObjectAmount("Salary", double.MaxValue);
 
-            var expected = 0;
+            const int expected = 0;
             var actual = calc.GetTotalIncome();
             Assert.AreEqual(expected, actual);
         }
@@ -45,7 +45,7 @@ namespace BudgetCalculator.Tests
         {
             seeder.InitList();
             calc = new Calculator(seeder.ecoController);
-            var expected = 3599;
+            const int expected = 3599;
             var actual = calc.GetTotalExpenses();
             Assert.AreEqual(expected, actual);
         }
@@ -56,7 +56,7 @@ namespace BudgetCalculator.Tests
             seeder.InitList();
             calc = new Calculator(seeder.ecoController);
             seeder.ecoController.UpdateEconomicObjectAmount("Food", double.MaxValue);
-            var expected = 0;
+            const int expected = 0;
             var actual = calc.GetTotalExpenses();
 
             Assert.AreEqual(expected, actual);
@@ -68,7 +68,7 @@ namespace BudgetCalculator.Tests
             seeder.InitList();
             seeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, 0.15);
             calc = new Calculator(seeder.ecoController);
-            var expected = 0.25;
+            const double expected = 0.25;
             var actual = calc.GetTotalSaving();
             Assert.AreEqual(expected, actual);
         }
@@ -80,7 +80,7 @@ namespace BudgetCalculator.Tests
             seeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, -0.15);
             calc = new Calculator(seeder.ecoController);
 
-            var expected = 0.1d;
+            const double expected = 0.1d;
             var actual = calc.GetTotalSaving();
             Assert.AreEqual(expected, actual);
         }
@@ -92,7 +92,7 @@ namespace BudgetCalculator.Tests
             seeder.ecoController.UpdateEconomicObjectAmount("Saving", double.MaxValue);
             calc = new Calculator(seeder.ecoController);
 
-            var expected = 0;
+            const int expected = 0;
             var actual = calc.GetTotalSaving();
             Assert.AreEqual(expected, actual);
         }
@@ -103,8 +103,8 @@ namespace BudgetCalculator.Tests
             seeder.InitList();
             calc = new Calculator(seeder.ecoController);
 
-            var expected = 9001;
-            var actual = calc.GetRemainingBalance(out List<EconomicObject> listOfPaidExpenses, out List<EconomicObject> listOfUnpaidExpenses);
+            const int expected = 9001;
+            var actual = calc.GetRemainingBalance(out _, out _);
             Assert.AreEqual(expected, actual);
         }
 
@@ -116,8 +116,8 @@ namespace BudgetCalculator.Tests
             seeder.ecoController.UpdateEconomicObjectAmount("Food", 8500);
             calc = new Calculator(seeder.ecoController);
 
-            var expected = 0;
-            var actual = calc.GetRemainingBalance(out List<EconomicObject> listOfPaidExpenses, out List<EconomicObject> listOfUnpaidExpenses);
+            const int expected = 0;
+            var actual = calc.GetRemainingBalance(out _, out _);
             Assert.AreEqual(expected, actual);
         }
 
@@ -128,8 +128,7 @@ namespace BudgetCalculator.Tests
             seeder.ecoController.AddEconomicObjectToList("Electric bill", EconomicType.Expense, 9001);
             seeder.ecoController.AddEconomicObjectToList("Fun stuff", EconomicType.Expense, 1000);
             calc = new Calculator(seeder.ecoController);
-
-            calc.GetRemainingBalance(out List<EconomicObject> listOfPaidExpenses, out List<EconomicObject> listOfUnpaidExpenses);
+            calc.GetRemainingBalance(out _, out List<EconomicObject> listOfUnpaidExpenses);
             Assert.AreEqual(1, listOfUnpaidExpenses.Count);
         }
 
@@ -139,8 +138,7 @@ namespace BudgetCalculator.Tests
             seeder.InitList();
             seeder.ecoController.AddEconomicObjectToList("Electric bill", EconomicType.Expense, 500);
             calc = new Calculator(seeder.ecoController);
-
-            calc.GetRemainingBalance(out List<EconomicObject> listOfPaidExpenses, out List<EconomicObject> listOfUnpaidExpenses);
+            calc.GetRemainingBalance(out List<EconomicObject> listOfPaidExpenses, out _);
             Assert.AreEqual(5, listOfPaidExpenses.Count);
         }
 
@@ -150,7 +148,7 @@ namespace BudgetCalculator.Tests
             seeder.InitList();
             seeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, 0.15);
             calc = new Calculator(seeder.ecoController);
-            var expected = 3500;
+            const int expected = 3500;
             var actual = calc.GetTotalSavingToMoney();
             Assert.AreEqual(expected, actual);
         }
@@ -161,7 +159,7 @@ namespace BudgetCalculator.Tests
             seeder.InitList();
             seeder.ecoController.UpdateEconomicObjectAmount("Saving", -0.15);
             calc = new Calculator(seeder.ecoController);
-            var expected = 1400;
+            const int expected = 1400;
             var actual = calc.GetTotalSavingToMoney();
             Assert.AreEqual(expected, actual);
         }
@@ -172,7 +170,7 @@ namespace BudgetCalculator.Tests
             seeder.InitList();
             seeder.ecoController.UpdateEconomicObjectAmount("Saving", double.MaxValue);
             calc = new Calculator(seeder.ecoController);
-            var expected = 0;
+            const int expected = 0;
             var actual = calc.GetTotalSavingToMoney();
             Assert.AreEqual(expected, actual);
         }

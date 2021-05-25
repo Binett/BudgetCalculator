@@ -8,7 +8,6 @@ namespace BudgetCalculator.Tests
     [TestClass()]
     public class BudgetReportTests
     {
-        private Calculator calc;
         private TestSeeder seeder;
 
         [TestInitialize]
@@ -21,10 +20,9 @@ namespace BudgetCalculator.Tests
         public void GetCalculatedDataToStringTest_SendInEcoController_ReturnsCollectedDataAsString()
         {
             seeder.InitList();
-            calc = new Calculator(seeder.ecoController);
-            BudgetReport report = new BudgetReport(seeder.ecoController);
+            BudgetReport report = new(seeder.ecoController);
             var actual = report.GetCalculatedDataToString().Trim();
-            WriteToFile writer = new WriteToFile();
+            WriteToFile writer = new();
 
             //In case file already exists--
             writer.WriteStringToFile("test file", report.GetCalculatedDataToString());

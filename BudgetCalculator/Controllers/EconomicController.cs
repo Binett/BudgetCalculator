@@ -1,5 +1,6 @@
 ﻿using BudgetCalculator.Helpers;
 using BudgetCalculator.Models;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -10,9 +11,6 @@ namespace BudgetCalculator.Controllers
     /// </summary>
     public class EconomicController
     {
-        private List<EconomicObject> EconomicObjectList;
-        private List<string> errorLog;
-
         #region Public Methods
 
         /// <summary>
@@ -21,11 +19,10 @@ namespace BudgetCalculator.Controllers
         /// </summary>
         public EconomicController()
         {
-            EconomicObjectList = new List<EconomicObject>();
-            errorLog = new List<string>();
+            GetList = new List<EconomicObject>();
         }
 
-        public List<EconomicObject> GetList => EconomicObjectList;
+        public List<EconomicObject> GetList { get; }
 
         /// <summary>
         /// Add Economic object to EconomicObjectList
@@ -40,7 +37,7 @@ namespace BudgetCalculator.Controllers
             {
                 if (!DoListContainName(name))
                 {
-                    EconomicObjectList.Add(new EconomicObject
+                    GetList.Add(new EconomicObject
                     {
                         Name = name,
                         Type = type,
@@ -71,7 +68,7 @@ namespace BudgetCalculator.Controllers
             {
                 if (DoListContainName(name))
                 {
-                    EconomicObjectList.RemoveAll(x => x.Name == name);
+                    GetList.RemoveAll(x => x.Name == name);
                     return true;
                 }
 
@@ -91,11 +88,11 @@ namespace BudgetCalculator.Controllers
         /// <returns>bool true if success</returns>
         public bool UpdateEconomicObjectAmount(string name, double newAmount)
         {
-            if (IsValidString(name) && IsAmountMoreThanZero(newAmount))
+            if (IsValidString(name) && IsAmountMoreThanZero(newAmount) && !IsAmountMoreThanMaxValue(newAmount))
             {
                 if (DoListContainName(name))
                 {
-                    foreach (var ecoObj in EconomicObjectList)
+                    foreach (var ecoObj in GetList)
                     {
                         if (ecoObj.Name.Contains(name))
                         {
@@ -127,7 +124,7 @@ namespace BudgetCalculator.Controllers
         {
             if (IsValidString(oldName) && IsValidString(newName))
             {
-                foreach (var ecoObj in EconomicObjectList)
+                foreach (var ecoObj in GetList)
                 {
                     if (ecoObj.Name.Contains(oldName))
                     {
@@ -150,6 +147,20 @@ namespace BudgetCalculator.Controllers
         #endregion Public Methods
 
         #region Private Methods
+        private bool IsAmountMoreThanMaxValue(double amount)
+        {
+            if (amount > double.MaxValue)
+            {
+                return true;
+            }
+            else
+            {
+                string errormsg = $"{this} Amount was more than double.MaxValue";
+                Debug.WriteLine(errormsg);
+                ErrorLogger.Add(errormsg);
+                return false;
+            }
+        }
 
         /// <summary>
         /// Checks so the string name dosent contain
@@ -198,7 +209,7 @@ namespace BudgetCalculator.Controllers
         /// </summary>
         /// <param name="check">string check</param>
         /// <returns>if string is null return false</returns>
-        private bool IsStringNull(string check)
+        private static bool IsStringNull(string check)
         {
             return check == null;
         }
@@ -208,9 +219,9 @@ namespace BudgetCalculator.Controllers
         /// </summary>
         /// <param name="check">string check</param>
         /// <returns>if string is empty return false</returns>
-        private bool IsStringEmpty(string check)
+        private static bool IsStringEmpty(string check)
         {
-            return check == "";
+            return check.Length == 0;
         }
 
         /// <summary>
@@ -218,7 +229,7 @@ namespace BudgetCalculator.Controllers
         /// </summary>
         /// <param name="check">string check</param>
         /// <returns>if string starts with whitespace return false</returns>
-        private bool IsStringPreWhitespace(string check)
+        private static bool IsStringPreWhitespace(string check)
         {
             return check[0] == ' ';
         }
@@ -250,7 +261,7 @@ namespace BudgetCalculator.Controllers
         /// <returns>bool true if name dosent exists</returns>
         private bool DoListContainName(string name)
         {
-            foreach (var ecoObj in EconomicObjectList)
+            foreach (var ecoObj in GetList)
             {
                 if (ecoObj.Name.Contains(name))
                 {

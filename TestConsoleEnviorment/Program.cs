@@ -4,6 +4,10 @@
     {
         private static void Main(string[] args)
         {
+            if (args is null)
+            {
+                throw new System.ArgumentNullException(nameof(args));
+            }
             //Console.WriteLine("Hello Test Enviorment!");
 
             ////Testing the Budgetcalculator Library
