@@ -18,7 +18,6 @@ namespace BudgetCalculator
         public List<EconomicObject> PaidExpenses { get; }
         public List<EconomicObject> UnpaidExpenses { get; }
         public double Balance { get; }
-
         private Calculator calc;
         public  EconomicController ecoController;
 
