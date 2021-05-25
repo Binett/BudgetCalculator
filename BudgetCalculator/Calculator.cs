@@ -130,8 +130,7 @@ namespace BudgetCalculator
         /// Convert the total percentage of saving into money.
         /// </summary>
         /// <returns>The sum of Saving value.</returns>
-        public double GetTotalSavingToMoney() => GetTotalIncome() * GetTotalSaving();
-
+        public double GetTotalSavingToMoney() => Math.Round(GetTotalIncome() * GetTotalSaving(), 2);
 
         #region Private
 

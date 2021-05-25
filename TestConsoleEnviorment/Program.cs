@@ -35,6 +35,9 @@ namespace TestConsoleEnviorment
 
             Console.WriteLine(report.GetCalculatedDataToString());
 
+            WriteToFile writer = new WriteToFile();
+            writer.WriteStringToFile("super rapporten", report.GetCalculatedDataToString());
+
         }
     }
 }
