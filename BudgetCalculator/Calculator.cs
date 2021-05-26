@@ -97,7 +97,7 @@ namespace BudgetCalculator
                     }
                 }
 
-                if (CheckPercentageNeverExceedMax(totalSavingInPercentage))
+                if (CheckPercentageNeverExceedMaxPercentage(totalSavingInPercentage))
                 {
                     return totalSavingInPercentage;
                 }
@@ -244,20 +244,20 @@ namespace BudgetCalculator
         /// Check if saving is possible.
         /// </summary>
         /// <returns>True if the remaining is greater than the sum of saving.</returns>
-        private bool IsSavingPossible() => CheckRemindingIsMoreThanSaving() && CheckPercentageNeverExceedMax(GetTotalSaving());
+        private bool IsSavingPossible() => CheckRemaningIsMoreThanSaving() && CheckPercentageNeverExceedMaxPercentage(GetTotalSaving());
 
         /// <summary>
         /// Check if the percentage in parameter is exceeded maximum allowed.
         /// </summary>
         /// <param name="totalPercentage"></param>
         /// <returns>True if parameter is less than max.</returns>
-        private static bool CheckPercentageNeverExceedMax(double totalPercentage) => totalPercentage < maxPercentage;
+        private static bool CheckPercentageNeverExceedMaxPercentage(double totalPercentage) => totalPercentage < maxPercentage;
 
         /// <summary>
         /// Check if reminding is more than the total value of saving.
         /// </summary>
         /// <returns>True if remaining is more than saving.</returns>
-        private bool CheckRemindingIsMoreThanSaving() => GetTotalIncome() - GetTotalExpenses() > GetTotalSavingToMoney();
+        private bool CheckRemaningIsMoreThanSaving() => GetTotalIncome() - GetTotalExpenses() > GetTotalSavingToMoney();
 
         #endregion Private
     }
