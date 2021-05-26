@@ -16,11 +16,6 @@ namespace BudgetCalculator.Controllers.Tests
         }
 
         [TestMethod()]
-        public void AddEconomicObjectToListTest()
-        {
-        }
-
-        [TestMethod()]
         [DataRow(null, 200, false)]
         [DataRow("", 200, false)]
         [DataRow(" ", 200, false)]

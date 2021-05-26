@@ -10,7 +10,6 @@ namespace BudgetCalculator
     public class BudgetReport
     {
         public double TotalIncome { get; }
-
         public double TotalExpenses { get; }
         public double TotalMoneyForSavings { get; }
         public List<EconomicObject> PaidExpenses { get; }
