@@ -1,4 +1,9 @@
-﻿namespace TestConsoleEnviorment
+﻿using BudgetCalculatorTests1.Seeder;
+using BudgetCalculator.Controllers;
+using BudgetCalculator.Models;
+using BudgetCalculator;
+
+namespace TestConsoleEnviorment
 {
     internal static class Program
     {
@@ -23,6 +28,13 @@
             //BudgetReport report = new BudgetReport(ecoController);
 
             //Console.WriteLine(ErrorLogger.GetSummarizedLogAsString());
+
+            TestSeeder seeder = new TestSeeder();
+
+            seeder.InitList();
+            seeder.ecoController.AddEconomicObjectToList("Ima buy me some Solar cells", EconomicType.Saving, 0.7);
+            
+            System.Console.WriteLine(new BudgetReport(seeder.ecoController).GetCalculatedDataToString());
         }
     }
 }
