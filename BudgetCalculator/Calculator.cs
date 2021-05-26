@@ -133,15 +133,15 @@ namespace BudgetCalculator
                 if (IsSavingPossible())
                 {
                     remainingBalance -= savings;
-                    return remainingBalance;
                 }
                 else
                 {
                     errormsg = $"{this} Saving is not possible";
                     Debug.WriteLine(errormsg);
                     ErrorLogger.Add(errormsg);
-                    return 0;
                 }
+
+                return remainingBalance;
             }
 
             errormsg = $"{this} Expenses exceed income";
