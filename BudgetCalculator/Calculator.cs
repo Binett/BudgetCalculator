@@ -78,7 +78,7 @@ namespace BudgetCalculator
         {
             var totalSavingInPercentage = 0d;
             string errormsg;
-            if (IsMoreIncomeThanExpenses())
+            if (GetTotalIncome() > GetTotalExpenses())
             {
                 foreach (var s in economicObjectList)
                 {
@@ -94,18 +94,18 @@ namespace BudgetCalculator
                             Debug.WriteLine(errormsg);
                             ErrorLogger.Add(errormsg);
                         }
+
+                        if(totalSavingInPercentage >= 1)
+                        {
+                            errormsg = $"{this} Total saving percentage was over 100";
+                            Debug.WriteLine(errormsg);
+                            ErrorLogger.Add(errormsg);
+                            return 0;
+                        }
                     }
                 }
 
-                if (CheckPercentageNeverExceedMaxPercentage(totalSavingInPercentage))
-                {
-                    return totalSavingInPercentage;
-                }
-
-                errormsg = $"{this} Total saving percentage was over 100";
-                Debug.WriteLine(errormsg);
-                ErrorLogger.Add(errormsg);
-                return 0;
+                return totalSavingInPercentage;
             }
 
             errormsg = $"{this} Less income than expenses";
@@ -123,13 +123,13 @@ namespace BudgetCalculator
             listOfPaidExpenses = GetPaidExpensesList();
             listOfUnpaidExpenses = GetUnpaidExpensesList();
             string errormsg;
-            if (IsMoreIncomeThanExpenses())
+            var income = GetTotalIncome();
+            var expenses = GetTotalExpenses();
+            var savings = GetTotalMoneyForSaving();
+            if (income > expenses)
             {
-                var income = GetTotalIncome();
-                var expenses = GetTotalExpenses();
-                var savings = GetTotalMoneyForSaving();
-
                 var remainingBalance = income - expenses;
+
                 if (remainingBalance >= savings)
                 {
                     remainingBalance -= savings;
@@ -164,6 +164,12 @@ namespace BudgetCalculator
         /// <returns>list of economic objects</returns>
         private List<EconomicObject> GetPaidExpensesList()
         {
+
+
+            //TODO refaktorera.
+            //Kolla om ett objekt är BETALBART, om så lägg i lista betalade, annars ej betalt.
+
+
             var listOfPaidExpenses = new List<EconomicObject>();
             string errormsg;
             var income = GetTotalIncome();
@@ -233,25 +239,6 @@ namespace BudgetCalculator
 
             return listUnpaidExpenses;
         }
-
-        /// <summary>
-        /// Check if the sum of income is more than the sum of expenses.
-        /// </summary>
-        /// <returns>True if income is more than expenses.</returns>
-        private bool IsMoreIncomeThanExpenses() => GetTotalIncome() > GetTotalExpenses();
-
-        /// <summary>
-        /// Check if the percentage in parameter is exceeded maximum allowed.
-        /// </summary>
-        /// <param name="totalPercentage"></param>
-        /// <returns>True if parameter is less than max.</returns>
-        private static bool CheckPercentageNeverExceedMaxPercentage(double totalPercentage) => totalPercentage < maxPercentage;
-
-        /// <summary>
-        /// Check if reminding is more than the total value of saving.
-        /// </summary>
-        /// <returns>True if remaining is more than saving.</returns>
-        private bool CheckRemaingIsMoreThanSaving() => GetTotalIncome() - GetTotalExpenses() > GetTotalMoneyForSaving();
 
         #endregion Private
     }
