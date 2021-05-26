@@ -11,7 +11,7 @@ namespace BudgetCalculator.Helpers
         private static readonly List<string> logList = new();
 
         /// <summary>
-        /// Returns the list of errors. 
+        /// Returns the list of errors.
         /// </summary>
         /// <returns>A list of string type</returns>
         public static List<string> GetLogList()
