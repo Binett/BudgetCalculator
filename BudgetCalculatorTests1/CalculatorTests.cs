@@ -156,6 +156,16 @@ namespace BudgetCalculator.Tests
         }
 
         [TestMethod()]
+        public void GetRemainingBalanceTest_NegativeListSavings_ShouldContain1Unpaid()
+        {
+            seeder.InitList();
+            seeder.ecoController.AddEconomicObjectToList("Ima buy me some Solar cells", EconomicType.Saving, 0.70);
+            calc = new Calculator(seeder.ecoController);
+            calc.GetRemainingBalance(out _, out List<EconomicObject> listOfUnpaidExpenses);
+            Assert.AreEqual("Ima buy me some Solar cells", listOfUnpaidExpenses[0].Name);
+        }
+
+        [TestMethod()]
         public void GetTotalSavingToMoneyTest_PassValue_ShouldReturn_3500()
         {
             seeder.InitList();
