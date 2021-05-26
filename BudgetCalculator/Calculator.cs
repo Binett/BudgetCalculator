@@ -244,7 +244,7 @@ namespace BudgetCalculator
         /// Check if saving is possible.
         /// </summary>
         /// <returns>True if the remaining is greater than the sum of saving.</returns>
-        private bool IsSavingPossible() => CheckRemaningIsMoreThanSaving() && CheckPercentageNeverExceedMaxPercentage(GetTotalSaving());
+        private bool IsSavingPossible() => CheckRemaingIsMoreThanSaving() && CheckPercentageNeverExceedMaxPercentage(GetTotalSaving());
 
         /// <summary>
         /// Check if the percentage in parameter is exceeded maximum allowed.
@@ -257,7 +257,7 @@ namespace BudgetCalculator
         /// Check if reminding is more than the total value of saving.
         /// </summary>
         /// <returns>True if remaining is more than saving.</returns>
-        private bool CheckRemaningIsMoreThanSaving() => GetTotalIncome() - GetTotalExpenses() > GetTotalSavingToMoney();
+        private bool CheckRemaingIsMoreThanSaving() => GetTotalIncome() - GetTotalExpenses() > GetTotalSavingToMoney();
 
         #endregion Private
     }
