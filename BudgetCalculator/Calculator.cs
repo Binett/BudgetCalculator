@@ -164,10 +164,8 @@ namespace BudgetCalculator
         /// <returns>list of economic objects</returns>
         private List<EconomicObject> GetPaidExpensesList()
         {
-
-
             //TODO refaktorera.
-            //Kolla om ett objekt är BETALBART, om så lägg i lista betalade, annars ej betalt.
+            //Kolla om ett objekt är BETALBART, om så lägg i lista betalade och minus income, annars ej betalt -> unpayed list
 
 
             var listOfPaidExpenses = new List<EconomicObject>();
