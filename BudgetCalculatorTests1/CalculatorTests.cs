@@ -98,7 +98,7 @@ namespace BudgetCalculator.Tests
         }
 
         [TestMethod()]
-        public void GetRemainingBalanceTest_Pass_ShouldReturnSum()
+        public void GetRemainingBalanceTest_SeederList_ShouldReturnSum()
         {
             seeder.InitList();
             calc = new Calculator(seeder.ecoController);
@@ -109,7 +109,20 @@ namespace BudgetCalculator.Tests
         }
 
         [TestMethod()]
-        public void GetRemainingBalanceTest_Fail_ShouldReturnZero()
+        public void GetRemainingBalanceTest_NegativeHighPercentageSavings_ShouldReturnSum()
+        {
+            seeder.InitList();
+            seeder.ecoController.AddEconomicObjectToList("Fun stuff", EconomicType.Expense, 1000);
+            seeder.ecoController.AddEconomicObjectToList("Motorcycle", EconomicType.Saving, 0.7);
+            calc = new Calculator(seeder.ecoController);
+
+            const int expected = 9401;
+            var actual = calc.GetRemainingBalance(out _, out _);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void GetRemainingBalanceTest_NegativeHighValueExpense_ShouldReturnZero()
         {
             seeder.InitList();
             seeder.ecoController.UpdateEconomicObjectAmount("Salary", 10000);
@@ -122,7 +135,7 @@ namespace BudgetCalculator.Tests
         }
 
         [TestMethod()]
-        public void GetRemainingBalanceTest_list_ShouldContain1Unpaid()
+        public void GetRemainingBalanceTest_NegativeList_ShouldContain1Unpaid()
         {
             seeder.InitList();
             seeder.ecoController.AddEconomicObjectToList("Electric bill", EconomicType.Expense, 9001);
@@ -133,7 +146,7 @@ namespace BudgetCalculator.Tests
         }
 
         [TestMethod()]
-        public void GetRemainingBalanceTest_list_ShouldContain5Paid()
+        public void GetRemainingBalanceTest_PositiveList_ShouldContain5Paid()
         {
             seeder.InitList();
             seeder.ecoController.AddEconomicObjectToList("Electric bill", EconomicType.Expense, 500);
