@@ -120,8 +120,10 @@ namespace BudgetCalculator
         /// <returns>double, remaining balance</returns>
         public double GetRemainingBalance(out List<EconomicObject> listOfPaidExpenses, out List<EconomicObject> listOfUnpaidExpenses)
         {
-            listOfPaidExpenses = GetPaidExpensesList();
-            listOfUnpaidExpenses = GetUnpaidExpensesList();
+            GetExpensesLists(out List<EconomicObject> paidExpenses, out List<EconomicObject> unpaidExpenses);
+            listOfPaidExpenses = paidExpenses;
+            listOfUnpaidExpenses = unpaidExpenses;
+
             string errormsg;
             var income = GetTotalIncome();
             var expenses = GetTotalExpenses();
@@ -162,81 +164,115 @@ namespace BudgetCalculator
         /// Checks when the total income is exceeded and adds seperate object to list when it does not exceed income
         /// </summary>
         /// <returns>list of economic objects</returns>
-        private List<EconomicObject> GetPaidExpensesList()
+        private void GetExpensesLists(out List<EconomicObject> listOfPaidExpenses, out List<EconomicObject> listOfUnpaidExpenses)
         {
             //TODO refaktorera.
             //Kolla om ett objekt är BETALBART, om så lägg i lista betalade och minus income, annars ej betalt -> unpayed list
 
+            listOfPaidExpenses = new List<EconomicObject>();
+            listOfUnpaidExpenses = new List<EconomicObject>();
 
-            var listOfPaidExpenses = new List<EconomicObject>();
-            string errormsg;
             var income = GetTotalIncome();
-            var expenses = 0d;
-            foreach (var ecoObj in economicObjectList)
+            var temp = income;
+
+            foreach(var obj in economicObjectList)
             {
-                if (ecoObj.Type == EconomicType.Expense)
+                if(obj.Type == EconomicType.Expense)
                 {
-                    expenses += ecoObj.Amount;
-
-                    if (expenses > income)
+                    if(obj.Amount <= income)
                     {
-                        break;
+                        income -= obj.Amount;
+                        listOfPaidExpenses.Add(obj);
                     }
-
-                    listOfPaidExpenses.Add(ecoObj);
+                    else
+                    {
+                        listOfUnpaidExpenses.Add(obj);
+                    }
                 }
-                if (ecoObj.Type == EconomicType.Saving)
+                else if (obj.Type == EconomicType.Saving)
                 {
-                    double amountSavings = ecoObj.Amount * income;
-                    expenses += amountSavings;
-                    if (expenses > income)
+                    if(obj.Amount * temp <= income)
                     {
-                        errormsg = $"{this} Savings exceed income";
-                        Debug.WriteLine(errormsg);
-                        ErrorLogger.Add(errormsg);
-                        break;
+                        income -= obj.Amount * temp;
+                        listOfPaidExpenses.Add(obj);
                     }
-
-                    listOfPaidExpenses.Add(ecoObj);
+                    else
+                    {
+                        listOfUnpaidExpenses.Add(obj);
+                    }
                 }
+                
             }
 
-            return listOfPaidExpenses;
+            //var listOfPaidExpenses = new List<EconomicObject>();
+            //string errormsg;
+            //var income = GetTotalIncome();
+            //var expenses = 0d;
+            //foreach (var ecoObj in economicObjectList)
+            //{
+            //    if (ecoObj.Type == EconomicType.Expense)
+            //    {
+            //        expenses += ecoObj.Amount;
+
+            //        if (expenses > income)
+            //        {
+            //            break;
+            //        }
+
+            //        listOfPaidExpenses.Add(ecoObj);
+            //    }
+            //    if (ecoObj.Type == EconomicType.Saving)
+            //    {
+            //        double amountSavings = ecoObj.Amount * income;
+            //        expenses += amountSavings;
+            //        if (expenses > income)
+            //        {
+            //            errormsg = $"{this} Savings exceed income";
+            //            Debug.WriteLine(errormsg);
+            //            ErrorLogger.Add(errormsg);
+            //            break;
+            //        }
+
+            //        listOfPaidExpenses.Add(ecoObj);
+            //    }
+            //}
+
+            //return listOfPaidExpenses;
         }
 
         /// <summary>
         /// Checks when total income is exceeded, when it is, it'll will add the exceeding expenses to list
         /// </summary>
         /// <returns>list of economic objects</returns>
-        private List<EconomicObject> GetUnpaidExpensesList()
-        {
-            var listUnpaidExpenses = new List<EconomicObject>();
+        //private List<EconomicObject> GetUnpaidExpensesList()
+        //{
+        //    var listUnpaidExpenses = new List<EconomicObject>();
 
-            var income = GetTotalIncome();
-            var expenses = 0d;
-            foreach (var ecoObj in economicObjectList)
-            {
-                if (ecoObj.Type == EconomicType.Expense)
-                {
-                    expenses += ecoObj.Amount;
-                    if (income < expenses)
-                    {
-                        listUnpaidExpenses.Add(ecoObj);
-                    }
-                }
-                if (ecoObj.Type == EconomicType.Saving)
-                {
-                    double amountSavings = ecoObj.Amount * income;
-                    expenses += amountSavings;
-                    if (income < expenses)
-                    {
-                        listUnpaidExpenses.Add(ecoObj);
-                    }
-                }
-            }
+        //    var income = GetTotalIncome();
+        //    var expenses = 0d;
+        //    foreach (var ecoObj in economicObjectList)
+        //    {
+        //        if (ecoObj.Type == EconomicType.Expense)
+        //        {
+        //            expenses += ecoObj.Amount;
+        //            if (income < expenses)
+        //            {
+        //                listUnpaidExpenses.Add(ecoObj);
+        //            }
+        //        }
+        //        if (ecoObj.Type == EconomicType.Saving)
+        //        {
+        //            double amountSavings = ecoObj.Amount * income;
+        //            expenses += amountSavings;
+        //            if (income < expenses)
+        //            {
+        //                listUnpaidExpenses.Add(ecoObj);
+        //            }
+        //        }
+        //    }
 
-            return listUnpaidExpenses;
-        }
+        //    return listUnpaidExpenses;
+        //}
 
         #endregion Private
     }
