@@ -28,7 +28,7 @@ namespace BudgetCalculator
             calc = new Calculator(ecoController);
             TotalIncome = calc.GetTotalIncome();
             TotalExpenses = calc.GetTotalExpenses();
-            TotalMoneyForSavings = calc.GetTotalSavingToMoney();
+            TotalMoneyForSavings = calc.GetTotalMoneyForSaving();
             Balance = calc.GetRemainingBalance(out List<EconomicObject> paidExpenses, out List<EconomicObject> unpayedExpenses);
             PaidExpenses = paidExpenses;
             UnpaidExpenses = unpayedExpenses;

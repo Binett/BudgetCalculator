@@ -127,10 +127,10 @@ namespace BudgetCalculator
             {
                 var income = GetTotalIncome();
                 var expenses = GetTotalExpenses();
-                var savings = GetTotalSavingToMoney();
+                var savings = GetTotalMoneyForSaving();
 
                 var remainingBalance = income - expenses;
-                if (IsSavingPossible())
+                if (remainingBalance >= savings)
                 {
                     remainingBalance -= savings;
                 }
@@ -154,7 +154,7 @@ namespace BudgetCalculator
         /// Convert the total percentage of saving into money.
         /// </summary>
         /// <returns>The sum of Saving value.</returns>
-        public double GetTotalSavingToMoney() => Math.Round(GetTotalIncome() * GetTotalSaving(), 2);
+        public double GetTotalMoneyForSaving() => Math.Round(GetTotalIncome() * GetTotalSaving(), 2);
 
         #region Private
 
@@ -241,12 +241,6 @@ namespace BudgetCalculator
         private bool IsMoreIncomeThanExpenses() => GetTotalIncome() > GetTotalExpenses();
 
         /// <summary>
-        /// Check if saving is possible.
-        /// </summary>
-        /// <returns>True if the remaining is greater than the sum of saving.</returns>
-        private bool IsSavingPossible() => CheckRemaingIsMoreThanSaving() && CheckPercentageNeverExceedMaxPercentage(GetTotalSaving());
-
-        /// <summary>
         /// Check if the percentage in parameter is exceeded maximum allowed.
         /// </summary>
         /// <param name="totalPercentage"></param>
@@ -257,7 +251,7 @@ namespace BudgetCalculator
         /// Check if reminding is more than the total value of saving.
         /// </summary>
         /// <returns>True if remaining is more than saving.</returns>
-        private bool CheckRemaingIsMoreThanSaving() => GetTotalIncome() - GetTotalExpenses() > GetTotalSavingToMoney();
+        private bool CheckRemaingIsMoreThanSaving() => GetTotalIncome() - GetTotalExpenses() > GetTotalMoneyForSaving();
 
         #endregion Private
     }

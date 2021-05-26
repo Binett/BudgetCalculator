@@ -172,7 +172,7 @@ namespace BudgetCalculator.Tests
             seeder.ecoController.AddEconomicObjectToList("Buffer", EconomicType.Saving, 0.15);
             calc = new Calculator(seeder.ecoController);
             const int expected = 3500;
-            var actual = calc.GetTotalSavingToMoney();
+            var actual = calc.GetTotalMoneyForSaving();
             Assert.AreEqual(expected, actual);
         }
 
@@ -183,7 +183,7 @@ namespace BudgetCalculator.Tests
             seeder.ecoController.UpdateEconomicObjectAmount("Saving", -0.15);
             calc = new Calculator(seeder.ecoController);
             const int expected = 1400;
-            var actual = calc.GetTotalSavingToMoney();
+            var actual = calc.GetTotalMoneyForSaving();
             Assert.AreEqual(expected, actual);
         }
 
@@ -194,7 +194,7 @@ namespace BudgetCalculator.Tests
             seeder.ecoController.UpdateEconomicObjectAmount("Saving", double.MaxValue);
             calc = new Calculator(seeder.ecoController);
             const int expected = 0;
-            var actual = calc.GetTotalSavingToMoney();
+            var actual = calc.GetTotalMoneyForSaving();
             Assert.AreEqual(expected, actual);
         }
     }
