@@ -1,23 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BudgetCalculator.Helpers
 {
-    public class ErrorLogger
+    /// <summary>
+    /// Static class that contains a list of errors.
+    /// </summary>
+    public static class ErrorLogger
     {
-        public List<string> Log { get; set; }
+        private static readonly List<string> logList = new();
 
-        public string GetErrorsAsString()
+        /// <summary>
+        /// Returns the list of errors.
+        /// </summary>
+        /// <returns>A list of string type</returns>
+        public static List<string> GetLogList()
         {
-            string stringToSend = null;
-            foreach(string error in Log)
+            return logList;
+        }
+
+        /// <summary>
+        /// Returns a summarize of the LogList as a string.
+        /// </summary>
+        /// <returns>String of summarized log errors</returns>
+        public static string GetSummarizedLogAsString()
+        {
+            int counter = 1;
+            string stringToSend = string.Empty;
+            if (logList == null || logList.Count == 0)
             {
-                stringToSend += $"\n{error} {DateTime.Now}";
+                return "No Logs";
             }
+
+            foreach (var s in logList)
+            {
+                stringToSend += $"{counter}: {DateTime.Now} {s}\n";
+                counter++;
+            }
+
             return stringToSend;
+        }
+
+        /// <summary>
+        /// Adds a error to the LogList
+        /// </summary>
+        /// <param name="text"></param>
+        public static void Add(string text)
+        {
+            if (logList.Contains(text))
+            {
+                return;
+            }
+
+            logList.Add(text);
         }
     }
 }

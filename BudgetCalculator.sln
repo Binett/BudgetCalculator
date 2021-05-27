@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetCalculator", "BudgetC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetCalculatorTests1", "BudgetCalculatorTests1\BudgetCalculatorTests1.csproj", "{F8DFF6AE-03EB-4E93-A569-82A3CD14085F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsoleEnviorment", "TestConsoleEnviorment\TestConsoleEnviorment.csproj", "{279D48E8-CBD4-42DA-8B9E-E44572A959EC}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{F8DFF6AE-03EB-4E93-A569-82A3CD14085F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8DFF6AE-03EB-4E93-A569-82A3CD14085F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8DFF6AE-03EB-4E93-A569-82A3CD14085F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{279D48E8-CBD4-42DA-8B9E-E44572A959EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{279D48E8-CBD4-42DA-8B9E-E44572A959EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{279D48E8-CBD4-42DA-8B9E-E44572A959EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{279D48E8-CBD4-42DA-8B9E-E44572A959EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,35 +1,42 @@
-﻿using System;
+﻿using BudgetCalculatorTests1.Seeder;
 using BudgetCalculator.Controllers;
 using BudgetCalculator.Models;
-using BudgetCalculator.Helpers;
 using BudgetCalculator;
+using System;
+using BudgetCalculator.Helpers;
 
 namespace TestConsoleEnviorment
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            if (args is null)
+            {
+                throw new System.ArgumentNullException(nameof(args));
+            }
             Console.WriteLine("Hello Test Enviorment!");
-
 
             //Testing the Budgetcalculator Library
 
-            EconomicController ecoTest = new EconomicController();
+            EconomicController ecoController = new EconomicController();
 
-            ecoTest.AddEconomicObjectToList("Salary", EconomicType.Income, 14000);
-            ecoTest.AddEconomicObjectToList("Rent", EconomicType.Expense, 2000);
-            ecoTest.AddEconomicObjectToList("Subscription", EconomicType.Expense, 99);
-            ecoTest.AddEconomicObjectToList("Food", EconomicType.Expense, 1500);
-            ecoTest.AddEconomicObjectToList("Savings", EconomicType.Saving, 0.1);
+            ecoController.AddEconomicObjectToList("Salary", EconomicType.Income, 14000);
+            ecoController.AddEconomicObjectToList("Rent", EconomicType.Expense, 2000);
+            ecoController.AddEconomicObjectToList("Subscription", EconomicType.Expense, 99);
+            ecoController.AddEconomicObjectToList("Food", EconomicType.Expense, 1500);
+            ecoController.AddEconomicObjectToList("Savings", EconomicType.Saving, 0.1);
 
-            BudgetReport report = new BudgetReport(ecoTest);
+            BudgetReport report = new BudgetReport(ecoController);
 
-            WriteToFile writer = new WriteToFile();
+            Console.WriteLine(ErrorLogger.GetSummarizedLogAsString());
 
-            writer.WriteReportToFile(report);
+            //TestSeeder seeder = new TestSeeder();
 
-            Console.WriteLine(report);
+            //seeder.InitList();
+            //seeder.ecoController.AddEconomicObjectToList("Ima buy me some Solar cells", EconomicType.Saving, 0.7);
+
+            //System.Console.WriteLine(new BudgetReport(seeder.ecoController).GetCalculatedDataToString());
         }
     }
 }
