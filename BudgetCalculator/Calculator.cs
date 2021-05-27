@@ -78,7 +78,7 @@ namespace BudgetCalculator
         {
             var totalSavingInPercentage = 0d;
             string errormsg;
-            if (IsMoreIncomeThanExpenses())
+            if (GetTotalIncome() > GetTotalExpenses())
             {
                 foreach (var s in economicObjectList)
                 {
@@ -94,18 +94,18 @@ namespace BudgetCalculator
                             Debug.WriteLine(errormsg);
                             ErrorLogger.Add(errormsg);
                         }
+
+                        if(totalSavingInPercentage >= 1)
+                        {
+                            errormsg = $"{this} Total saving percentage was over 100";
+                            Debug.WriteLine(errormsg);
+                            ErrorLogger.Add(errormsg);
+                            return 0;
+                        }
                     }
                 }
 
-                if (CheckPercentageNeverExceedMax(totalSavingInPercentage))
-                {
-                    return totalSavingInPercentage;
-                }
-
-                errormsg = $"{this} Total saving percentage was over 100";
-                Debug.WriteLine(errormsg);
-                ErrorLogger.Add(errormsg);
-                return 0;
+                return totalSavingInPercentage;
             }
 
             errormsg = $"{this} Less income than expenses";
@@ -120,17 +120,19 @@ namespace BudgetCalculator
         /// <returns>double, remaining balance</returns>
         public double GetRemainingBalance(out List<EconomicObject> listOfPaidExpenses, out List<EconomicObject> listOfUnpaidExpenses)
         {
-            listOfPaidExpenses = GetPaidExpensesList();
-            listOfUnpaidExpenses = GetUnpaidExpensesList();
-            string errormsg;
-            if (IsMoreIncomeThanExpenses())
-            {
-                var income = GetTotalIncome();
-                var expenses = GetTotalExpenses();
-                var savings = GetTotalSavingToMoney();
+            listOfPaidExpenses = new();
+            listOfUnpaidExpenses = new();
+            GetExpensesLists(ref listOfPaidExpenses, ref listOfUnpaidExpenses);
 
+            string errormsg;
+            var income = GetTotalIncome();
+            var expenses = GetTotalExpenses();
+            var savings = GetTotalMoneyForSaving();
+            if (income > expenses)
+            {
                 var remainingBalance = income - expenses;
-                if (IsSavingPossible())
+
+                if (remainingBalance >= savings)
                 {
                     remainingBalance -= savings;
                 }
@@ -154,7 +156,7 @@ namespace BudgetCalculator
         /// Convert the total percentage of saving into money.
         /// </summary>
         /// <returns>The sum of Saving value.</returns>
-        public double GetTotalSavingToMoney() => Math.Round(GetTotalIncome() * GetTotalSaving(), 2);
+        public double GetTotalMoneyForSaving() => Math.Round(GetTotalIncome() * GetTotalSaving(), 2);
 
         #region Private
 
@@ -162,103 +164,39 @@ namespace BudgetCalculator
         /// Checks when the total income is exceeded and adds seperate object to list when it does not exceed income
         /// </summary>
         /// <returns>list of economic objects</returns>
-        private List<EconomicObject> GetPaidExpensesList()
+        private void GetExpensesLists(ref List<EconomicObject> listOfPaidExpenses, ref List<EconomicObject> listOfUnpaidExpenses)
         {
-            var listOfPaidExpenses = new List<EconomicObject>();
-            string errormsg;
             var income = GetTotalIncome();
-            var expenses = 0d;
-            foreach (var ecoObj in economicObjectList)
+            var temp = income;
+
+            foreach(var obj in economicObjectList)
             {
-                if (ecoObj.Type == EconomicType.Expense)
+                if(obj.Type == EconomicType.Expense)
                 {
-                    expenses += ecoObj.Amount;
-
-                    if (expenses > income)
+                    if(obj.Amount <= income)
                     {
-                        break;
+                        income -= obj.Amount;
+                        listOfPaidExpenses.Add(obj);
                     }
-
-                    listOfPaidExpenses.Add(ecoObj);
-                }
-                if (ecoObj.Type == EconomicType.Saving)
-                {
-                    double amountSavings = ecoObj.Amount * income;
-                    expenses += amountSavings;
-                    if (expenses > income)
+                    else
                     {
-                        errormsg = $"{this} Savings exceed income";
-                        Debug.WriteLine(errormsg);
-                        ErrorLogger.Add(errormsg);
-                        break;
-                    }
-
-                    listOfPaidExpenses.Add(ecoObj);
-                }
-            }
-
-            return listOfPaidExpenses;
-        }
-
-        /// <summary>
-        /// Checks when total income is exceeded, when it is, it'll will add the exceeding expenses to list
-        /// </summary>
-        /// <returns>list of economic objects</returns>
-        private List<EconomicObject> GetUnpaidExpensesList()
-        {
-            var listUnpaidExpenses = new List<EconomicObject>();
-
-            var income = GetTotalIncome();
-            var expenses = 0d;
-            foreach (var ecoObj in economicObjectList)
-            {
-                if (ecoObj.Type == EconomicType.Expense)
-                {
-                    expenses += ecoObj.Amount;
-                    if (income < expenses)
-                    {
-                        listUnpaidExpenses.Add(ecoObj);
+                        listOfUnpaidExpenses.Add(obj);
                     }
                 }
-                if (ecoObj.Type == EconomicType.Saving)
+                else if (obj.Type == EconomicType.Saving)
                 {
-                    double amountSavings = ecoObj.Amount * income;
-                    expenses += amountSavings;
-                    if (income < expenses)
+                    if(obj.Amount * temp <= income)
                     {
-                        listUnpaidExpenses.Add(ecoObj);
+                        income -= obj.Amount * temp;
+                        listOfPaidExpenses.Add(obj);
+                    }
+                    else
+                    {
+                        listOfUnpaidExpenses.Add(obj);
                     }
                 }
             }
-
-            return listUnpaidExpenses;
         }
-
-        /// <summary>
-        /// Check if the sum of income is more than the sum of expenses.
-        /// </summary>
-        /// <returns>True if income is more than expenses.</returns>
-        private bool IsMoreIncomeThanExpenses() => GetTotalIncome() > GetTotalExpenses();
-
-        /// <summary>
-        /// Check if saving is possible.
-        /// </summary>
-        /// <returns>True if the remaining is greater than the sum of saving.</returns>
-        private bool IsSavingPossible() => CheckRemindingIsMoreThanSaving() && CheckPercentageNeverExceedMax(GetTotalSaving());
-
-        /// <summary>
-        /// Check if the percentage in parameter is exceeded maximum allowed.
-        /// </summary>
-        /// <param name="totalPercentage"></param>
-        /// <returns>True if parameter is less than max.</returns>
-        private static bool CheckPercentageNeverExceedMax(double totalPercentage) => totalPercentage < maxPercentage;
-
-        /// <summary>
-        /// Check if reminding is more than the total value of saving.
-        /// </summary>
-        /// <returns>True if remaining is more than saving.</returns>
-        private bool CheckRemindingIsMoreThanSaving() => GetTotalIncome() - GetTotalExpenses() > GetTotalSavingToMoney();
-
         #endregion Private
     }
 }
