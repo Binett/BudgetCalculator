@@ -13,7 +13,6 @@ namespace BudgetCalculator
     public class Calculator
     {
         private readonly List<EconomicObject> economicObjectList;
-        private const double maxPercentage = 1d;
 
         public Calculator(EconomicController ecoController)
         {
