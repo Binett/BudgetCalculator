@@ -96,7 +96,7 @@ namespace BudgetCalculator
 
                         if(totalSavingInPercentage >= 1)
                         {
-                            errormsg = $"{this} Total saving percentage was over 100";
+                            errormsg = $"{this} Calculated saving value was over 100% of income";
                             Debug.WriteLine(errormsg);
                             ErrorLogger.Add(errormsg);
                             return 0;

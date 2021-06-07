@@ -1,9 +1,10 @@
-﻿using BudgetCalculatorTests1.Seeder;
-using BudgetCalculator.Controllers;
-using BudgetCalculator.Models;
+﻿using System;
 using BudgetCalculator;
-using System;
+using BudgetCalculatorTests1.Seeder;
+using BudgetCalculator.Controllers;
 using BudgetCalculator.Helpers;
+using BudgetCalculator.Models;
+using BudgetCalculator.Tests;
 
 namespace TestConsoleEnviorment
 {
@@ -13,30 +14,45 @@ namespace TestConsoleEnviorment
         {
             if (args is null)
             {
-                throw new System.ArgumentNullException(nameof(args));
+                throw new ArgumentNullException(nameof(args));
             }
-            Console.WriteLine("Hello Test Enviorment!");
 
-            //Testing the Budgetcalculator Library
-
+            //Skapa en ecocontroller.
             EconomicController ecoController = new EconomicController();
 
+            //För in data i ecocontrollern
+            ecoController.AddEconomicObjectToList("Giraffe", EconomicType.Saving, 9999.9);
+            ecoController.AddEconomicObjectToList("Income", EconomicType.Income, 5000);
+            ecoController.AddEconomicObjectToList(" ", EconomicType.Expense, double.MaxValue);
+            ecoController.AddEconomicObjectToList(null, EconomicType.Income, -2222.222);
+
+            //Skapa en rapport med ecocontrollern
+            BudgetReport report = new BudgetReport(ecoController);
+
+            //Skapa en writer
+            WriteToFile writer = new WriteToFile();
+
+            //Skriv errorloggern till fil
+            writer.WriteStringToFile("the error log", ErrorLogger.GetSummarizedLogAsString());
+
+            //Ta bort giraffen, för dyr.
+            ecoController.RemoveEconomicObjectFromList("Giraffe");
+
+            //Lägg till lite grejjer
             ecoController.AddEconomicObjectToList("Salary", EconomicType.Income, 14000);
             ecoController.AddEconomicObjectToList("Rent", EconomicType.Expense, 2000);
             ecoController.AddEconomicObjectToList("Subscription", EconomicType.Expense, 99);
             ecoController.AddEconomicObjectToList("Food", EconomicType.Expense, 1500);
             ecoController.AddEconomicObjectToList("Savings", EconomicType.Saving, 0.1);
 
-            BudgetReport report = new BudgetReport(ecoController);
+            //Ny rapport
+            report = new BudgetReport(ecoController);
 
-            Console.WriteLine(ErrorLogger.GetSummarizedLogAsString());
+            //Skicka till consolen
+            Console.WriteLine(report.GetCalculatedDataToString());
 
-            //TestSeeder seeder = new TestSeeder();
-
-            //seeder.InitList();
-            //seeder.ecoController.AddEconomicObjectToList("Ima buy me some Solar cells", EconomicType.Saving, 0.7);
-
-            //System.Console.WriteLine(new BudgetReport(seeder.ecoController).GetCalculatedDataToString());
+            //Skriv rapporten till fil
+            writer.WriteStringToFile("Private economy report", report.GetCalculatedDataToString());
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BudgetCalculator\BudgetCalculator.csproj" />
     <ProjectReference Include="..\BudgetCalculatorTests1\BudgetCalculatorTests1.csproj" />
+    <ProjectReference Include="..\BudgetCalculator\BudgetCalculator.csproj" />
   </ItemGroup>
 
 </Project>
