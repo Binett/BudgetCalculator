@@ -1,6 +1,8 @@
 ﻿using BudgetCalculator.Controllers;
 using BudgetCalculator.Models;
+using BudgetCalculator.Helpers;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace BudgetCalculator
 {
@@ -24,14 +26,23 @@ namespace BudgetCalculator
         /// <param name="_ecoController"></param>
         public BudgetReport(EconomicController _ecoController)
         {
-            ecoController = _ecoController;
-            calc = new Calculator(ecoController);
-            TotalIncome = calc.GetTotalIncome();
-            TotalExpenses = calc.GetTotalExpenses();
-            TotalMoneyForSavings = calc.GetTotalMoneyForSaving();
-            Balance = calc.GetRemainingBalance(out List<EconomicObject> paidExpenses, out List<EconomicObject> unpayedExpenses);
-            PaidExpenses = paidExpenses;
-            UnpaidExpenses = unpayedExpenses;
+
+            if(_ecoController != null)
+            {
+                ecoController = _ecoController;
+                calc = new Calculator(ecoController);
+                TotalIncome = calc.GetTotalIncome();
+                TotalExpenses = calc.GetTotalExpenses();
+                TotalMoneyForSavings = calc.GetTotalMoneyForSaving();
+                Balance = calc.GetRemainingBalance(out List<EconomicObject> paidExpenses, out List<EconomicObject> unpayedExpenses);
+                PaidExpenses = paidExpenses;
+                UnpaidExpenses = unpayedExpenses;
+            }
+            else
+            {
+                Debug.WriteLine("ecocontroller was null");
+                ErrorLogger.Add("Ecocontroller was null when instantiating budgetreport object");
+            }
         }
 
         /// <summary>
