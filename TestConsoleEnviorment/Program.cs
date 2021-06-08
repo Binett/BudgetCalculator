@@ -27,7 +27,7 @@ namespace TestConsoleEnviorment
             ecoController.AddEconomicObjectToList(null, EconomicType.Income, -2222.222);
 
             //Skapa en rapport med ecocontrollern
-            BudgetReport report = new BudgetReport(null);
+            BudgetReport report = new BudgetReport(ecoController);
 
             //Skapa en writer
             WriteToFile writer = new WriteToFile();
