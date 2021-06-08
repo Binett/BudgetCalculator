@@ -27,7 +27,7 @@ namespace BudgetCalculator
         public BudgetReport(EconomicController _ecoController)
         {
 
-            if(_ecoController != null)
+            if (_ecoController != null)
             {
                 ecoController = _ecoController;
                 calc = new Calculator(ecoController);
@@ -70,19 +70,20 @@ namespace BudgetCalculator
         private static List<string> UnWrapExpenses(List<EconomicObject> list)
         {
             List<string> listToSend = new();
-
-            foreach (var exp in list)
+            if (list != null)
             {
-                if (exp.Type == EconomicType.Saving)
+                foreach (var exp in list)
                 {
-                    listToSend.Add($"{exp.Name} Amount: {exp.Amount * 100} Percent\n");
-                }
-                else
-                {
-                    listToSend.Add($"{exp.Name} Amount: {exp.Amount}\n");
-                }
+                    if (exp.Type == EconomicType.Saving)
+                    {
+                        listToSend.Add($"{exp.Name} Amount: {exp.Amount * 100} Percent\n");
+                    }
+                    else
+                    {
+                        listToSend.Add($"{exp.Name} Amount: {exp.Amount}\n");
+                    }
+                }                
             }
-
             return listToSend;
         }
 
@@ -94,15 +95,19 @@ namespace BudgetCalculator
         private static string GetStringFromList(List<string> list)
         {
             string dataTxt = string.Empty;
-            foreach (var s in list)
+            if (list != null)
             {
-                dataTxt += s;
-            }
-            if (dataTxt?.Length == 0)
-            {
-                return "None\n";
+                foreach (var s in list)
+                {
+                    dataTxt += s;
+                }
+                if (dataTxt?.Length == 0)
+                {
+                    return "None\n";
+                }
             }
             return dataTxt;
+
         }
     }
 }

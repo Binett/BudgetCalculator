@@ -16,6 +16,7 @@ namespace BudgetCalculator
 
         public Calculator(EconomicController ecoController)
         {
+            economicObjectList = new List<EconomicObject>();
             if(ecoController != null)
             {
                 economicObjectList = ecoController.GetList;
