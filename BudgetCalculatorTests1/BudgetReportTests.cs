@@ -36,7 +36,7 @@ namespace BudgetCalculator.Tests
         }
 
         [TestMethod()]
-        public void GetCalculatedDataToStringTest_Null_ReturnsEmptyListOfString()
+        public void GetCalculatedDataToStringTest_Null_ReturnsEmptyString()
         {           
             BudgetReport report = new(null);
             var actual = report.GetCalculatedDataToString().Trim();

@@ -200,7 +200,7 @@ namespace BudgetCalculator.Tests
         }
 
         [TestMethod()]
-        public void CalculatorTest()
+        public void CalculatorTest_Null_ShouldReturnZero()
         {
             seeder.InitList();
             calc = new Calculator(null);
