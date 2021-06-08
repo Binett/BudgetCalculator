@@ -16,7 +16,16 @@ namespace BudgetCalculator
 
         public Calculator(EconomicController ecoController)
         {
-            economicObjectList = ecoController.GetList;
+            economicObjectList = new List<EconomicObject>();
+            if(ecoController != null)
+            {
+                economicObjectList = ecoController.GetList;
+            }
+            else
+            {
+                Debug.WriteLine("ecocontroller was null");
+                ErrorLogger.Add("Ecocontroller was null in the constructor of calcualtor");
+            }
         }
 
         /// <summary>
@@ -96,7 +105,7 @@ namespace BudgetCalculator
 
                         if(totalSavingInPercentage >= 1)
                         {
-                            errormsg = $"{this} Total saving percentage was over 100";
+                            errormsg = $"{this} Calculated saving value was over 100% of income";
                             Debug.WriteLine(errormsg);
                             ErrorLogger.Add(errormsg);
                             return 0;

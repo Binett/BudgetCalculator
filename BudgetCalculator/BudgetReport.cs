@@ -1,6 +1,8 @@
 ﻿using BudgetCalculator.Controllers;
 using BudgetCalculator.Models;
+using BudgetCalculator.Helpers;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace BudgetCalculator
 {
@@ -24,14 +26,23 @@ namespace BudgetCalculator
         /// <param name="_ecoController"></param>
         public BudgetReport(EconomicController _ecoController)
         {
-            ecoController = _ecoController;
-            calc = new Calculator(ecoController);
-            TotalIncome = calc.GetTotalIncome();
-            TotalExpenses = calc.GetTotalExpenses();
-            TotalMoneyForSavings = calc.GetTotalMoneyForSaving();
-            Balance = calc.GetRemainingBalance(out List<EconomicObject> paidExpenses, out List<EconomicObject> unpayedExpenses);
-            PaidExpenses = paidExpenses;
-            UnpaidExpenses = unpayedExpenses;
+
+            if (_ecoController != null)
+            {
+                ecoController = _ecoController;
+                calc = new Calculator(ecoController);
+                TotalIncome = calc.GetTotalIncome();
+                TotalExpenses = calc.GetTotalExpenses();
+                TotalMoneyForSavings = calc.GetTotalMoneyForSaving();
+                Balance = calc.GetRemainingBalance(out List<EconomicObject> paidExpenses, out List<EconomicObject> unpayedExpenses);
+                PaidExpenses = paidExpenses;
+                UnpaidExpenses = unpayedExpenses;
+            }
+            else
+            {
+                Debug.WriteLine("ecocontroller was null");
+                ErrorLogger.Add("Ecocontroller was null when instantiating budgetreport object");
+            }
         }
 
         /// <summary>
@@ -59,19 +70,20 @@ namespace BudgetCalculator
         private static List<string> UnWrapExpenses(List<EconomicObject> list)
         {
             List<string> listToSend = new();
-
-            foreach (var exp in list)
+            if (list != null)
             {
-                if (exp.Type == EconomicType.Saving)
+                foreach (var exp in list)
                 {
-                    listToSend.Add($"{exp.Name} Amount: {exp.Amount * 100} Percent\n");
-                }
-                else
-                {
-                    listToSend.Add($"{exp.Name} Amount: {exp.Amount}\n");
-                }
+                    if (exp.Type == EconomicType.Saving)
+                    {
+                        listToSend.Add($"{exp.Name} Amount: {exp.Amount * 100} Percent\n");
+                    }
+                    else
+                    {
+                        listToSend.Add($"{exp.Name} Amount: {exp.Amount}\n");
+                    }
+                }                
             }
-
             return listToSend;
         }
 
@@ -83,15 +95,19 @@ namespace BudgetCalculator
         private static string GetStringFromList(List<string> list)
         {
             string dataTxt = string.Empty;
-            foreach (var s in list)
+            if (list != null)
             {
-                dataTxt += s;
-            }
-            if (dataTxt?.Length == 0)
-            {
-                return "None\n";
+                foreach (var s in list)
+                {
+                    dataTxt += s;
+                }
+                if (dataTxt?.Length == 0)
+                {
+                    return "None\n";
+                }
             }
             return dataTxt;
+
         }
     }
 }

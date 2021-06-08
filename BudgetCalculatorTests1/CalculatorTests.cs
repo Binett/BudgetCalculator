@@ -1,4 +1,5 @@
-﻿using BudgetCalculator.Models;
+﻿using BudgetCalculator;
+using BudgetCalculator.Models;
 using BudgetCalculatorTests1.Seeder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -196,6 +197,16 @@ namespace BudgetCalculator.Tests
             const int expected = 0;
             var actual = calc.GetTotalMoneyForSaving();
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void CalculatorTest_Null_ShouldReturnZero()
+        {
+            seeder.InitList();
+            calc = new Calculator(null);
+            var actual = calc.GetTotalExpenses();
+            var expected = 0;
+            Assert.AreEqual(expected,actual);
         }
     }
 }

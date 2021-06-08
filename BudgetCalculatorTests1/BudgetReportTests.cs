@@ -34,5 +34,23 @@ namespace BudgetCalculator.Tests
 
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod()]
+        public void GetCalculatedDataToStringTest_Null_ReturnsEmptyString()
+        {           
+            BudgetReport report = new(null);
+            var actual = report.GetCalculatedDataToString().Trim();
+            WriteToFile writer = new();
+
+            //In case file already exists--
+            writer.WriteStringToFile("test file", report.GetCalculatedDataToString());
+            File.Delete(writer.PathAndFileName);
+            //--
+
+            writer.WriteStringToFile("test file", report.GetCalculatedDataToString());
+            string expected = File.ReadAllText(writer.PathAndFileName).Trim();
+
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

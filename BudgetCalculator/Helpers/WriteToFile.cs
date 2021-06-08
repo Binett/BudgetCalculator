@@ -30,14 +30,22 @@ namespace BudgetCalculator.Helpers
         /// <param name="txt">text that should be added to file</param>
         public void WriteStringToFile(string name, string txt)
         {
-            if (txt != "")
+            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(txt))
             {
-                fileName = name;
-                File.AppendAllText(PathAndFileName, txt + "\n");
+                if (txt != "")
+                {
+                    fileName = name;
+                    File.AppendAllText(PathAndFileName, txt + "\n");
+                }
+                else
+                {
+                    Debug.WriteLine("Text is empty");
+                }
             }
             else
             {
-                Debug.WriteLine("Text is empty");
+                Debug.WriteLine("String is null or empty");
+                ErrorLogger.Add("String is null or empty in write to file call to write to string file");
             }
         }
     }
