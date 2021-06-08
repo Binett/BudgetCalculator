@@ -26,5 +26,25 @@ namespace BudgetCalculator.Helpers.Tests
             fileTxt.WriteStringToFile(fileTxt.PathAndFileName, test);
             Assert.AreEqual(false, File.Exists(fileTxt.PathAndFileName));
         }
+
+        [TestMethod()]
+        public void WriteStringToFileTest_CallsWriteToFileWithNullText_ShouldNotWriteToFile()
+        {
+            var fileTxt = new WriteToFile();
+            string test = null;
+
+            fileTxt.WriteStringToFile(fileTxt.PathAndFileName, test);
+            Assert.AreEqual(false, File.Exists(fileTxt.PathAndFileName));
+        }
+
+        [TestMethod()]
+        public void WriteStringToFileTest_CallsWriteToFileWithNullName_ShouldNotWriteToFile()
+        {
+            var fileTxt = new WriteToFile();
+            string test = "Error";
+
+            fileTxt.WriteStringToFile(null, test);
+            Assert.AreEqual(false, File.Exists(null));
+        }
     }
 }
